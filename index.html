@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Zhyar • لینکەکان</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: linear-gradient(145deg, #f9f2e7 0%, #fff3e0 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            position: relative;
+            direction: ltr;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 30% 40%, rgba(255, 215, 175, 0.25) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(200, 180, 230, 0.2) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .card {
+            max-width: 560px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: min(48px, 10vw) min(48px, 10vw) min(40px, 8vw) min(40px, 8vw);
+            padding: min(36px, 8vw) min(28px, 6vw) min(32px, 7vw);
+            box-shadow: 
+                0 20px 40px -12px rgba(0, 0, 0, 0.15),
+                0 8px 24px -6px rgba(0, 0, 0, 0.05),
+                inset 0 1px 1px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+            z-index: 2;
+        }
+
+        @media (max-width: 380px) {
+            .card {
+                padding: 24px 16px 24px;
+            }
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: min(28px, 6vw);
+        }
+
+        .avatar {
+            width: min(104px, 26vw);
+            height: min(104px, 26vw);
+            border-radius: 50%;
+            box-shadow: 
+                0 10px 20px -5px rgba(180, 130, 90, 0.3),
+                0 0 0 3px rgba(255, 255, 255, 0.8);
+            margin-bottom: min(16px, 4vw);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(24px, 7vw, 28px);
+            font-weight: 650;
+            color: #2e2a28;
+            letter-spacing: -0.3px;
+            margin-bottom: clamp(4px, 2vw, 6px);
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .bio-text {
+            font-size: clamp(14px, 4vw, 16px);
+            color: #6b5e54;
+            background: rgba(235, 225, 215, 0.6);
+            padding: clamp(6px, 2vw, 8px) clamp(16px, 5vw, 20px);
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            font-weight: 450;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: inline-block;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 350px) {
+            .bio-text {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(12px, 3vw, 16px);
+            margin: clamp(24px, 6vw, 30px) 0 clamp(18px, 5vw, 22px);
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: clamp(8px, 2.5vw, 10px) clamp(14px, 4vw, 18px) clamp(8px, 2.5vw, 10px) clamp(10px, 3vw, 12px);
+            border-radius: min(80px, 15vw);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03);
+            transition: all 0.25s ease;
+            text-decoration: none;
+            color: #2e2a28;
+            cursor: pointer;
+            width: 100%;
+            min-height: 70px;
+        }
+
+        @media (max-width: 380px) {
+            .link-card {
+                min-height: 60px;
+            }
+        }
+
+        .link-card:hover {
+            transform: scale(1.02) translateY(-3px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 18px 28px -12px rgba(100, 70, 40, 0.25);
+            border-color: #ffffff;
+        }
+
+        @media (hover: none) {
+            .link-card:hover {
+                transform: none;
+            }
+        }
+
+        .icon-img {
+            width: clamp(44px, 12vw, 48px);
+            height: clamp(44px, 12vw, 48px);
+            border-radius: 50%;
+            object-fit: cover;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 2px solid white;
+            flex-shrink: 0;
+        }
+
+        .link-content {
+            flex: 1;
+            padding: 0 clamp(8px, 3vw, 12px) 0 clamp(12px, 4vw, 16px);
+            font-weight: 550;
+            font-size: clamp(15px, 4.5vw, 17px);
+            color: #2f2a24;
+            display: flex;
+            align-items: center;
+            gap: clamp(4px, 2vw, 8px);
+            flex-wrap: wrap;
+            min-width: 0;
+        }
+
+        .link-content small {
+            font-size: clamp(11px, 3.5vw, 13px);
+            font-weight: 400;
+            color: #9f8f81;
+            background: rgba(240, 230, 220, 0.8);
+            padding: clamp(3px, 1.5vw, 4px) clamp(6px, 2.5vw, 10px);
+            border-radius: 60px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 120px;
+        }
+
+        @media (max-width: 400px) {
+            .link-content small {
+                max-width: 80px;
+            }
+        }
+
+        .arrow {
+            font-size: clamp(18px, 5vw, 22px);
+            color: #b68b6b;
+            opacity: 0.8;
+            transition: transform 0.2s;
+            margin-left: 4px;
+            flex-shrink: 0;
+        }
+
+        .link-card:hover .arrow {
+            transform: translateX(6px);
+            opacity: 1;
+            color: #8b6c4d;
+        }
+
+        @media (hover: none) {
+            .link-card:hover .arrow {
+                transform: none;
+            }
+        }
+
+        .extra-links {
+            display: flex;
+            justify-content: center;
+            gap: clamp(16px, 5vw, 24px);
+            margin: clamp(16px, 4vw, 20px) 0 clamp(12px, 3vw, 16px);
+            flex-wrap: wrap;
+        }
+
+        .extra-item {
+            background: rgba(220, 205, 190, 0.3);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: clamp(6px, 2vw, 8px) clamp(16px, 5vw, 24px);
+            border-radius: 60px;
+            font-size: clamp(13px, 4vw, 14.5px);
+            color: #6a4e3a;
+            border: 1px solid rgba(255, 255, 240, 0.8);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: clamp(4px, 2vw, 8px);
+            text-decoration: none;
+            font-weight: 520;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 350px) {
+            .extra-item {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+
+        .extra-item:hover {
+            background: rgba(200, 180, 160, 0.4);
+            color: #3a2c20;
+        }
+
+        .footer-note {
+            margin-top: clamp(8px, 2vw, 12px);
+            font-size: clamp(11px, 3.5vw, 13px);
+            color: #a28e7c;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(4px, 2vw, 8px);
+            background: rgba(255, 255, 255, 0.5);
+            padding: clamp(4px, 1.5vw, 6px) clamp(12px, 4vw, 16px);
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 350px) {
+            .footer-note {
+                font-size: 10px;
+            }
+        }
+
+        .bottom-note {
+            margin-top: 20px;
+            font-size: clamp(11px, 3.5vw, 13px);
+            color: #a28b7a;
+            opacity: 0.8;
+            text-align: center;
+            max-width: 500px;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            padding: clamp(6px, 2vw, 8px) clamp(12px, 4vw, 18px);
+            border-radius: 60px;
+            background: rgba(255,245,235,0.4);
+            width: 100%;
+        }
+
+        /* پشتیوانی بۆ شاشەی گەورە */
+        @media (min-width: 768px) {
+            .card {
+                margin: 20px;
+            }
+        }
+
+        /* پشتیوانی بۆ ڕێنوێنی و ڕێکخستنی باشتر */
+        @media (orientation: landscape) and (max-height: 600px) {
+            body {
+                padding: 12px;
+            }
+            
+            .profile {
+                margin-bottom: 12px;
+            }
+            
+            .avatar {
+                width: 70px;
+                height: 70px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="card">
+        <div class="profile">
+            <div class="avatar">
+                <img src="https://i.ibb.co/3YM2YKcH/IMG-20251130-154443-975.jpg" alt="Zhyar" loading="lazy">
+            </div>
+            <h1>Zhyar</h1>
+            <span class="bio-text">✨ کوردستان · سیان · هەولێر ✨</span>
+        </div>
+
+        <div class="links-container">
+            <!-- Snapchat -->
+            <a href="https://www.snapchat.com/add/im.zhyo?share_id=mHjZVUgjVI8&locale=en-US" target="_blank" rel="noopener noreferrer" class="link-card">
+                <img class="icon-img" src="https://cdn.prod.website-files.com/666d73652dd00cac579627ec/67767f942c4928d932dc4f37_67767e2671f2ed8d606a3302_Icon.jpeg" alt="Snapchat" loading="lazy">
+                <div class="link-content">
+                    Snapchat <small>im.zhyo</small>
+                </div>
+                <span class="arrow">↗</span>
+            </a>
+            
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/im.zhy4r?igsh=bzFzd3FybzRoZDR0" target="_blank" rel="noopener noreferrer" class="link-card">
+                <img class="icon-img" src="https://unblast.com/wp-content/uploads/2025/07/instagram-logo-colored.jpg" alt="Instagram" loading="lazy">
+                <div class="link-content">
+                    Instagram <small>im.zhy4r</small>
+                </div>
+                <span class="arrow">↗</span>
+            </a>
+
+            <!-- TikTok -->
+            <a href="https://www.tiktok.com/@im.zhy4r?_r=1&_t=ZT-94cvsE0IX7d" target="_blank" rel="noopener noreferrer" class="link-card">
+                <img class="icon-img" src="https://img.freepik.com/premium-vector/tik-tok-logo_578229-290.jpg?semt=ais_rp_progressive&w=740&q=80" alt="TikTok" loading="lazy">
+                <div class="link-content">
+                    TikTok <small>im.zhy4r</small>
+                </div>
+                <span class="arrow">↗</span>
+            </a>
+
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/share/1B1fGsUU7R/" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="icon-img" style="background: #1877F2; display: flex; align-items: center; justify-content: center; color: white; font-size: clamp(24px, 6vw, 28px); font-weight: bold;">f</div>
+                <div class="link-content">
+                    Facebook <small>im.zhy4r</small>
+                </div>
+                <span class="arrow">↗</span>
+            </a>
+        </div>
+
+        <div class="extra-links">
+            <a href="https://www.instagram.com/reels/audio/584003719137071/" target="_blank" rel="noopener noreferrer" class="extra-item">
+                <span>📸</span> ڕیلز
+            </a>
+            <a href="https://www.tiktok.com/t/ZThcNh19h/" target="_blank" rel="noopener noreferrer" class="extra-item">
+                <span>🎵</span> ڤیدیۆ
+            </a>
+        </div>
+
+        <div class="footer-note">
+            <span>⎔</span> Zhyar · هەموو تۆڕەکان <span>⎔</span>
+        </div>
+    </div>
+
+    <div class="bottom-note">
+        ⚡ کلیک بکە لەسەر هەر لینکێک · بەخێربێیت بۆ پڕۆفایلی Zhyar
+    </div>
+</body>
+</html>
