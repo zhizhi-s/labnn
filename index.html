@@ -615,8 +615,24 @@
             text-overflow: ellipsis;
         }
 
-        body.dark-mode .book-status-badge {
-            background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+        .available-count-badge {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            background: rgba(56, 178, 172, 0.95);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.6rem;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid white;
+            direction: ltr;
+        }
+
+        body.dark-mode .available-count-badge {
+            background: rgba(34, 197, 94, 0.95);
         }
 
         .book-title {
@@ -2820,6 +2836,7 @@
                             <th>ناوی کتێب</th>
                             <th>نووسەر</th>
                             <th>ژانەر</th>
+                            <th>ژمارەی بەردەست</th>
                             <th>بارودۆخ</th>
                             <th>کردارەکان</th>
                         </tr>
@@ -2911,6 +2928,10 @@
                         <option value="هونەری">هونەری</option>
                         <option value="تەندروستی">تەندروستی</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="bookTotalCopies"><i class="fas fa-copy"></i> ژمارەی کۆپی (چەند دانە)</label>
+                    <input type="number" id="bookTotalCopies" min="1" value="1" placeholder="ژمارەی کۆپی کتێبەکە" required>
                 </div>
                 <div class="form-group">
                     <label for="bookSummary"><i class="fas fa-align-left"></i> کورتەی کتێب</label>
@@ -3052,7 +3073,6 @@
         const dateColumnHeader2 = document.getElementById('dateColumnHeader2');
         const dateColumnHeader3 = document.getElementById('dateColumnHeader3');
 
-        // هۆم بەتن بۆ ڕسمەکە
         const homeLogoBtn = document.getElementById('homeLogoBtn');
 
         let currentUser = null;
@@ -3066,8 +3086,8 @@
         let currentStudentView = 'pending';
         let currentSelectedBook = null;
 
-        const ADMIN_USERNAME = '1981Language2026';
-        const ADMIN_PASSWORD = 'S1981S';
+        const ADMIN_USERNAME = 's2022';
+        const ADMIN_PASSWORD = 'z2005';
 
         const STATUS = {
             PENDING: 'pending',
@@ -3268,7 +3288,6 @@
                 displayRegisteredStudents(searchTerm);
             });
 
-            // کلیک لە ڕسمەکە بۆ گەڕانەوە بۆ پەڕەی سەرەکی
             homeLogoBtn.addEventListener('click', () => {
                 goToMainPage();
             });
@@ -3327,6 +3346,8 @@
                         zhanar: bookData.genre || bookData.zhanar || "هیچ",
                         kurta: bookData.summary || bookData.kurta || "هیچ کورتەیەک نیە",
                         linkewena: bookData.imgUrl || bookData.linkewena || "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                        totalCopies: bookData.totalCopies || 1,
+                        borrowedCount: bookData.borrowedCount || 0,
                         createdAt: bookData.createdAt || new Date().toISOString()
                     });
                 });
@@ -3347,59 +3368,43 @@
         async function addSampleBooks() {
             const sampleBooks = [
                 {
-                    name: "مێژووی کورد",
+                    name: "مێژووی کورد (4 دانە)",
                     authorName: "د. کەمال مەزھەر",
                     genre: "مێژوو",
-                    summary: "کتێبێکی دەقی زانستیە کە مێژووی کورد و کوردستان باس دەکات",
+                    summary: "کتێبێکی دەقی زانستیە کە مێژووی کورد و کوردستان باس دەکات - 4 کۆپی بەردەستە",
                     imgUrl: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                    totalCopies: 4,
+                    borrowedCount: 0,
                     createdAt: new Date().toISOString()
                 },
                 {
-                    name: "ڕۆمانی شەوانی بەغدا",
+                    name: "ڕۆمانی شەوانی بەغدا (2 دانە)",
                     authorName: "نووسەر نەناسراو",
                     genre: "ڕۆمان",
-                    summary: "ڕۆمانێکی سەردەمی مۆدێرن کە چیرۆکەکەی لە شاری بەغدادە",
+                    summary: "ڕۆمانێکی سەردەمی مۆدێرن کە چیرۆکەکەی لە شاری بەغدادە - 2 کۆپی بەردەستە",
                     imgUrl: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                    totalCopies: 2,
+                    borrowedCount: 0,
                     createdAt: new Date().toISOString()
                 },
                 {
-                    name: "چاوەڕێم بکە",
+                    name: "چاوەڕێم بکە (3 دانە)",
                     authorName: "د. عەلی کەریم",
                     genre: "خۆشەویستی",
-                    summary: "ڕۆمانێکی خۆشەویستی کە چیرۆکی خۆشەویستی لە نێوان دوو خوێندکار دەگێڕێتەوە",
+                    summary: "ڕۆمانێکی خۆشەویستی کە چیرۆکی خۆشەویستی لە نێوان دوو خوێندکار دەگێڕێتەوە - 3 کۆپی بەردەستە",
                     imgUrl: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                    totalCopies: 3,
+                    borrowedCount: 0,
                     createdAt: new Date().toISOString()
                 },
                 {
-                    name: "فێرکاری زمانی ئینگلیزی",
+                    name: "فێرکاری زمانی ئینگلیزی (1 دانە)",
                     authorName: "د. سەلام ناوخۆش",
                     genre: "فێرکاری زمان",
-                    summary: "کتێبێک بۆ فێربوونی زمانی ئینگلیزی بە شێوەیەکی سادە",
+                    summary: "کتێبێک بۆ فێربوونی زمانی ئینگلیزی بە شێوەیەکی سادە - 1 کۆپی بەردەستە",
                     imgUrl: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
-                    createdAt: new Date().toISOString()
-                },
-                {
-                    name: "فەلسەفەی ڕۆژئاوایی",
-                    authorName: "د. نەوزاد ئەحمەد",
-                    genre: "فەلسەفە",
-                    summary: "وتارێک لەسەر فەلسەفەی ڕۆژئاوایی و کاریگەریەکانی",
-                    imgUrl: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
-                    createdAt: new Date().toISOString()
-                },
-                {
-                    name: "هونەری نەخشەکێشان",
-                    authorName: "سەلاح عەبدوڵڵا",
-                    genre: "هونەری",
-                    summary: "کتێبێک بۆ فێربوونی هونەری نەخشەکێشان",
-                    imgUrl: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
-                    createdAt: new Date().toISOString()
-                },
-                {
-                    name: "زانستی کۆمپیوتەر",
-                    authorName: "ئەحمەد عەلی",
-                    genre: "فێرکاری تەکنەلۆژیا",
-                    summary: "کتێبێک بۆ فێربوونی زانستی کۆمپیوتەر",
-                    imgUrl: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                    totalCopies: 1,
+                    borrowedCount: 0,
                     createdAt: new Date().toISOString()
                 }
             ];
@@ -3465,10 +3470,15 @@
             document.getElementById('adminApprovedRequests').textContent = borrowedBooksCount;
         }
 
+        function getAvailableCopies(book) {
+            if (!book) return 0;
+            return (book.totalCopies || 1) - (book.borrowedCount || 0);
+        }
+
         function isBookBorrowed(bookTitle) {
-            return approvedRequests.some(request => 
-                request.bookTitle === bookTitle && request.pasand === true && !request.returned
-            );
+            const book = books.find(b => b.naw === bookTitle);
+            if (!book) return false;
+            return getAvailableCopies(book) <= 0;
         }
 
         function hasPendingRequests(bookTitle) {
@@ -3558,19 +3568,21 @@
                 const isInWishlist = wishlist.some(item => item.id === book.id);
                 const isBorrowed = isBookBorrowed(book.naw);
                 const hasPending = hasPendingRequests(book.naw);
+                const availableCopies = getAvailableCopies(book);
                 
                 const bookCard = document.createElement('div');
                 bookCard.className = `book-card`;
                 bookCard.innerHTML = `
                     <div class="book-badge">${book.zhanar}</div>
-                    ${isBorrowed ? '<div class="book-status-badge">📖 بردراوە</div>' : ''}
+                    ${isBorrowed ? '<div class="book-status-badge">📖 تەواو بردراوە</div>' : ''}
                     ${hasPending && !isBorrowed ? '<div class="book-status-badge" style="background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);">⏳ چاوەڕوان</div>' : ''}
+                    <div class="available-count-badge"><i class="fas fa-copy"></i> ${availableCopies} / ${book.totalCopies}</div>
                     <img src="${book.linkewena || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'}" alt="${book.naw}" class="book-image">
                     <div class="book-info">
                         <div class="book-title">${book.naw}</div>
                         <div class="book-author"><i class="fas fa-user-edit"></i> ${book.author || 'نەناسراو'}</div>
                         <div class="book-genre"><i class="fas fa-tag"></i> ${book.zhanar}</div>
-                        ${isBorrowed ? '<div style="color: var(--danger-color); font-size: 0.7rem; margin-top: 0.3rem;"><i class="fas fa-info-circle"></i> پێشتر داوا کراە</div>' : ''}
+                        ${isBorrowed ? '<div style="color: var(--danger-color); font-size: 0.7rem; margin-top: 0.3rem;"><i class="fas fa-info-circle"></i> هەموو کۆپیەکان بردراون</div>' : `<div style="color: var(--success-color); font-size: 0.7rem; margin-top: 0.3rem;"><i class="fas fa-check-circle"></i> ${availableCopies} کۆپی بەردەستە</div>`}
                     </div>
                 `;
                 
@@ -3586,6 +3598,7 @@
             const isInWishlist = wishlist.some(item => item.id === book.id);
             const isBorrowed = isBookBorrowed(book.naw);
             const hasPending = hasPendingRequests(book.naw);
+            const availableCopies = getAvailableCopies(book);
             
             const bookDetailsContent = document.getElementById('bookDetailsContent');
             bookDetailsContent.innerHTML = `
@@ -3601,6 +3614,8 @@
                         <h3 style="color: var(--primary-color); margin-bottom: 0.6rem; font-size: 1rem;"><i class="fas fa-info-circle"></i> زانیاری کتێب</h3>
                         <p style="margin-bottom: 0.4rem;"><strong>نووسەر:</strong> ${book.author || 'نەناسراو'}</p>
                         <p><strong>ژانەر:</strong> ${book.zhanar}</p>
+                        <p><strong><i class="fas fa-copy"></i> ژمارەی کۆپی:</strong> ${book.totalCopies || 1}</p>
+                        <p><strong><i class="fas fa-book-open"></i> کۆپی بەردەست:</strong> ${availableCopies}</p>
                         ${book.createdAt ? `<p style="margin-top: 0.4rem;"><strong>بەرواری زیادکردن:</strong> ${new Date(book.createdAt).toLocaleDateString('ku')}</p>` : ''}
                     </div>
                     
@@ -3614,7 +3629,7 @@
                     ${isBorrowed ? `
                     <div style="background: #FEF3C7; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; border-right: 4px solid #D97706;">
                         <h3 style="color: #92400E; margin-bottom: 0.6rem; font-size: 1rem;"><i class="fas fa-exclamation-triangle"></i> ئاگاداری</h3>
-                        <p style="color: #92400E; font-size: 0.9rem;">پێشتر داوا کراە چاوەڕوان بە!</p>
+                        <p style="color: #92400E; font-size: 0.9rem;">هەموو کۆپیەکانی ئەم کتێبە بردراون، تکایە دواتر هەوڵبدەرەوە!</p>
                     </div>
                     ` : ''}
                     
@@ -3629,7 +3644,7 @@
                         <i class="fas fa-heart"></i> ${isInWishlist ? 'لابردنی لە لیستی دڵخوازەکان' : 'زیادکردنی بۆ لیستی دڵخوازەکان'}
                     </button>
                     
-                    ${!isBorrowed ? `
+                    ${!isBorrowed && availableCopies > 0 ? `
                     <button class="borrow-btn" id="borrowBookBtn" data-id="${book.id}" data-title="${book.naw}" style="background: var(--gradient); color: white; border: none; padding: 0.8rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; margin-top: 0.8rem; width: 100%; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                         <i class="fas fa-book-reader"></i> داواکردنی کتێب
                     </button>
@@ -3648,7 +3663,7 @@
                 toggleWishlist(bookId, bookTitle, bookAuthor, bookImage);
             });
             
-            if (!isBorrowed) {
+            if (!isBorrowed && availableCopies > 0) {
                 document.getElementById('borrowBookBtn').addEventListener('click', (e) => {
                     const bookId = e.target.closest('button').getAttribute('data-id');
                     const bookTitle = e.target.closest('button').getAttribute('data-title');
@@ -3710,7 +3725,9 @@
             emptyWishlist.style.display = 'none';
             
             wishlist.forEach(item => {
-                const isBorrowed = isBookBorrowed(item.title);
+                const book = books.find(b => b.id === item.id);
+                const availableCopies = book ? getAvailableCopies(book) : 0;
+                const isBorrowed = availableCopies <= 0;
                 
                 const wishlistItem = document.createElement('div');
                 wishlistItem.className = 'wishlist-item';
@@ -3719,12 +3736,13 @@
                     <div class="wishlist-item-info">
                         <div class="wishlist-item-title">${item.title}</div>
                         <div class="wishlist-item-author">${item.author}</div>
-                        ${isBorrowed ? '<div style="color: var(--danger-color); font-size: 0.7rem; margin-bottom: 0.3rem;"><i class="fas fa-info-circle"></i> پێشتر داوا کراە</div>' : ''}
+                        ${book ? `<div style="font-size: 0.7rem; color: var(--success-color);"><i class="fas fa-copy"></i> ${availableCopies} کۆپی بەردەستە</div>` : ''}
+                        ${isBorrowed ? '<div style="color: var(--danger-color); font-size: 0.7rem; margin-bottom: 0.3rem;"><i class="fas fa-info-circle"></i> هەموو کۆپیەکان بردراون</div>' : ''}
                         <div class="wishlist-item-actions">
                             <button class="wishlist-remove-btn" data-id="${item.id}">
                                 <i class="fas fa-trash"></i>
                             </button>
-                            ${!isBorrowed ? `<button class="wishlist-borrow-btn" data-id="${item.id}" data-title="${item.title}">
+                            ${!isBorrowed && availableCopies > 0 ? `<button class="wishlist-borrow-btn" data-id="${item.id}" data-title="${item.title}">
                                 <i class="fas fa-book-reader"></i> داواکردن
                             </button>` : ''}
                         </div>
@@ -3796,14 +3814,14 @@
             if (filteredBooks.length === 0) {
                 const emptyMessage = `
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 2rem;">
+                        <td colspan="7" style="text-align: center; padding: 2rem;">
                             <div class="empty-state">
                                 <i class="fas fa-book"></i>
                                 <h3>هیچ کتێبێک نەدۆزرایەوە</h3>
                                 <p>کتێبێکی نوێ زیاد بکە</p>
                             </div>
-                         </td>
-                     </tr>
+                          </td>
+                      </tr>
                 `;
                 adminBooksTable.innerHTML = emptyMessage;
                 mobileAdminBooksTable.innerHTML = '<div class="empty-state"><i class="fas fa-book"></i><h3>هیچ کتێبێک نەدۆزرایەوە</h3><p>کتێبێکی نوێ زیاد بکە</p></div>';
@@ -3811,14 +3829,15 @@
             }
             
             filteredBooks.forEach(book => {
-                const isBorrowed = isBookBorrowed(book.naw);
+                const availableCopies = getAvailableCopies(book);
+                const isBorrowed = availableCopies <= 0;
                 const hasPending = hasPendingRequests(book.naw);
                 
                 let statusText = 'بەردەستە';
                 let statusClass = 'status-approved';
                 
                 if (isBorrowed) {
-                    statusText = 'بردراوە';
+                    statusText = 'تەواو بردراوە';
                     statusClass = 'status-pending';
                 } else if (hasPending) {
                     statusText = 'چاوەڕوان';
@@ -3827,29 +3846,31 @@
                 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    </td><img src="${book.linkewena || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80'}" alt="${book.naw}" style="width: 45px; height: 60px; object-fit: cover; border-radius: 5px;"></td>
+                    <td><img src="${book.linkewena || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80'}" alt="${book.naw}" style="width: 45px; height: 60px; object-fit: cover; border-radius: 5px;"></td>
                     <td><strong>${book.naw}</strong></td>
                     <td>${book.author || 'نەناسراو'}</td>
                     <td><span class="badge">${book.zhanar}</span></td>
+                    <td><span class="badge" style="background: var(--success-color);">${availableCopies} / ${book.totalCopies}</span></td>
                     <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                     <td>
                         <button class="action-btn edit-btn" data-id="${book.id}"><i class="fas fa-edit"></i> دەستکاری</button>
                         <button class="action-btn delete-btn" data-id="${book.id}"><i class="fas fa-trash"></i> سڕینەوە</button>
-                     </td>
+                      </td>
                 `;
                 
                 adminBooksTable.appendChild(row);
             });
             
             filteredBooks.forEach(book => {
-                const isBorrowed = isBookBorrowed(book.naw);
+                const availableCopies = getAvailableCopies(book);
+                const isBorrowed = availableCopies <= 0;
                 const hasPending = hasPendingRequests(book.naw);
                 
                 let statusText = 'بەردەستە';
                 let statusClass = 'status-approved';
                 
                 if (isBorrowed) {
-                    statusText = 'بردراوە';
+                    statusText = 'تەواو بردراوە';
                     statusClass = 'status-pending';
                 } else if (hasPending) {
                     statusText = 'چاوەڕوان';
@@ -3876,6 +3897,10 @@
                     <div class="mobile-table-cell">
                         <span class="mobile-table-label">ژانەر:</span>
                         <span class="mobile-table-value"><span class="badge">${book.zhanar}</span></span>
+                    </div>
+                    <div class="mobile-table-cell">
+                        <span class="mobile-table-label">ژمارەی کۆپی:</span>
+                        <span class="mobile-table-value"><span class="badge" style="background: var(--success-color);">${availableCopies} / ${book.totalCopies}</span></span>
                     </div>
                     <div class="mobile-table-cell">
                         <span class="mobile-table-label">بارودۆخ:</span>
@@ -3936,20 +3961,16 @@
                     );
                 }
                 
-                // *** ڕێکخستنی ستوونەکانی بەروار بەپێی view ***
-                // 1. بەشی چاوەڕوان (Pending): تەنها بەرواری داواکردن
                 if (currentStudentView === 'pending') {
                     dateColumnHeader1.textContent = 'بەرواری داواکردن';
                     dateColumnHeader2.style.display = 'none';
                     dateColumnHeader3.style.display = 'none';
                 }
-                // 2. بەشی بردراوەکان (Approved): تەنها بەرواری بردن
                 else if (currentStudentView === 'approved') {
                     dateColumnHeader1.textContent = 'بەرواری بردن';
                     dateColumnHeader2.style.display = 'none';
                     dateColumnHeader3.style.display = 'none';
                 }
-                // 3. بەشی گەڕێندراوەکان (Returned): هەر سێ بەروارەکە
                 else if (currentStudentView === 'returned') {
                     dateColumnHeader1.textContent = 'بەرواری داواکردن';
                     dateColumnHeader2.textContent = 'بەرواری بردن';
@@ -3971,8 +3992,8 @@
                                 <h3>هەڵە ڕوویدا</h3>
                                 <p>ناتوانرێت زانیاریەکان باربکرێن</p>
                             </div>
-                         </td>
-                     </tr>
+                          </td>
+                      </tr>
                 `;
                 registeredStudentsTable.innerHTML = errorMessage;
                 mobileRegisteredStudentsTable.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>هەڵە ڕوویدا</h3><p>ناتوانرێت زانیاریەکان باربکرێن</p></div>';
@@ -3997,8 +4018,8 @@
                                 <h3>${noDataText}</h3>
                                 <p>کاتێک داواکاری نوێ هات، لێرە دەردەکەون</p>
                             </div>
-                         </td>
-                     </tr>
+                          </td>
+                      </tr>
                 `;
                 return;
             }
@@ -4014,7 +4035,6 @@
                 
                 const row = document.createElement('tr');
                 
-                // بەشی چاوەڕوان: تەنها بەرواری داواکردن
                 if (currentStudentView === 'pending') {
                     row.innerHTML = `
                         <td><strong>${request.name || '---'}</strong></td>
@@ -4035,7 +4055,6 @@
                         </td>
                     `;
                 }
-                // بەشی بردراوەکان: تەنها بەرواری بردن
                 else if (currentStudentView === 'approved') {
                     row.innerHTML = `
                         <td><strong>${request.name || '---'}</strong></td>
@@ -4055,7 +4074,6 @@
                         </td>
                     `;
                 }
-                // بەشی گەڕێندراوەکان: هەر سێ بەروارەکە
                 else if (currentStudentView === 'returned') {
                     row.innerHTML = `
                         <td><strong>${request.name || '---'}</strong></td>
@@ -4111,7 +4129,6 @@
                 const mobileRow = document.createElement('div');
                 mobileRow.className = `mobile-table-row student-request-card ${currentStudentView}`;
                 
-                // بەشی چاوەڕوان: تەنها بەرواری داواکردن
                 if (currentStudentView === 'pending') {
                     mobileRow.innerHTML = `
                         <div class="mobile-table-cell">
@@ -4157,7 +4174,6 @@
                         </div>
                     `;
                 }
-                // بەشی بردراوەکان: تەنها بەرواری بردن
                 else if (currentStudentView === 'approved') {
                     mobileRow.innerHTML = `
                         <div class="mobile-table-cell">
@@ -4200,7 +4216,6 @@
                         </div>
                     `;
                 }
-                // بەشی گەڕێندراوەکان: هەر سێ بەروارەکە
                 else if (currentStudentView === 'returned') {
                     mobileRow.innerHTML = `
                         <div class="mobile-table-cell">
@@ -4327,8 +4342,11 @@
                 return;
             }
             
-            if (isBookBorrowed(bookTitle)) {
-                showNotification('❌ پێشتر داوا کراە چاوەڕوان بە! تکایە کتێبێکی تر هەڵبژێرە.', 'error');
+            const book = books.find(b => b.naw === bookTitle);
+            const availableCopies = book ? getAvailableCopies(book) : 0;
+            
+            if (availableCopies <= 0) {
+                showNotification('❌ ببورە، هەموو کۆپیەکانی ئەم کتێبە بردراون! تکایە دواتر هەوڵبدەرەوە.', 'error');
                 return;
             }
             
@@ -4382,12 +4400,34 @@
         async function approveStudentRequest(requestId) {
             if (confirm('ئایا دڵنیای کە دەتەوێت ئەم داواکاریە پەسەند بکەیت؟')) {
                 try {
+                    const request = allRequests.find(r => r.id === requestId);
+                    if (!request) {
+                        throw new Error("Request not found");
+                    }
+                    
+                    const book = books.find(b => b.naw === request.bookTitle);
+                    if (!book) {
+                        throw new Error("Book not found");
+                    }
+                    
+                    const availableCopies = getAvailableCopies(book);
+                    if (availableCopies <= 0) {
+                        showNotification('❌ ببورە، هەموو کۆپیەکانی ئەم کتێبە بردراون!', 'error');
+                        return;
+                    }
+                    
+                    const bookRef = doc(db, "Slahaddin", book.id);
+                    await updateDoc(bookRef, {
+                        borrowedCount: (book.borrowedCount || 0) + 1
+                    });
+                    
                     const requestRef = doc(db, "requests", requestId);
                     await updateDoc(requestRef, {
                         pasand: true,
                         approvedDate: new Date().toISOString()
                     });
                     
+                    await loadBooksFromFirebase();
                     await loadAllRequestsFromFirebase();
                     displayBooks();
                     updateStatistics();
@@ -4410,12 +4450,21 @@
                         throw new Error("Request not found");
                     }
                     
+                    const book = books.find(b => b.naw === request.bookTitle);
+                    if (book) {
+                        const bookRef = doc(db, "Slahaddin", book.id);
+                        await updateDoc(bookRef, {
+                            borrowedCount: Math.max(0, (book.borrowedCount || 0) - 1)
+                        });
+                    }
+                    
                     const requestRef = doc(db, "requests", requestId);
                     await updateDoc(requestRef, {
                         returned: true,
                         returnDate: new Date().toISOString()
                     });
                     
+                    await loadBooksFromFirebase();
                     await loadAllRequestsFromFirebase();
                     displayBooks();
                     updateStatistics();
@@ -4434,12 +4483,20 @@
             if (confirm('ئایا دڵنیای کە دەتەوێت ئەم داواکاریە بسڕیتەوە؟')) {
                 try {
                     const request = allRequests.find(r => r.id === requestId);
-                    if (!request) {
-                        throw new Error("Request not found");
+                    
+                    if (request && request.pasand === true && !request.returned) {
+                        const book = books.find(b => b.naw === request.bookTitle);
+                        if (book) {
+                            const bookRef = doc(db, "Slahaddin", book.id);
+                            await updateDoc(bookRef, {
+                                borrowedCount: Math.max(0, (book.borrowedCount || 0) - 1)
+                            });
+                        }
                     }
                     
                     await deleteDoc(doc(db, "requests", requestId));
                     
+                    await loadBooksFromFirebase();
                     await loadAllRequestsFromFirebase();
                     displayBooks();
                     updateStatistics();
@@ -4507,6 +4564,7 @@
                 document.getElementById('bookTitle').value = book.naw;
                 document.getElementById('bookAuthor').value = book.author || '';
                 document.getElementById('bookGenre').value = book.zhanar || '';
+                document.getElementById('bookTotalCopies').value = book.totalCopies || 1;
                 document.getElementById('bookSummary').value = book.kurta || '';
                 document.getElementById('bookImage').value = book.linkewena || '';
                 bookFormSubmitBtn.innerHTML = '<i class="fas fa-save"></i> نوێکردنەوە';
@@ -4522,6 +4580,7 @@
         function resetBookForm() {
             bookForm.reset();
             document.getElementById('bookId').value = '';
+            document.getElementById('bookTotalCopies').value = '1';
             editingBookId = null;
         }
 
@@ -4534,13 +4593,23 @@
                 genre: document.getElementById('bookGenre').value,
                 summary: document.getElementById('bookSummary').value,
                 imgUrl: document.getElementById('bookImage').value,
+                totalCopies: parseInt(document.getElementById('bookTotalCopies').value) || 1,
+                borrowedCount: 0,
                 createdAt: new Date().toISOString()
             };
             
             try {
                 if (editingBookId) {
+                    const oldBook = books.find(b => b.id === editingBookId);
                     const bookRef = doc(db, "Slahaddin", editingBookId);
                     await updateDoc(bookRef, bookData);
+                    
+                    if (oldBook && oldBook.totalCopies !== bookData.totalCopies) {
+                        const activeBorrows = allRequests.filter(r => r.bookTitle === oldBook.naw && r.pasand === true && !r.returned).length;
+                        if (activeBorrows > bookData.totalCopies) {
+                            showNotification('⚠️ ئاگاداری: ژمارەی کتێبە بردراوەکان لە کۆپی نوێ زیاترە!', 'warning');
+                        }
+                    }
                     
                     showNotification('✅ کتێبەکە بە سەرکەوتوویی نوێکرایەوە', 'success');
                 } else {
@@ -4573,11 +4642,13 @@
         async function deleteBook(bookId) {
             if (confirm('ئایا دڵنیای کە دەتەوێت ئەم کتێبە بسڕیتەوە؟')) {
                 try {
-                    const bookTitle = books.find(b => b.id === bookId)?.naw;
-                    const hasRequests = allRequests.some(r => r.bookTitle === bookTitle);
+                    const book = books.find(b => b.id === bookId);
+                    if (!book) return;
                     
-                    if (hasRequests) {
-                        if (!confirm('ئەم کتێبە داواکاری هەیە. ئایا هێشتا دەتەوێت بسڕیتەوە؟')) {
+                    const hasActiveBorrows = allRequests.some(r => r.bookTitle === book.naw && r.pasand === true && !r.returned);
+                    
+                    if (hasActiveBorrows) {
+                        if (!confirm('ئاگاداری: ئەم کتێبە هێشتا کتێبی بردراوی هەیە! ئایا دڵنیای کە دەتەوێت بسڕیتەوە؟')) {
                             return;
                         }
                     }
@@ -4625,7 +4696,7 @@
                     suggestion.style.transition = 'background-color 0.2s';
                     suggestion.innerHTML = `
                         <strong>${book.naw}</strong><br>
-                        <small style="color: #666;">${book.author || 'نەناسراو'} - ${book.zhanar}</small>
+                        <small style="color: #666;">${book.author || 'نەناسراو'} - ${book.zhanar} (${getAvailableCopies(book)} کۆپی بەردەست)</small>
                     `;
                     suggestion.addEventListener('mouseover', () => {
                         suggestion.style.backgroundColor = '#f5f5f5';
@@ -4668,7 +4739,7 @@
                     suggestion.style.transition = 'background-color 0.2s';
                     suggestion.innerHTML = `
                         <strong>${book.naw}</strong><br>
-                        <small style="color: #666;">${book.author || 'نەناسراو'} - ${book.zhanar}</small>
+                        <small style="color: #666;">${book.author || 'نەناسراو'} - ${book.zhanar} (${getAvailableCopies(book)}/${book.totalCopies} کۆپی بەردەست)</small>
                     `;
                     suggestion.addEventListener('mouseover', () => {
                         suggestion.style.backgroundColor = '#f5f5f5';
@@ -4748,7 +4819,6 @@
                 );
             }
             
-            // *** ڕێکخستنی ستوونەکانی بەروار بەپێی view ***
             if (currentStudentView === 'pending') {
                 dateColumnHeader1.textContent = 'بەرواری داواکردن';
                 dateColumnHeader2.style.display = 'none';
