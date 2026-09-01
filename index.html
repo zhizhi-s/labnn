@@ -440,11 +440,18 @@
             border-radius: 10px;
         }
 
+        /* Loading indicator */
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #aaa;
+            font-size: 18px;
+        }
+
         /* ============================================================ */
         /* وەڵامدانەوە بۆ هەموو شاشەکان */
         /* ============================================================ */
 
-        /* شاشە گەورەکان (لەپتۆپ و دێسکتۆپ) */
         @media (max-width: 1200px) {
             .groups-container {
                 gap: 20px;
@@ -462,7 +469,6 @@
             }
         }
 
-        /* شاشە ناوەند (تابلێت و شاشە بچووکەکان) */
         @media (max-width: 992px) {
             body {
                 padding: 12px;
@@ -507,7 +513,6 @@
             }
         }
 
-        /* تابلێت و مۆبایل گەورە */
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -574,7 +579,6 @@
             }
         }
 
-        /* مۆبایل (بچووکترین شاشەکان) */
         @media (max-width: 480px) {
             body {
                 padding: 8px;
@@ -687,7 +691,6 @@
             }
         }
 
-        /* شاشە زۆر بچووک (مۆبایلە بچووکەکان) */
         @media (max-width: 360px) {
             body {
                 padding: 5px;
@@ -741,7 +744,6 @@
             }
         }
 
-        /* ڕێگەدان بە ئاسایی بۆ شاشە زۆر گەورە */
         @media (min-width: 1600px) {
             .groups-container {
                 max-width: 1800px;
@@ -794,8 +796,10 @@
 
     <!-- گرووپەکان -->
     <div class="groups-container" id="groupsContainer">
+        <div class="loading" id="loadingIndicator">⏳ بارکردنی داتاکان...</div>
+        
         <!-- گرووپ A -->
-        <div class="group-card" id="groupA">
+        <div class="group-card" id="groupA" style="display:none;">
             <div class="group-title">گرووپ A</div>
             <div class="table-wrapper">
                 <table>
@@ -815,7 +819,7 @@
         </div>
 
         <!-- گرووپ B -->
-        <div class="group-card" id="groupB">
+        <div class="group-card" id="groupB" style="display:none;">
             <div class="group-title">گرووپ B</div>
             <div class="table-wrapper">
                 <table>
@@ -862,9 +866,37 @@
         </div>
     </div>
 
-    <script>
-        // داتاکان
-        let data = {
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // Firebase imports
+        import { initializeApp } from "firebase/app";
+        import { getDatabase, ref, onValue, set, get, child } from "firebase/database";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBx-Ff2YcFX4H2kpdJvlhWZcIyJ1JRfJmY",
+            authDomain: "sun4-6f764.firebaseapp.com",
+            projectId: "sun4-6f764",
+            storageBucket: "sun4-6f764.firebasestorage.app",
+            messagingSenderId: "1071133630664",
+            appId: "1:1071133630664:web:752ba657845b2005f745fd",
+            measurementId: "G-YELRYLN23N"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Default data
+        const defaultData = {
             A: [
                 { name: 'ئێران', img: 'https://flagcdn.com/ir.svg', points: 6, goals: 5, goalsAgainst: 2 },
                 { name: 'عێراق', img: 'https://flagcdn.com/iq.svg', points: 4, goals: 4, goalsAgainst: 3 },
@@ -879,7 +911,13 @@
             ]
         };
 
+        let data = { A: [], B: [] };
         let isAdmin = false;
+
+        // DOM elements
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const groupA = document.getElementById('groupA');
+        const groupB = document.getElementById('groupB');
 
         // فەنکشنی ڕیزبەندی
         function sortTeams(teams) {
@@ -895,7 +933,15 @@
         // ڕێکخستنی خشتە
         function renderGroup(groupKey) {
             const tbody = document.getElementById(`group${groupKey}Tbody`);
-            const sorted = sortTeams(data[groupKey]);
+            if (!tbody) return;
+            
+            const teams = data[groupKey] || [];
+            if (teams.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;color:#888;">هیچ داتایەک نییە</td></tr>`;
+                return;
+            }
+            
+            const sorted = sortTeams(teams);
             tbody.innerHTML = '';
             sorted.forEach((team, index) => {
                 const rank = index + 1;
@@ -909,7 +955,7 @@
                     <td><span class="${rankClass}">${rank}</span></td>
                     <td>
                         <div class="team-info">
-                            <img src="${team.img}" alt="${team.name}" class="team-img" loading="lazy" onerror="this.src='https://via.placeholder.com/40/1a1a4e/fff?text=?'">
+                            <img src="${team.img || 'https://via.placeholder.com/40/1a1a4e/fff?text=?'}" alt="${team.name}" class="team-img" loading="lazy" onerror="this.src='https://via.placeholder.com/40/1a1a4e/fff?text=?'">
                             <span class="team-name">${team.name}</span>
                         </div>
                     </td>
@@ -925,6 +971,57 @@
         function renderAll() {
             renderGroup('A');
             renderGroup('B');
+            
+            // Show groups, hide loading
+            loadingIndicator.style.display = 'none';
+            groupA.style.display = 'block';
+            groupB.style.display = 'block';
+        }
+
+        // Load data from Firebase with real-time updates
+        function loadDataFromFirebase() {
+            const dbRef = ref(db, 'footballData');
+            
+            onValue(dbRef, (snapshot) => {
+                const firebaseData = snapshot.val();
+                
+                if (firebaseData && firebaseData.A && firebaseData.B) {
+                    // Use data from Firebase
+                    data.A = firebaseData.A;
+                    data.B = firebaseData.B;
+                    console.log('✅ داتا لە Firebaseەوە بارکرا');
+                } else {
+                    // No data in Firebase, save default data
+                    console.log('📝 داتای بنەڕەت لە Firebase دەنرێت...');
+                    set(dbRef, defaultData).then(() => {
+                        data.A = [...defaultData.A];
+                        data.B = [...defaultData.B];
+                        console.log('✅ داتای بنەڕەت پاشەکەوت کرا');
+                    }).catch((error) => {
+                        console.error('❌ هەڵە لە پاشەکەوتکردنی داتای بنەڕەت:', error);
+                        // Use default data locally if can't save
+                        data.A = [...defaultData.A];
+                        data.B = [...defaultData.B];
+                    });
+                }
+                renderAll();
+            }, (error) => {
+                console.error('❌ هەڵە لە خوێندنەوەی داتا:', error);
+                // Fallback to default data
+                data.A = [...defaultData.A];
+                data.B = [...defaultData.B];
+                renderAll();
+                showToast('⚠️ کێشە لە پەیوەندی بە Firebaseەوە، داتای ناوخۆیی بەکارهات', 'error');
+            });
+        }
+
+        // Save data to Firebase
+        function saveDataToFirebase() {
+            const dbRef = ref(db, 'footballData');
+            return set(dbRef, {
+                A: data.A,
+                B: data.B
+            });
         }
 
         // مۆدالی لۆگین
@@ -955,7 +1052,7 @@
             if (user === 'z' && pass === '1') {
                 isAdmin = true;
                 loginModal.classList.remove('active');
-                adminBtn.textContent = '🚪 دەرچوون';
+                adminBtn.textContent = '🚪 دەرچون';
                 adminBtn.classList.add('logout');
                 showToast('✅ بە سەرکەوتوو چوویتە ژوورەوە!', 'success');
                 openEditModal();
@@ -973,7 +1070,7 @@
             }
         });
 
-        // دەرچوون
+        // دەرچون
         function logout() {
             isAdmin = false;
             adminBtn.textContent = '🔐 پەنەلی ئەدمین';
@@ -1002,7 +1099,7 @@
 
         function openEditModal() {
             editModal.classList.add('active');
-            buildEditForm('A');
+            buildEditForm(editGroupSelect.value);
         }
 
         closeEdit.addEventListener('click', () => editModal.classList.remove('active'));
@@ -1015,30 +1112,30 @@
         });
 
         function buildEditForm(groupKey) {
-            const teams = data[groupKey];
+            const teams = data[groupKey] || [];
             let html = '';
             teams.forEach((team, index) => {
                 html += `
                     <div class="edit-form-group" data-index="${index}">
                         <div class="full-width">
                             <label>ناوی هەڵبژاردە</label>
-                            <input type="text" class="edit-name" value="${team.name}">
+                            <input type="text" class="edit-name" value="${team.name || ''}">
                         </div>
                         <div class="full-width">
                             <label>لینکی وێنە</label>
-                            <input type="text" class="edit-img" value="${team.img}">
+                            <input type="text" class="edit-img" value="${team.img || ''}">
                         </div>
                         <div>
                             <label>خاڵ</label>
-                            <input type="number" class="edit-points" value="${team.points}" min="0">
+                            <input type="number" class="edit-points" value="${team.points || 0}" min="0">
                         </div>
                         <div>
                             <label>گۆڵ</label>
-                            <input type="number" class="edit-goals" value="${team.goals}" min="0">
+                            <input type="number" class="edit-goals" value="${team.goals || 0}" min="0">
                         </div>
                         <div>
                             <label>گۆڵ لێکران</label>
-                            <input type="number" class="edit-against" value="${team.goalsAgainst}" min="0">
+                            <input type="number" class="edit-against" value="${team.goalsAgainst || 0}" min="0">
                         </div>
                     </div>
                 `;
@@ -1046,14 +1143,16 @@
             editFormContainer.innerHTML = html;
         }
 
-        saveEditBtn.addEventListener('click', () => {
+        saveEditBtn.addEventListener('click', async () => {
             if (!isAdmin) {
                 showToast('❌ تۆ ئەدمین نیت!', 'error');
                 return;
             }
+            
             const groupKey = editGroupSelect.value;
             const formGroups = editFormContainer.querySelectorAll('.edit-form-group');
             const newData = [];
+            
             formGroups.forEach((group) => {
                 const name = group.querySelector('.edit-name').value.trim();
                 const img = group.querySelector('.edit-img').value.trim();
@@ -1061,22 +1160,39 @@
                 const goals = parseInt(group.querySelector('.edit-goals').value) || 0;
                 const goalsAgainst = parseInt(group.querySelector('.edit-against').value) || 0;
                 if (name) {
-                    newData.push({ name, img: img || 'https://via.placeholder.com/40/1a1a4e/fff?text=?', points, goals,
-                        goalsAgainst });
+                    newData.push({ 
+                        name, 
+                        img: img || 'https://via.placeholder.com/40/1a1a4e/fff?text=?', 
+                        points, 
+                        goals,
+                        goalsAgainst 
+                    });
                 }
             });
+            
             if (newData.length !== 4) {
                 showToast('❌ پێویستە 4 یانە هەبێت!', 'error');
                 return;
             }
+            
+            // Update local data
             data[groupKey] = newData;
-            renderAll();
-            showToast('✅ داتاکان بە سەرکەوتوو پاشەکەوت کران!', 'success');
-            editModal.classList.remove('active');
+            
+            // Save to Firebase
+            try {
+                await saveDataToFirebase();
+                renderAll();
+                showToast('✅ داتاکان بە سەرکەوتوو پاشەکەوت کران!', 'success');
+                editModal.classList.remove('active');
+            } catch (error) {
+                console.error('❌ هەڵە لە پاشەکەوتکردن:', error);
+                showToast('❌ کێشە لە پاشەکەوتکردندا!', 'error');
+            }
         });
 
-        // دەستپێکردن
-        renderAll();
+        // دەستپێکردن - Load data from Firebase
+        console.log('🚀 دەستپێکردنی پەڕە...');
+        loadDataFromFirebase();
 
         console.log('👋 بەخێربێیت! ناوی بەکارهێنەر: z، تێپەڕەوشە: 1');
     </script>
