@@ -17,7 +17,7 @@
             background: linear-gradient(135deg, #0a0a2e, #1a1a4e, #0a0a2e);
             min-height: 100vh;
             color: #fff;
-            padding: 12px;
+            padding: 16px 12px;
             direction: rtl;
         }
 
@@ -26,17 +26,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 18px;
+            padding: 12px 22px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 18px;
-            margin-bottom: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
         .header h1 {
-            font-size: clamp(1.1rem, 3.5vw, 1.8rem);
+            font-size: clamp(1.3rem, 4vw, 2.2rem);
             background: linear-gradient(90deg, #ff6b6b, #ffd93d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -45,148 +45,149 @@
         }
         .header-buttons {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
         }
         .admin-btn {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: #fff;
             border: none;
-            padding: 7px 14px;
+            padding: 8px 18px;
             border-radius: 50px;
-            font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+            font-size: clamp(0.7rem, 1.3vw, 0.9rem);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.25);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
             gap: 5px;
         }
         .admin-btn:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
         .admin-btn.logout {
             background: linear-gradient(135deg, #f093fb, #f5576c);
-            box-shadow: 0 3px 10px rgba(245, 87, 108, 0.25);
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.25);
         }
         .admin-btn.semi-btn {
             background: linear-gradient(135deg, #f7971e, #ffd200);
-            box-shadow: 0 3px 10px rgba(247, 151, 30, 0.25);
+            box-shadow: 0 4px 12px rgba(247, 151, 30, 0.25);
             color: #1a1a4e;
         }
         .admin-btn.final-btn {
             background: linear-gradient(135deg, #fc4a1a, #f7b733);
-            box-shadow: 0 3px 10px rgba(252, 74, 26, 0.25);
+            box-shadow: 0 4px 12px rgba(252, 74, 26, 0.25);
         }
         .admin-btn.reset-btn {
             background: linear-gradient(135deg, #e17055, #d63031);
-            box-shadow: 0 3px 10px rgba(225, 112, 85, 0.25);
+            box-shadow: 0 4px 12px rgba(225, 112, 85, 0.25);
         }
         .admin-btn.winner-btn {
             background: linear-gradient(135deg, #ffd700, #f7c948);
             color: #1a1a4e;
-            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.25);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.25);
         }
 
-        /* ===== GROUPS CONTAINER (standings) ===== */
+        /* ===== GROUPS CONTAINER (standings) - LARGER & BOLDER ===== */
         .groups-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
+            gap: 28px;
             max-width: 1500px;
             margin: 0 auto;
         }
         .group-card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(6px);
-            border-radius: 18px;
-            padding: 14px 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 22px 18px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.25s ease;
             overflow: hidden;
         }
         .group-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         }
         .group-title {
             text-align: center;
-            font-size: clamp(1.1rem, 2.5vw, 1.7rem);
-            font-weight: 800;
-            padding: 6px 0 12px;
-            margin-bottom: 10px;
-            border-bottom: 3px solid rgba(255, 255, 255, 0.06);
+            font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+            font-weight: 900;
+            padding: 8px 0 16px;
+            margin-bottom: 14px;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.08);
             background: linear-gradient(90deg, #ffd93d, #ff6b6b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
-        /* ===== TABLE ===== */
+        /* ===== TABLE - LARGER FONTS, MORE SPACING ===== */
         .table-wrapper {
             overflow-x: auto;
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.25);
             -webkit-overflow-scrolling: touch;
             margin: 0 -2px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 420px;
+            min-width: 520px;
         }
         th {
-            background: rgba(102, 126, 234, 0.15);
-            padding: 8px 4px;
-            font-size: clamp(0.55rem, 0.9vw, 0.7rem);
-            font-weight: 700;
+            background: rgba(102, 126, 234, 0.2);
+            padding: 14px 8px;
+            font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+            font-weight: 800;
             text-transform: uppercase;
             color: #ffd93d;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
-            letter-spacing: 0.3px;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.08);
+            letter-spacing: 0.5px;
             white-space: nowrap;
         }
         td {
-            padding: 6px 4px;
+            padding: 12px 8px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             vertical-align: middle;
-            font-size: clamp(0.6rem, 1vw, 0.8rem);
+            font-size: clamp(0.8rem, 1.2vw, 1rem);
         }
         tr:hover td {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .team-info {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 12px;
             justify-content: center;
-            min-width: 90px;
+            min-width: 130px;
             cursor: pointer;
-            padding: 2px 0;
+            padding: 4px 0;
         }
         .team-info:hover .team-img {
-            transform: scale(1.08);
+            transform: scale(1.12);
             border-color: #ffd93d;
         }
         .team-img {
-            width: clamp(24px, 2.8vw, 38px);
-            height: clamp(24px, 2.8vw, 38px);
+            width: clamp(38px, 4vw, 52px);
+            height: clamp(38px, 4vw, 52px);
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 2.5px solid rgba(255, 255, 255, 0.15);
             transition: all 0.3s ease;
             flex-shrink: 0;
             background: #1a1a4e;
         }
         .team-name {
-            font-weight: 600;
-            font-size: clamp(0.6rem, 0.9vw, 0.8rem);
+            font-weight: 700;
+            font-size: clamp(0.8rem, 1.2vw, 1rem);
             line-height: 1.2;
         }
 
@@ -194,64 +195,71 @@
             display: inline-block;
             background: linear-gradient(135deg, #ffd93d, #f6b93b);
             color: #1a1a4e;
-            font-weight: 800;
-            width: clamp(22px, 2.4vw, 30px);
-            height: clamp(22px, 2.4vw, 30px);
-            line-height: clamp(22px, 2.4vw, 30px);
+            font-weight: 900;
+            width: clamp(32px, 3.2vw, 42px);
+            height: clamp(32px, 3.2vw, 42px);
+            line-height: clamp(32px, 3.2vw, 42px);
             border-radius: 50%;
             text-align: center;
-            font-size: clamp(0.6rem, 0.9vw, 0.8rem);
+            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
         }
-        .rank-1 { background: linear-gradient(135deg, #ffd700, #f7c948); color: #1a1a4e; }
-        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a8a8a8); color: #1a1a4e; }
-        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b87333); color: #1a1a4e; }
+        .rank-1 { background: linear-gradient(135deg, #ffd700, #f7c948); color: #1a1a4e; box-shadow: 0 2px 12px rgba(255, 215, 0, 0.3); }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a8a8a8); color: #1a1a4e; box-shadow: 0 2px 8px rgba(192, 192, 192, 0.2); }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b87333); color: #1a1a4e; box-shadow: 0 2px 8px rgba(205, 127, 50, 0.2); }
 
         .points {
-            font-weight: 800;
-            font-size: clamp(0.8rem, 1.3vw, 1.1rem);
+            font-weight: 900;
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
             color: #ffd93d;
+            letter-spacing: 0.5px;
         }
         .goals {
-            font-weight: 600;
+            font-weight: 700;
+            font-size: clamp(0.85rem, 1.2vw, 1.05rem);
         }
-        .gd-positive { color: #00b894; }
-        .gd-negative { color: #e17055; }
+        .gd-positive { color: #00b894; font-weight: 700; }
+        .gd-negative { color: #e17055; font-weight: 700; }
 
         /* ===== RESPONSIVE STANDINGS ===== */
         @media (max-width: 992px) {
-            .groups-container { gap: 14px; }
+            .groups-container { gap: 22px; }
+            .group-card { padding: 18px 14px; }
+            table { min-width: 460px; }
         }
         @media (max-width: 768px) {
-            .groups-container { grid-template-columns: 1fr; max-width: 550px; margin: 0 auto; }
+            .groups-container { grid-template-columns: 1fr; max-width: 580px; margin: 0 auto; }
             .header { flex-direction: column; align-items: stretch; }
             .header h1 { text-align: center; }
             .header-buttons { justify-content: center; }
-            table { min-width: 340px; }
-            .team-info { min-width: 80px; gap: 4px; }
+            table { min-width: 400px; }
+            .team-info { min-width: 100px; gap: 8px; }
         }
         @media (max-width: 480px) {
-            body { padding: 6px; }
-            .header { padding: 8px 12px; }
-            .group-card { padding: 10px 6px; }
-            table { min-width: 280px; }
-            th, td { padding: 4px 2px; font-size: 0.55rem; }
-            .team-img { width: 22px; height: 22px; }
-            .team-name { font-size: 0.55rem; }
-            .rank-badge { width: 18px; height: 18px; line-height: 18px; font-size: 0.55rem; }
-            .points { font-size: 0.75rem; }
-            .admin-btn { font-size: 0.6rem; padding: 5px 10px; }
+            body { padding: 10px 6px; }
+            .header { padding: 10px 14px; }
+            .group-card { padding: 14px 10px; border-radius: 18px; }
+            table { min-width: 320px; }
+            th { padding: 10px 4px; font-size: 0.65rem; }
+            td { padding: 8px 4px; font-size: 0.7rem; }
+            .team-img { width: 28px; height: 28px; }
+            .team-name { font-size: 0.7rem; }
+            .rank-badge { width: 26px; height: 26px; line-height: 26px; font-size: 0.7rem; }
+            .points { font-size: 0.95rem; }
+            .goals { font-size: 0.7rem; }
+            .admin-btn { font-size: 0.6rem; padding: 6px 12px; }
         }
         @media (max-width: 360px) {
-            table { min-width: 240px; }
-            th { font-size: 0.45rem; padding: 3px 1px; }
-            td { font-size: 0.45rem; padding: 3px 1px; }
-            .team-img { width: 18px; height: 18px; }
-            .team-name { font-size: 0.45rem; }
-            .rank-badge { width: 16px; height: 16px; line-height: 16px; font-size: 0.45rem; }
-            .points { font-size: 0.65rem; }
+            table { min-width: 270px; }
+            th { font-size: 0.55rem; padding: 6px 2px; }
+            td { font-size: 0.6rem; padding: 6px 2px; }
+            .team-img { width: 22px; height: 22px; }
+            .team-name { font-size: 0.6rem; }
+            .rank-badge { width: 22px; height: 22px; line-height: 22px; font-size: 0.6rem; }
+            .points { font-size: 0.8rem; }
         }
 
-        /* ===== SEMI & FINAL - COMPACT & CLEAN ===== */
+        /* ===== SEMI & FINAL - kept compact as before ===== */
         .page-container { display: none; max-width: 1100px; margin: 0 auto; padding: 8px; }
         .page-container.active { display: block; }
         .back-btn {
@@ -284,7 +292,6 @@
         }
         .semi-subtitle { font-size: clamp(0.8rem, 1.5vw, 1.2rem); color: #aaa; text-align: center; }
 
-        /* semi grid - two cards side by side */
         .semi-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -293,7 +300,6 @@
             max-width: 900px;
         }
 
-        /* match card - compact */
         .match-card-semi {
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(6px);
@@ -379,7 +385,6 @@
             margin-left: 4px;
         }
 
-        /* champion card inside semi */
         .champion-card-semi {
             border-color: rgba(255,215,0,0.15);
             background: rgba(255,215,0,0.03);
@@ -389,7 +394,6 @@
             font-size: clamp(1rem, 1.8vw, 1.4rem);
         }
 
-        /* connector */
         .semi-connector {
             display: flex;
             justify-content: center;
@@ -412,7 +416,6 @@
         }
         @keyframes pulse { 0%,100%{opacity:0.5;transform:scale(1);} 50%{opacity:1;transform:scale(1.1);} }
 
-        /* FINAL CARD - compact */
         .final-card {
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(6px);
@@ -497,7 +500,6 @@
             margin-left: 6px;
         }
 
-        /* admin controls inside cards - compact */
         .admin-actions { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
         .admin-actions .admin-btn {
             font-size: clamp(0.55rem, 0.8vw, 0.7rem);
@@ -530,7 +532,7 @@
             margin-bottom: 0;
         }
 
-        /* ===== MODALS (unchanged, responsive) ===== */
+        /* ===== MODALS (unchanged) ===== */
         .modal {
             display: none;
             position: fixed;
@@ -615,7 +617,6 @@
         }
         .modal-content .close-modal:hover { color: #fff; }
 
-        /* edit form */
         .edit-form-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -643,7 +644,6 @@
         }
         .save-edit-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,184,148,0.25); }
 
-        /* team selector grid */
         .team-select-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -682,7 +682,6 @@
         }
         .team-select-item.selected .select-badge { background: #ffd700; color: #1a1a4e; }
 
-        /* team info modal */
         .team-info-modal .team-info-header {
             display: flex;
             align-items: center;
@@ -755,7 +754,6 @@
         }
         .team-info-modal .goals-edit-group input:focus { border-color: #ffd93d; }
 
-        /* toast */
         .toast {
             position: fixed;
             bottom: 16px;
@@ -845,7 +843,6 @@
                 </select>
             </div>
             <div class="semi-grid">
-                <!-- Match 1 -->
                 <div class="match-card-semi" id="semiFinalA">
                     <div class="match-label">یاری ١</div>
                     <div class="match-teams" id="semiFinalATeams"></div>
@@ -865,7 +862,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Match 2 -->
                 <div class="match-card-semi" id="semiFinalB">
                     <div class="match-label">یاری ٢</div>
                     <div class="match-teams" id="semiFinalBTeams"></div>
@@ -893,7 +889,6 @@
                 <div class="line"></div>
             </div>
 
-            <!-- Champion Card (compact) -->
             <div style="width:100%;max-width:650px;">
                 <div class="match-card-semi champion-card-semi">
                     <div class="match-label">🏆 Champion</div>
@@ -977,7 +972,6 @@
     </div>
 
     <!-- ===== MODALS ===== -->
-    <!-- Semi Team Selector -->
     <div class="modal" id="semiTeamSelectorModal">
         <div class="modal-content wide">
             <h2>🏆 هەڵبژاردنی یانە بۆ نیوە کۆتایی</h2>
@@ -994,7 +988,6 @@
         </div>
     </div>
 
-    <!-- Final Team Selector -->
     <div class="modal" id="finalTeamSelectorModal">
         <div class="modal-content wide">
             <h2>🏆 هەڵبژاردنی یانە بۆ کۆتایی</h2>
@@ -1011,7 +1004,6 @@
         </div>
     </div>
 
-    <!-- Team Info Modal -->
     <div class="modal" id="teamInfoModal">
         <div class="modal-content team-info-modal">
             <div class="team-info-header">
@@ -1046,7 +1038,6 @@
         </div>
     </div>
 
-    <!-- Login Modal -->
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <h2>🔑 چوونە ژوورەوە</h2>
@@ -1059,7 +1050,6 @@
         </div>
     </div>
 
-    <!-- Edit Modal -->
     <div class="modal edit-modal" id="editModal">
         <div class="modal-content">
             <h2>✏️ دەستکاری دیتەڵ</h2>
@@ -1155,7 +1145,7 @@
             if (!tbody) return;
             const teams = data[groupKey] || [];
             if (teams.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:14px;color:#888;">هیچ داتایەک نییە</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:16px;color:#888;font-size:1rem;">هیچ داتایەک نییە</td></tr>`;
                 return;
             }
             const sorted = sortTeams(teams);
@@ -1172,7 +1162,7 @@
                     <td><span class="${cls}">${rank}</span></td>
                     <td>
                         <div class="team-info" onclick="openTeamInfo('${team.name}')">
-                            <img src="${team.img || 'https://via.placeholder.com/40/1a1a4e/fff?text=?'}" alt="${team.name}" class="team-img" loading="lazy" onerror="this.src='https://via.placeholder.com/40/1a1a4e/fff?text=?'">
+                            <img src="${team.img || 'https://via.placeholder.com/50/1a1a4e/fff?text=?'}" alt="${team.name}" class="team-img" loading="lazy" onerror="this.src='https://via.placeholder.com/50/1a1a4e/fff?text=?'">
                             <span class="team-name">${team.name}</span>
                         </div>
                     </td>
@@ -1193,7 +1183,7 @@
             groupB.style.display = 'block';
         }
 
-        // ===== SEMI RENDER (compact) =====
+        // ===== SEMI RENDER =====
         function renderSemiMatch(groupKey, matchKey, matchData) {
             const containerId = matchKey === 'match1' ? 'semiFinalATeams' : 'semiFinalBTeams';
             const scoreId = matchKey === 'match1' ? 'semiAScore' : 'semiBScore';
@@ -1722,7 +1712,7 @@
                     const existing = data[gk].find(t => t.name === name);
                     const tig = existing && existing.teamInfoGoals !== undefined ? existing.teamInfoGoals : 0;
                     const tigA = existing && existing.teamInfoGoalsAgainst !== undefined ? existing.teamInfoGoalsAgainst : 0;
-                    newData.push({ name, img: img || 'https://via.placeholder.com/40/1a1a4e/fff?text=?', points, goals, goalsAgainst: ga, champions: ch, europa: eu, super: su, teamInfoGoals: tig, teamInfoGoalsAgainst: tigA });
+                    newData.push({ name, img: img || 'https://via.placeholder.com/50/1a1a4e/fff?text=?', points, goals, goalsAgainst: ga, champions: ch, europa: eu, super: su, teamInfoGoals: tig, teamInfoGoalsAgainst: tigA });
                 }
             });
             if (newData.length !== 4) { showToast('❌ پێویستە 4 یانە هەبێت!', 'error'); return; }
