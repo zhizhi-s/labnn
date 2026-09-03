@@ -1116,13 +1116,30 @@
             margin-top: 0;
         }
 
+        /* Responsive: extra small, small, medium, large */
+        @media (max-width: 1200px) {
+            .groups-container {
+                gap: 20px;
+            }
+            .final-card {
+                padding: 30px;
+            }
+        }
+
         @media (max-width: 992px) {
+            .groups-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 18px;
+            }
             .semi-grid {
                 grid-template-columns: 1fr;
                 gap: 25px;
             }
             .final-card {
                 padding: 25px;
+            }
+            .header {
+                padding: 12px 18px;
             }
         }
 
@@ -1138,6 +1155,12 @@
                 justify-content: center;
                 flex-wrap: wrap;
             }
+            .groups-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                max-width: 600px;
+                margin: 0 auto;
+            }
             .match-card-semi .match-teams {
                 gap: 10px;
             }
@@ -1146,6 +1169,26 @@
             }
             .semi-connector .line {
                 max-width: 40px;
+            }
+            .modal-content.wide {
+                max-width: 95%;
+                padding: 20px;
+            }
+            .edit-modal .modal-content {
+                max-width: 95%;
+                padding: 20px;
+            }
+            .edit-form-group {
+                grid-template-columns: 1fr;
+            }
+            .edit-form-group .full-width {
+                grid-column: 1;
+            }
+            .final-card {
+                padding: 20px;
+            }
+            table {
+                min-width: 420px;
             }
         }
 
@@ -1157,6 +1200,7 @@
             .admin-btn {
                 width: 100%;
                 text-align: center;
+                justify-content: center;
             }
             .match-card-semi {
                 padding: 15px;
@@ -1165,7 +1209,7 @@
                 min-width: 60px;
             }
             .final-card {
-                padding: 20px;
+                padding: 16px;
             }
             .final-card .final-team img {
                 width: 50px;
@@ -1177,6 +1221,139 @@
             .score-input-group input {
                 width: 50px;
                 font-size: 16px;
+            }
+            .groups-container {
+                padding: 0 4px;
+            }
+            .group-card {
+                padding: 12px;
+            }
+            table {
+                min-width: 320px;
+            }
+            th, td {
+                padding: 6px 4px;
+                font-size: 11px;
+            }
+            .team-info {
+                min-width: 80px;
+                gap: 4px;
+            }
+            .team-img {
+                width: 26px;
+                height: 26px;
+            }
+            .rank-badge {
+                width: 22px;
+                height: 22px;
+                line-height: 22px;
+                font-size: 10px;
+            }
+            .points {
+                font-size: 14px;
+            }
+            .modal-content {
+                padding: 18px;
+                max-width: 100%;
+            }
+            .modal-content .team-select-grid {
+                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            }
+            .modal-content .team-select-item img {
+                width: 40px;
+                height: 40px;
+            }
+            .team-info-modal .team-info-header img {
+                width: 50px;
+                height: 50px;
+            }
+            .team-info-modal .trophy-row img {
+                width: 28px;
+                height: 28px;
+            }
+            .final-card .final-score {
+                font-size: 24px;
+                padding: 6px 18px;
+            }
+            .final-card .final-winner {
+                font-size: 16px;
+                padding: 8px 18px;
+            }
+            .match-card-semi .match-score {
+                font-size: 18px;
+                padding: 4px 12px;
+            }
+            .match-card-semi .match-winner {
+                font-size: 13px;
+                padding: 6px 14px;
+            }
+            .match-card-semi .match-team img {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        /* Fix for very small screens (<=360px) */
+        @media (max-width: 360px) {
+            body {
+                padding: 8px;
+            }
+            .header {
+                padding: 10px 12px;
+            }
+            .group-card {
+                padding: 8px;
+            }
+            table {
+                min-width: 280px;
+            }
+            th, td {
+                padding: 4px 2px;
+                font-size: 10px;
+            }
+            .team-img {
+                width: 22px;
+                height: 22px;
+            }
+            .team-name {
+                font-size: 10px;
+            }
+            .rank-badge {
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                font-size: 9px;
+            }
+            .points {
+                font-size: 12px;
+            }
+            .admin-btn {
+                font-size: 11px;
+                padding: 8px 12px;
+            }
+            .modal-content {
+                padding: 14px;
+            }
+            .modal-content h2 {
+                font-size: 18px;
+            }
+            .modal-content input {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+            .final-card .final-team img {
+                width: 40px;
+                height: 40px;
+            }
+            .match-card-semi .match-team img {
+                width: 36px;
+                height: 36px;
+            }
+            .match-card-semi .match-vs {
+                font-size: 16px;
+            }
+            .final-card .final-vs {
+                font-size: 18px;
             }
         }
     </style>
@@ -1242,7 +1419,6 @@
             <div class="semi-title">🏆 SEMI-FINALS</div>
             <div class="semi-subtitle">FIFA WORLD CUP</div>
 
-            <!-- Single Combo Box for Semi-Final Group Selection -->
             <div class="combo-group">
                 <select id="semiGroupSelect" onchange="changeSemiGroup()">
                     <option value="A">گرووپ A</option>
@@ -1253,9 +1429,7 @@
             <div class="semi-grid">
                 <div class="match-card-semi" id="semiFinalA">
                     <div class="match-label">یاری ١</div>
-                    <div class="match-teams" id="semiFinalATeams">
-                        <!-- Teams will be rendered here -->
-                    </div>
+                    <div class="match-teams" id="semiFinalATeams"></div>
                     <div class="match-score" id="semiAScore">-</div>
                     <div id="semiAWinner"></div>
                     <div id="semiAAdminControls" style="display:none;margin-top:15px;padding-top:15px;border-top:1px solid rgba(255,255,255,0.1);">
@@ -1275,9 +1449,7 @@
 
                 <div class="match-card-semi" id="semiFinalB">
                     <div class="match-label">یاری ٢</div>
-                    <div class="match-teams" id="semiFinalBTeams">
-                        <!-- Teams will be rendered here -->
-                    </div>
+                    <div class="match-teams" id="semiFinalBTeams"></div>
                     <div class="match-score" id="semiBScore">-</div>
                     <div id="semiBWinner"></div>
                     <div id="semiBAdminControls" style="display:none;margin-top:15px;padding-top:15px;border-top:1px solid rgba(255,255,255,0.1);">
@@ -1345,7 +1517,6 @@
             <div class="final-title">🏆 FINAL</div>
             <div style="font-size:clamp(16px,2vw,24px);color:#aaa;margin-bottom:10px;">FIFA WORLD CUP</div>
 
-            <!-- Single Combo Box for Final Group Selection -->
             <div class="combo-group">
                 <select id="finalGroupSelect" onchange="changeFinalGroup()">
                     <option value="A">گرووپ A</option>
@@ -1397,9 +1568,7 @@
                 کلیک لەسەر یانە بکە بۆ هەڵبژاردن یان لابردنی (دوو یانە جیاواز هەڵبژێرە)
             </div>
             <div id="semiTeamSelectorContainer">
-                <div class="team-select-grid" id="semiTeamSelectorGrid">
-                    <!-- Teams will be rendered here -->
-                </div>
+                <div class="team-select-grid" id="semiTeamSelectorGrid"></div>
             </div>
             <div style="display:flex;gap:10px;justify-content:center;margin-top:15px;flex-wrap:wrap;">
                 <button class="login-submit" style="flex:1;min-width:120px;" onclick="confirmSemiTeamSelection()">✅ پاشەکەوتکردن</button>
@@ -1416,9 +1585,7 @@
                 کلیک لەسەر یانە بکە بۆ هەڵبژاردن یان لابردنی (دوو یانە جیاواز هەڵبژێرە)
             </div>
             <div id="finalTeamSelectorContainer">
-                <div class="team-select-grid" id="finalTeamSelectorGrid">
-                    <!-- Teams will be rendered here -->
-                </div>
+                <div class="team-select-grid" id="finalTeamSelectorGrid"></div>
             </div>
             <div style="display:flex;gap:10px;justify-content:center;margin-top:15px;flex-wrap:wrap;">
                 <button class="login-submit" style="flex:1;min-width:120px;" onclick="confirmFinalTeamSelection()">✅ پاشەکەوتکردن</button>
@@ -1442,7 +1609,6 @@
                 <span class="label">🧤 گۆڵ لێکران:</span>
                 <span class="value" id="teamInfoGoalsAgainstDisplay">0</span>
             </div>
-            <!-- Admin Edit Controls for Goals and Goals Against -->
             <div id="teamInfoGoalsAdminControls" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">
                 <label style="font-size:13px;color:#aaa;display:block;margin-bottom:8px;">✏️ دەستکاری گۆڵ و گۆڵ لێکران (تەنها ئەدمین):</label>
                 <div class="goals-edit-group">
@@ -1571,10 +1737,8 @@
             }
         };
 
-        // Champion (Final Preview) data - independent of main final
         const championData = { teamA: null, teamB: null, winner: null, homeScore: null, awayScore: null };
 
-        // Each group has its own temp selections for the team selector modal
         const tempSemiSelections = {
             A: { match1: { team1: null, team2: null }, match2: { team1: null, team2: null } },
             B: { match1: { team1: null, team2: null }, match2: { team1: null, team2: null } }
@@ -1587,7 +1751,6 @@
         let isAdmin = false;
         let selectedFinalGroup = 'A';
 
-        // Team selector state - each match has its own independent state
         let tempFinalSelection = { teamA: null, teamB: null };
         let currentTeamInfo = null;
 
@@ -1595,7 +1758,6 @@
         const groupA = document.getElementById('groupA');
         const groupB = document.getElementById('groupB');
 
-        // Helper functions
         function sortTeams(teams) {
             return [...teams].sort((a, b) => {
                 if (b.points !== a.points) return b.points - a.points;
@@ -1615,7 +1777,6 @@
             return all.find(t => t.name === name) || null;
         }
 
-        // Render functions
         function renderGroup(groupKey) {
             const tbody = document.getElementById(`group${groupKey}Tbody`);
             if (!tbody) return;
@@ -1671,7 +1832,6 @@
             const container = document.getElementById(containerId);
             if (!container) return;
             
-            // Show only selected teams in the match
             let displayHtml = '';
             if (matchData.team1) {
                 displayHtml += `
@@ -1701,14 +1861,12 @@
             
             container.innerHTML = displayHtml;
             
-            // Update score
             const scoreElement = document.getElementById(scoreElementId);
             if (scoreElement) {
                 scoreElement.textContent = (matchData.homeScore !== null && matchData.awayScore !== null) ? 
                     `${matchData.homeScore} - ${matchData.awayScore}` : '-';
             }
             
-            // Update winner
             const winnerElement = document.getElementById(winnerElementId);
             if (winnerElement) {
                 if (matchData.winner) {
@@ -1725,19 +1883,15 @@
         }
 
         function renderSemiFinals() {
-            // Render Match 1 for current group
             const match1Data = semiMatchData[currentSemiGroup].match1;
             renderSemiMatch(currentSemiGroup, 'match1', match1Data);
             
-            // Render Match 2 for current group
             const match2Data = semiMatchData[currentSemiGroup].match2;
             renderSemiMatch(currentSemiGroup, 'match2', match2Data);
             
-            // Update Champion Card with winners from semi finals
             const finalA = match1Data.winner;
             const finalB = match2Data.winner;
             
-            // Auto-populate champion teams from semi-final winners if not manually set
             if (!championData.teamA && finalA) {
                 championData.teamA = finalA;
             }
@@ -1747,14 +1901,12 @@
             
             renderChampionCard();
             
-            // Admin controls visibility
             const controls = ['semiAAdminControls', 'semiBAdminControls', 'championAdminControls'];
             controls.forEach(id => {
                 document.getElementById(id).style.display = isAdmin ? 'block' : 'none';
             });
         }
 
-        // Champion Card rendering
         function renderChampionCard() {
             const teamA = championData.teamA;
             const teamB = championData.teamB;
@@ -1788,13 +1940,11 @@
         function renderFinal() {
             const { key1, key2 } = getFinalGroupKeys();
             
-            // Get the winners from the semi-final matches for the current group
             const match1Data = semiMatchData[selectedFinalGroup].match1;
             const match2Data = semiMatchData[selectedFinalGroup].match2;
             const winnerA = match1Data.winner;
             const winnerB = match2Data.winner;
             
-            // Auto-populate final teams from semi-final winners if not manually set
             if (!finalData.teamA && winnerA) {
                 finalData.teamA = winnerA;
             }
@@ -1813,7 +1963,6 @@
             document.getElementById('finalTeamBImg').src = teamB ? teamB.img : 'https://via.placeholder.com/80/1a1a4e/fff?text=?';
             document.getElementById('finalTeamBName').textContent = teamB ? teamB.name : '-';
             
-            // Update selected state
             const finalTeams = document.querySelectorAll('.final-team');
             finalTeams.forEach((el, idx) => {
                 if (idx === 0 && teamA) {
@@ -1841,7 +1990,6 @@
             document.getElementById('finalAdminControls').style.display = isAdmin ? 'block' : 'none';
         }
 
-        // Group change functions
         window.changeSemiGroup = function() {
             const select = document.getElementById('semiGroupSelect');
             currentSemiGroup = select.value;
@@ -1854,8 +2002,6 @@
             renderFinal();
         };
 
-        // --- TEAM INFO MODAL ---
-
         window.openTeamInfo = function(teamName) {
             const team = findTeamByName(teamName);
             if (!team) {
@@ -1867,7 +2013,6 @@
             document.getElementById('teamInfoImg').src = team.img || 'https://via.placeholder.com/70/1a1a4e/fff?text=?';
             document.getElementById('teamInfoName').textContent = team.name;
             
-            // Display goals and goals against - these are now stored in teamInfoGoals and teamInfoGoalsAgainst
             const teamGoals = team.teamInfoGoals !== undefined ? team.teamInfoGoals : 0;
             const teamGoalsAgainst = team.teamInfoGoalsAgainst !== undefined ? team.teamInfoGoalsAgainst : 0;
             document.getElementById('teamInfoGoalsDisplay').textContent = teamGoals;
@@ -1881,7 +2026,6 @@
             document.getElementById('editEuropa').value = team.europa || 0;
             document.getElementById('editSuper').value = team.super || 0;
             
-            // Set edit fields for goals
             document.getElementById('editTeamGoals').value = teamGoals;
             document.getElementById('editTeamGoalsAgainst').value = teamGoalsAgainst;
             
@@ -1895,7 +2039,6 @@
             currentTeamInfo = null;
         };
 
-        // Save Goals and Goals Against only (independent from standings)
         window.saveTeamGoals = function() {
             if (!isAdmin) {
                 showToast('❌ تۆ ئەدمین نیت!', 'error');
@@ -1910,13 +2053,11 @@
             const goals = parseInt(document.getElementById('editTeamGoals').value) || 0;
             const goalsAgainst = parseInt(document.getElementById('editTeamGoalsAgainst').value) || 0;
             
-            // Update the team in data (only teamInfoGoals and teamInfoGoalsAgainst)
             const teamName = currentTeamInfo.name;
             let found = false;
             ['A', 'B'].forEach(group => {
                 const team = data[group].find(t => t.name === teamName);
                 if (team) {
-                    // Store goals and goals against in separate properties
                     team.teamInfoGoals = goals;
                     team.teamInfoGoalsAgainst = goalsAgainst;
                     found = true;
@@ -1928,11 +2069,9 @@
                 return;
             }
             
-            // Update UI
             document.getElementById('teamInfoGoalsDisplay').textContent = goals;
             document.getElementById('teamInfoGoalsAgainstDisplay').textContent = goalsAgainst;
             
-            // Update currentTeamInfo
             currentTeamInfo.teamInfoGoals = goals;
             currentTeamInfo.teamInfoGoalsAgainst = goalsAgainst;
             
@@ -1955,7 +2094,6 @@
             const europa = parseInt(document.getElementById('editEuropa').value) || 0;
             const super_ = parseInt(document.getElementById('editSuper').value) || 0;
             
-            // Update the team in data (only trophy counts, NOT goals or goalsAgainst)
             const teamName = currentTeamInfo.name;
             let found = false;
             ['A', 'B'].forEach(group => {
@@ -1973,12 +2111,10 @@
                 return;
             }
             
-            // Update UI
             document.getElementById('teamInfoChampions').textContent = champions;
             document.getElementById('teamInfoEuropa').textContent = europa;
             document.getElementById('teamInfoSuper').textContent = super_;
             
-            // Update currentTeamInfo
             currentTeamInfo.champions = champions;
             currentTeamInfo.europa = europa;
             currentTeamInfo.super = super_;
@@ -1990,8 +2126,6 @@
             showToast('✅ ژمارەکانی جام پاشەکەوت کران!', 'success');
         };
 
-        // --- SEMI FINAL TEAM SELECTOR MODAL ---
-
         window.openSemiTeamSelector = function(matchId) {
             if (!isAdmin) {
                 showToast('❌ تۆ ئەدمین نیت!', 'error');
@@ -2000,11 +2134,9 @@
             
             currentSemiMatchId = matchId === 'A' ? 'match1' : 'match2';
             
-            // Get the current match data for the selected group
             const matchData = semiMatchData[currentSemiGroup][currentSemiMatchId];
             const tempSelection = tempSemiSelections[currentSemiGroup][currentSemiMatchId];
             
-            // Copy current team data to temp
             tempSelection.team1 = matchData.team1 ? { ...matchData.team1 } : null;
             tempSelection.team2 = matchData.team2 ? { ...matchData.team2 } : null;
             
@@ -2014,7 +2146,6 @@
 
         function renderSemiTeamSelectorGrid() {
             const grid = document.getElementById('semiTeamSelectorGrid');
-            // Show ALL teams from both groups (8 total teams)
             const allTeams = getAllTeams();
             const tempSelection = tempSemiSelections[currentSemiGroup][currentSemiMatchId];
             
@@ -2042,21 +2173,16 @@
             
             const tempSelection = tempSemiSelections[currentSemiGroup][currentSemiMatchId];
             
-            // If team is already selected as team1, remove it
             if (tempSelection.team1 && tempSelection.team1.name === teamName) {
                 tempSelection.team1 = null;
             }
-            // If team is already selected as team2, remove it
             else if (tempSelection.team2 && tempSelection.team2.name === teamName) {
                 tempSelection.team2 = null;
             }
-            // If team1 is empty, set as team1
             else if (!tempSelection.team1) {
                 tempSelection.team1 = team;
             }
-            // If team2 is empty, set as team2
             else if (!tempSelection.team2) {
-                // Make sure team2 is not the same as team1
                 if (tempSelection.team1 && tempSelection.team1.name === team.name) {
                     showToast('⚠️ ئەم یانەیە پێشتر هەڵبژێردراوە!', 'warning');
                     return;
@@ -2083,7 +2209,6 @@
                 return;
             }
             
-            // Update the correct match data for the current group
             const matchData = semiMatchData[currentSemiGroup][currentSemiMatchId];
             matchData.team1 = tempSelection.team1;
             matchData.team2 = tempSelection.team2;
@@ -2102,8 +2227,6 @@
             document.getElementById('semiTeamSelectorModal').classList.remove('active');
         };
 
-        // --- SEMI FINAL ADMIN FUNCTIONS ---
-
         window.toggleSemiTeam = function(containerId, teamName) {
             if (!isAdmin) {
                 showToast('❌ تۆ ئەدمین نیت!', 'error');
@@ -2116,7 +2239,6 @@
                 return;
             }
             
-            // Determine which match based on container ID
             let matchKey;
             if (containerId === 'semiFinalATeams') {
                 matchKey = 'match1';
@@ -2129,7 +2251,6 @@
             
             const matchData = semiMatchData[currentSemiGroup][matchKey];
             
-            // Check if team already selected
             if (matchData.team1 && matchData.team1.name === teamName) {
                 matchData.team1 = null;
             } else if (matchData.team2 && matchData.team2.name === teamName) {
@@ -2147,12 +2268,10 @@
                 return;
             }
             
-            // Reset scores and winner when teams change
             matchData.homeScore = null;
             matchData.awayScore = null;
             matchData.winner = null;
             
-            // Also reset champion data if the winners change
             if (matchKey === 'match1') {
                 championData.teamA = null;
             } else {
@@ -2237,8 +2356,6 @@
             showToast(`🔄 یاری ${matchId === 'A' ? '١' : '٢'} ڕێست کرا!`, 'success');
         };
 
-        // --- CHAMPION CARD ADMIN FUNCTIONS ---
-
         window.setChampionScore = function() {
             if (!isAdmin) {
                 showToast('❌ تۆ ئەدمین نیت!', 'error');
@@ -2281,7 +2398,6 @@
                 return;
             }
             
-            // Toggle winner between teamA and teamB
             if (championData.winner === championData.teamA) {
                 championData.winner = championData.teamB;
             } else if (championData.winner === championData.teamB) {
@@ -2315,15 +2431,11 @@
             showToast('🔄 Champion ڕێست کرا!', 'success');
         };
 
-        // --- FINAL ADMIN FUNCTIONS ---
-
         window.toggleFinalTeam = function(index) {
             if (!isAdmin) {
                 showToast('❌ تۆ ئەدمین نیت!', 'error');
                 return;
             }
-            
-            // Open the modal instead
             openFinalTeamSelector();
         };
 
@@ -2369,7 +2481,6 @@
                 return;
             }
             
-            // Toggle winner between teamA and teamB
             if (finalData.winner === finalData.teamA) {
                 finalData.winner = finalData.teamB;
             } else if (finalData.winner === finalData.teamB) {
@@ -2402,8 +2513,6 @@
             saveFinalDataToFirebase();
             showToast('🔄 کۆتایی ڕێست کرا!', 'success');
         };
-
-        // --- FINAL TEAM SELECTOR MODAL ---
 
         window.openFinalTeamSelector = function() {
             if (!isAdmin) {
@@ -2444,21 +2553,16 @@
             const team = findTeamByName(teamName);
             if (!team) return;
             
-            // If team is already selected as teamA, remove it
             if (tempFinalSelection.teamA && tempFinalSelection.teamA.name === teamName) {
                 tempFinalSelection.teamA = null;
             }
-            // If team is already selected as teamB, remove it
             else if (tempFinalSelection.teamB && tempFinalSelection.teamB.name === teamName) {
                 tempFinalSelection.teamB = null;
             }
-            // If teamA is empty, set as teamA
             else if (!tempFinalSelection.teamA) {
                 tempFinalSelection.teamA = team;
             }
-            // If teamB is empty, set as teamB
             else if (!tempFinalSelection.teamB) {
-                // Make sure teamB is not the same as teamA
                 if (tempFinalSelection.teamA && tempFinalSelection.teamA.name === team.name) {
                     showToast('⚠️ ئەم یانەیە پێشتر هەڵبژێردراوە!', 'warning');
                     return;
@@ -2499,8 +2603,6 @@
             document.getElementById('finalTeamSelectorModal').classList.remove('active');
         };
 
-        // --- FIREBASE FUNCTIONS ---
-
         function loadDataFromFirebase() {
             const dbRef = ref(db, 'footballData');
             onValue(dbRef, (snapshot) => {
@@ -2520,7 +2622,6 @@
                     data.B = [...defaultData.B];
                 }
                 if (firebaseData && firebaseData.semiMatchData) {
-                    // Merge with defaults to ensure all keys exist
                     Object.keys(semiMatchData).forEach(group => {
                         if (firebaseData.semiMatchData[group]) {
                             Object.keys(semiMatchData[group]).forEach(match => {
@@ -2588,8 +2689,6 @@
             });
         }
 
-        // --- LOGIN ---
-
         const loginModal = document.getElementById('loginModal');
         const adminBtn = document.getElementById('adminLoginBtn');
         const closeLogin = document.getElementById('closeLoginModal');
@@ -2648,8 +2747,6 @@
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 3500);
         }
-
-        // --- STANDINGS EDIT ---
 
         const editModal = document.getElementById('editModal');
         const closeEdit = document.getElementById('closeEditModal');
@@ -2736,7 +2833,6 @@
                 const europa = parseInt(group.querySelector('.edit-europa').value) || 0;
                 const super_ = parseInt(group.querySelector('.edit-super').value) || 0;
                 if (name) {
-                    // Keep existing teamInfoGoals and teamInfoGoalsAgainst if they exist
                     const existingTeam = data[groupKey].find(t => t.name === name);
                     const teamInfoGoals = existingTeam && existingTeam.teamInfoGoals !== undefined ? existingTeam.teamInfoGoals : 0;
                     const teamInfoGoalsAgainst = existingTeam && existingTeam.teamInfoGoalsAgainst !== undefined ? existingTeam.teamInfoGoalsAgainst : 0;
@@ -2768,8 +2864,6 @@
             }
         });
 
-        // --- PAGE NAVIGATION ---
-
         const mainPage = document.getElementById('groupsContainer');
         const semiPage = document.getElementById('semiFinalPage');
         const finalPage = document.getElementById('finalPage');
@@ -2793,8 +2887,6 @@
             semiPage.classList.remove('active');
             renderFinal();
         });
-
-        // --- START ---
 
         console.log('🚀 دەستپێکردنی پەڕە...');
         loadDataFromFirebase();
