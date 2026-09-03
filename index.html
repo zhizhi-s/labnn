@@ -91,7 +91,7 @@
             box-shadow: 0 4px 12px rgba(255, 215, 0, 0.25);
         }
 
-        /* ===== GROUPS CONTAINER ===== */
+        /* ===== GROUPS CONTAINER (standings) - LARGER & BOLDER ===== */
         .groups-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -127,7 +127,7 @@
             letter-spacing: 1px;
         }
 
-        /* ===== TABLE ===== */
+        /* ===== TABLE - LARGER FONTS, MORE SPACING ===== */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 16px;
@@ -162,7 +162,6 @@
             background: rgba(255, 255, 255, 0.06);
         }
 
-        /* ===== FIX: team-info in ONE ROW (horizontal) ===== */
         .team-info {
             display: flex;
             align-items: center;
@@ -171,8 +170,6 @@
             min-width: 130px;
             cursor: pointer;
             padding: 4px 0;
-            flex-wrap: nowrap;        /* ← force one line */
-            white-space: nowrap;      /* ← prevent text wrapping */
         }
         .team-info:hover .team-img {
             transform: scale(1.12);
@@ -192,7 +189,6 @@
             font-weight: 700;
             font-size: clamp(0.8rem, 1.2vw, 1rem);
             line-height: 1.2;
-            display: inline-block;
         }
 
         .rank-badge {
@@ -225,7 +221,7 @@
         .gd-positive { color: #00b894; font-weight: 700; }
         .gd-negative { color: #e17055; font-weight: 700; }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE STANDINGS ===== */
         @media (max-width: 992px) {
             .groups-container { gap: 22px; }
             .group-card { padding: 18px 14px; }
@@ -263,7 +259,7 @@
             .points { font-size: 0.8rem; }
         }
 
-        /* ===== SEMI & FINAL (compact, unchanged) ===== */
+        /* ===== SEMI & FINAL - kept compact as before ===== */
         .page-container { display: none; max-width: 1100px; margin: 0 auto; padding: 8px; }
         .page-container.active { display: block; }
         .back-btn {
@@ -536,7 +532,7 @@
             margin-bottom: 0;
         }
 
-        /* ===== MODALS ===== */
+        /* ===== MODALS (unchanged) ===== */
         .modal {
             display: none;
             position: fixed;
