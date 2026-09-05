@@ -242,53 +242,53 @@
         .semi-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 24px;
             width: 100%;
-            max-width: 960px;
+            max-width: 1000px;
         }
         .match-card {
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 16px 14px;
+            border-radius: 24px;
+            padding: 20px 18px;
             border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.3);
             text-align: center;
             transition: 0.3s;
-            min-height: 160px;
+            min-height: 200px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-        .match-card:hover { transform: translateY(-3px); border-color: rgba(255,217,61,0.25); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+        .match-card:hover { transform: translateY(-4px); border-color: rgba(255,217,61,0.3); box-shadow: 0 14px 40px rgba(0,0,0,0.4); }
         .match-card .match-label {
-            font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+            font-size: clamp(1rem, 1.6vw, 1.3rem);
             font-weight: 700;
             color: #ffd93d;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             letter-spacing: 0.5px;
         }
         .match-card .match-teams {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
             flex-wrap: wrap;
         }
         .match-card .match-team {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            min-width: 50px;
-            padding: 4px 6px;
-            border-radius: 12px;
+            gap: 6px;
+            min-width: 70px;
+            padding: 6px 8px;
+            border-radius: 14px;
             transition: 0.3s;
             cursor: default;
         }
         .match-card .match-team img {
-            width: clamp(36px, 4.5vw, 56px);
-            height: clamp(36px, 4.5vw, 56px);
+            width: clamp(48px, 6vw, 72px);
+            height: clamp(48px, 6vw, 72px);
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid rgba(255,255,255,0.15);
@@ -297,44 +297,44 @@
         }
         .match-card .match-team img:hover { transform: scale(1.08); border-color: #ffd93d; }
         .match-card .match-team .team-name {
-            font-size: clamp(0.6rem, 0.9vw, 0.8rem);
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
             font-weight: 600;
             line-height: 1.2;
         }
         .match-card .match-vs {
-            font-size: clamp(1rem, 1.6vw, 1.4rem);
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
             font-weight: 800;
             color: #ff6b6b;
-            padding: 0 4px;
+            padding: 0 6px;
         }
         .match-card .match-score {
-            font-size: clamp(1rem, 1.6vw, 1.4rem);
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
             font-weight: 900;
             color: #fff;
-            margin: 6px 0;
+            margin: 8px 0;
             background: rgba(0,0,0,0.25);
-            padding: 4px 16px;
-            border-radius: 10px;
+            padding: 6px 20px;
+            border-radius: 12px;
             display: inline-block;
             align-self: center;
         }
         .match-card .match-winner {
-            margin-top: 6px;
-            padding: 4px 16px;
+            margin-top: 8px;
+            padding: 6px 20px;
             background: linear-gradient(135deg, #ffd700, #f7c948);
-            border-radius: 24px;
+            border-radius: 28px;
             color: #1a1a4e;
             font-weight: 700;
             display: inline-block;
-            font-size: clamp(0.7rem, 0.9vw, 0.85rem);
+            font-size: clamp(0.8rem, 1vw, 0.95rem);
             align-self: center;
         }
         .match-card .match-winner img {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             vertical-align: middle;
-            margin-left: 5px;
+            margin-left: 6px;
         }
         .semi-connector {
             display: flex;
@@ -342,17 +342,17 @@
             align-items: center;
             gap: 10px;
             width: 100%;
-            max-width: 960px;
+            max-width: 1000px;
             padding: 6px 0;
         }
         .semi-connector .line {
             flex: 1;
             height: 2px;
             background: linear-gradient(90deg, rgba(255,215,0,0.2), rgba(255,215,0,0.5), rgba(255,215,0,0.2));
-            max-width: 70px;
+            max-width: 80px;
         }
         .semi-connector .arrow {
-            font-size: clamp(1.4rem, 2.2vw, 2rem);
+            font-size: clamp(1.6rem, 2.4vw, 2.2rem);
             color: #ffd93d;
             animation: pulse 1.5s ease-in-out infinite;
         }
@@ -660,30 +660,30 @@
         }
         .team-info-modal .goals-edit-group input:focus { border-color: #ffd93d; }
 
-        .admin-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
-        .admin-actions .admin-btn { font-size: clamp(0.6rem, 0.85vw, 0.75rem); padding: 5px 12px; }
+        .admin-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+        .admin-actions .admin-btn { font-size: clamp(0.7rem, 0.9vw, 0.85rem); padding: 6px 16px; }
         .score-input-group {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            margin: 6px 0;
+            margin: 8px 0;
         }
         .score-input-group input {
-            width: 44px;
-            padding: 5px 4px;
+            width: 52px;
+            padding: 6px 6px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 700;
             border: 2px solid rgba(255,255,255,0.06);
-            border-radius: 8px;
+            border-radius: 10px;
             background: rgba(0,0,0,0.2);
             color: #fff;
             margin-bottom: 0;
         }
         .score-input-group input:focus { border-color: #ffd93d; outline: none; }
-        .score-input-group label { font-size: 0.75rem; color: #aaa; margin-bottom: 0; }
+        .score-input-group label { font-size: 0.85rem; color: #aaa; margin-bottom: 0; }
 
         .toast {
             position: fixed;
@@ -724,200 +724,219 @@
         .combo-group select option { background: #1a1a4e; }
 
         .match-card.champion-card {
-            min-height: 140px;
-            padding: 14px 12px;
-            border-color: rgba(255,215,0,0.2);
+            min-height: 180px;
+            padding: 18px 16px;
+            border-color: rgba(255,215,0,0.25);
         }
         .match-card.champion-card .match-label {
-            font-size: clamp(1rem, 1.6vw, 1.3rem);
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
         }
         .match-card.champion-card .match-team img {
-            width: clamp(38px, 4.8vw, 58px);
-            height: clamp(38px, 4.8vw, 58px);
+            width: clamp(48px, 6vw, 72px);
+            height: clamp(48px, 6vw, 72px);
         }
         .match-card.champion-card .match-team .team-name {
-            font-size: clamp(0.6rem, 0.9vw, 0.8rem);
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
         }
         .match-card.champion-card .match-score {
-            font-size: clamp(1rem, 1.6vw, 1.4rem);
-            padding: 4px 18px;
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+            padding: 6px 22px;
         }
 
         @media (max-width: 768px) {
             .semi-grid {
-                gap: 14px;
+                gap: 16px;
+            }
+            .match-card {
+                padding: 16px 14px;
+                min-height: 160px;
+                border-radius: 20px;
+            }
+            .match-card .match-team img {
+                width: clamp(40px, 5vw, 56px);
+                height: clamp(40px, 5vw, 56px);
+            }
+            .match-card .match-team .team-name {
+                font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+            }
+            .match-card .match-score {
+                font-size: clamp(1rem, 1.6vw, 1.2rem);
+                padding: 4px 16px;
+            }
+            .match-card .match-vs {
+                font-size: clamp(1rem, 1.6vw, 1.3rem);
+            }
+            .match-card .match-label {
+                font-size: clamp(0.8rem, 1.2vw, 1rem);
+            }
+            .match-card .match-winner {
+                font-size: clamp(0.65rem, 0.9vw, 0.8rem);
+                padding: 4px 16px;
+            }
+            .match-card .match-winner img {
+                width: 18px;
+                height: 18px;
+            }
+            .match-card.champion-card .match-team img {
+                width: clamp(42px, 5.5vw, 60px);
+                height: clamp(42px, 5.5vw, 60px);
+            }
+            .match-card.champion-card .match-label {
+                font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+            }
+            .match-card.champion-card .match-score {
+                font-size: clamp(1rem, 1.6vw, 1.3rem);
+            }
+            .match-card.champion-card {
+                min-height: 150px;
+                padding: 14px 12px;
+            }
+            .score-input-group input {
+                width: 44px;
+                padding: 5px 4px;
+                font-size: 0.9rem;
+            }
+            .admin-actions .admin-btn {
+                font-size: clamp(0.6rem, 0.8vw, 0.75rem);
+                padding: 5px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .semi-grid {
+                gap: 12px;
             }
             .match-card {
                 padding: 12px 10px;
                 min-height: 130px;
+                border-radius: 16px;
             }
             .match-card .match-team img {
-                width: clamp(30px, 4.5vw, 42px);
-                height: clamp(30px, 4.5vw, 42px);
+                width: clamp(32px, 5.5vw, 42px);
+                height: clamp(32px, 5.5vw, 42px);
             }
             .match-card .match-team .team-name {
-                font-size: clamp(0.5rem, 0.9vw, 0.65rem);
+                font-size: clamp(0.5rem, 1vw, 0.65rem);
             }
             .match-card .match-score {
                 font-size: clamp(0.85rem, 1.4vw, 1rem);
                 padding: 3px 12px;
+                margin: 4px 0;
             }
             .match-card .match-vs {
-                font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+                font-size: clamp(0.85rem, 1.4vw, 1rem);
             }
             .match-card .match-label {
-                font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+                font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+                margin-bottom: 4px;
             }
             .match-card .match-winner {
-                font-size: clamp(0.55rem, 0.9vw, 0.7rem);
+                font-size: clamp(0.55rem, 1vw, 0.7rem);
                 padding: 3px 12px;
             }
             .match-card .match-winner img {
                 width: 16px;
                 height: 16px;
             }
-            .match-card.champion-card .match-team img {
-                width: clamp(34px, 5vw, 48px);
-                height: clamp(34px, 5vw, 48px);
-            }
-            .match-card.champion-card .match-label {
-                font-size: clamp(0.85rem, 1.3vw, 1.1rem);
-            }
-            .match-card.champion-card .match-score {
-                font-size: clamp(0.85rem, 1.4vw, 1.1rem);
-            }
-            .match-card.champion-card {
-                min-height: 120px;
-                padding: 10px 8px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .semi-grid {
-                gap: 10px;
-            }
-            .match-card {
-                padding: 10px 8px;
-                min-height: 110px;
-                border-radius: 16px;
-            }
-            .match-card .match-team img {
-                width: clamp(28px, 5.5vw, 36px);
-                height: clamp(28px, 5.5vw, 36px);
-            }
-            .match-card .match-team .team-name {
-                font-size: clamp(0.45rem, 1vw, 0.6rem);
-            }
-            .match-card .match-score {
-                font-size: clamp(0.75rem, 1.4vw, 0.9rem);
-                padding: 2px 10px;
-                margin: 4px 0;
-            }
-            .match-card .match-vs {
-                font-size: clamp(0.75rem, 1.4vw, 0.9rem);
-            }
-            .match-card .match-label {
-                font-size: clamp(0.6rem, 1.2vw, 0.8rem);
-                margin-bottom: 4px;
-            }
-            .match-card .match-winner {
-                font-size: clamp(0.5rem, 1vw, 0.65rem);
-                padding: 2px 10px;
-            }
-            .match-card .match-winner img {
-                width: 14px;
-                height: 14px;
-            }
             .match-card .match-teams {
-                gap: 6px;
+                gap: 8px;
             }
             .semi-connector .line {
                 max-width: 40px;
             }
             .semi-connector .arrow {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
             .match-card.champion-card .match-team img {
-                width: clamp(30px, 6vw, 40px);
-                height: clamp(30px, 6vw, 40px);
+                width: clamp(34px, 6vw, 44px);
+                height: clamp(34px, 6vw, 44px);
             }
             .match-card.champion-card .match-label {
-                font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+                font-size: clamp(0.8rem, 1.4vw, 1rem);
             }
             .match-card.champion-card .match-score {
-                font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+                font-size: clamp(0.85rem, 1.4vw, 1rem);
             }
             .match-card.champion-card {
-                min-height: 100px;
-                padding: 8px 6px;
-            }
-            .admin-actions .admin-btn {
-                font-size: 0.55rem;
-                padding: 4px 10px;
+                min-height: 110px;
+                padding: 10px 8px;
             }
             .score-input-group input {
-                width: 36px;
-                padding: 4px 2px;
-                font-size: 0.75rem;
+                width: 38px;
+                padding: 4px 3px;
+                font-size: 0.8rem;
             }
             .score-input-group label {
-                font-size: 0.65rem;
+                font-size: 0.7rem;
+            }
+            .admin-actions .admin-btn {
+                font-size: clamp(0.5rem, 0.8vw, 0.65rem);
+                padding: 4px 10px;
             }
             .score-input-group {
-                gap: 4px;
+                gap: 6px;
             }
             .match-card #semiMatch1AdminControls,
             .match-card #semiMatch2AdminControls {
-                margin-top: 4px;
-                padding-top: 4px;
+                margin-top: 6px;
+                padding-top: 6px;
             }
         }
 
         @media (max-width: 360px) {
             .match-card {
-                min-height: 90px;
-                padding: 6px 4px;
-                border-radius: 12px;
+                min-height: 100px;
+                padding: 8px 6px;
+                border-radius: 14px;
             }
             .match-card .match-team img {
-                width: 24px;
-                height: 24px;
-            }
-            .match-card .match-team .team-name {
-                font-size: 0.4rem;
-            }
-            .match-card .match-score {
-                font-size: 0.65rem;
-                padding: 1px 6px;
-            }
-            .match-card .match-vs {
-                font-size: 0.65rem;
-            }
-            .match-card .match-label {
-                font-size: 0.5rem;
-                margin-bottom: 2px;
-            }
-            .match-card .match-winner {
-                font-size: 0.4rem;
-                padding: 1px 6px;
-            }
-            .match-card .match-winner img {
-                width: 10px;
-                height: 10px;
-            }
-            .match-card.champion-card .match-team img {
                 width: 26px;
                 height: 26px;
             }
+            .match-card .match-team .team-name {
+                font-size: 0.45rem;
+            }
+            .match-card .match-score {
+                font-size: 0.7rem;
+                padding: 2px 8px;
+            }
+            .match-card .match-vs {
+                font-size: 0.7rem;
+            }
+            .match-card .match-label {
+                font-size: 0.55rem;
+                margin-bottom: 2px;
+            }
+            .match-card .match-winner {
+                font-size: 0.45rem;
+                padding: 2px 8px;
+            }
+            .match-card .match-winner img {
+                width: 12px;
+                height: 12px;
+            }
+            .match-card.champion-card .match-team img {
+                width: 28px;
+                height: 28px;
+            }
             .match-card.champion-card .match-label {
-                font-size: 0.65rem;
+                font-size: 0.7rem;
             }
             .match-card.champion-card .match-score {
-                font-size: 0.65rem;
+                font-size: 0.7rem;
             }
             .match-card.champion-card {
-                min-height: 80px;
-                padding: 4px 3px;
+                min-height: 90px;
+                padding: 6px 4px;
+            }
+            .score-input-group input {
+                width: 32px;
+                padding: 3px 2px;
+                font-size: 0.7rem;
+            }
+            .admin-actions .admin-btn {
+                font-size: 0.45rem;
+                padding: 3px 8px;
             }
         }
     </style>
@@ -972,11 +991,11 @@
                     <div class="match-teams" id="semiMatch1Teams"></div>
                     <div class="match-score" id="semiMatch1Score">-</div>
                     <div id="semiMatch1Winner"></div>
-                    <div id="semiMatch1AdminControls" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
+                    <div id="semiMatch1AdminControls" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
                         <div class="score-input-group">
                             <label>ئەنجام:</label>
                             <input type="number" id="semiMatch1HomeScore" min="0" placeholder="0">
-                            <span style="font-weight:700;color:#ff6b6b;font-size:0.9rem;">-</span>
+                            <span style="font-weight:700;color:#ff6b6b;font-size:1rem;">-</span>
                             <input type="number" id="semiMatch1AwayScore" min="0" placeholder="0">
                         </div>
                         <div class="admin-actions">
@@ -991,11 +1010,11 @@
                     <div class="match-teams" id="semiMatch2Teams"></div>
                     <div class="match-score" id="semiMatch2Score">-</div>
                     <div id="semiMatch2Winner"></div>
-                    <div id="semiMatch2AdminControls" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
+                    <div id="semiMatch2AdminControls" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
                         <div class="score-input-group">
                             <label>ئەنجام:</label>
                             <input type="number" id="semiMatch2HomeScore" min="0" placeholder="0">
-                            <span style="font-weight:700;color:#ff6b6b;font-size:0.9rem;">-</span>
+                            <span style="font-weight:700;color:#ff6b6b;font-size:1rem;">-</span>
                             <input type="number" id="semiMatch2AwayScore" min="0" placeholder="0">
                         </div>
                         <div class="admin-actions">
@@ -1012,7 +1031,7 @@
                 <div class="line"></div>
             </div>
             <div style="width:100%;max-width:700px;">
-                <div class="match-card champion-card" style="border-color:rgba(255,215,0,0.2);">
+                <div class="match-card champion-card" style="border-color:rgba(255,215,0,0.25);">
                     <div class="match-label" style="color:#ffd700;">🏆 Champion</div>
                     <div class="match-teams" id="championCardTeams">
                         <div class="match-team" id="championTeamA">
@@ -1027,11 +1046,11 @@
                     </div>
                     <div class="match-score" id="championScore">-</div>
                     <div id="championWinner"></div>
-                    <div id="championAdminControls" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
+                    <div id="championAdminControls" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
                         <div class="score-input-group">
                             <label>ئەنجام:</label>
                             <input type="number" id="championHomeScore" min="0" placeholder="0">
-                            <span style="font-weight:700;color:#ff6b6b;font-size:0.9rem;">-</span>
+                            <span style="font-weight:700;color:#ff6b6b;font-size:1rem;">-</span>
                             <input type="number" id="championAwayScore" min="0" placeholder="0">
                         </div>
                         <div class="admin-actions">
@@ -1318,11 +1337,11 @@
             let html = '';
             if (matchData.team1) {
                 html += `<div class="match-team selected"><img src="${matchData.team1.img}" onerror="this.src='https://via.placeholder.com/60/1a1a4e/fff?text=?'"><span class="team-name">${matchData.team1.name}</span></div>`;
-            } else { html += `<div class="match-team" style="opacity:0.3;min-width:50px;"><span>?</span></div>`; }
+            } else { html += `<div class="match-team" style="opacity:0.3;min-width:70px;"><span>?</span></div>`; }
             html += `<div class="match-vs">VS</div>`;
             if (matchData.team2) {
                 html += `<div class="match-team selected"><img src="${matchData.team2.img}" onerror="this.src='https://via.placeholder.com/60/1a1a4e/fff?text=?'"><span class="team-name">${matchData.team2.name}</span></div>`;
-            } else { html += `<div class="match-team" style="opacity:0.3;min-width:50px;"><span>?</span></div>`; }
+            } else { html += `<div class="match-team" style="opacity:0.3;min-width:70px;"><span>?</span></div>`; }
             container.innerHTML = html;
             const scoreEl = document.getElementById(scoreId);
             if (scoreEl) scoreEl.textContent = (matchData.homeScore !== null && matchData.awayScore !== null) ? `${matchData.homeScore} - ${matchData.awayScore}` : '-';
@@ -1331,7 +1350,7 @@
                 if (matchData.winner) {
                     winnerEl.innerHTML = `<div class="match-winner"><img src="${matchData.winner.img}" onerror="this.src='https://via.placeholder.com/30/1a1a4e/fff?text=?'"> براوە: ${matchData.winner.name} 🏆</div>`;
                 } else {
-                    winnerEl.innerHTML = `<div style="color:#888;margin-top:2px;font-size:0.7rem;">براوە دیاری نەکراوە</div>`;
+                    winnerEl.innerHTML = `<div style="color:#888;margin-top:4px;font-size:0.75rem;">براوە دیاری نەکراوە</div>`;
                 }
             }
         }
@@ -1388,7 +1407,7 @@
             if (cd.winner) {
                 wEl.innerHTML = `<div class="match-winner"><img src="${cd.winner.img}" onerror="this.src='https://via.placeholder.com/30/1a1a4e/fff?text=?'"> براوە: ${cd.winner.name} 🏆</div>`;
             } else {
-                wEl.innerHTML = `<div style="color:#888;margin-top:2px;font-size:0.7rem;">براوە دیاری نەکراوە</div>`;
+                wEl.innerHTML = `<div style="color:#888;margin-top:4px;font-size:0.75rem;">براوە دیاری نەکراوە</div>`;
             }
         }
 
