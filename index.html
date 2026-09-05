@@ -1346,6 +1346,82 @@
             }
         }
 
+        function updateChampionFromWinners() {
+            const group = currentSemiGroup;
+            const m1 = semiMatchData[group].match1;
+            const m2 = semiMatchData[group].match2;
+            const cd = championData[group];
+            
+            let updated = false;
+            
+            if (m1.winner) {
+                if (cd.teamA !== m1.winner) {
+                    cd.teamA = m1.winner;
+                    updated = true;
+                }
+            } else {
+                if (cd.teamA !== null) {
+                    cd.teamA = null;
+                    updated = true;
+                }
+            }
+            
+            if (m2.winner) {
+                if (cd.teamB !== m2.winner) {
+                    cd.teamB = m2.winner;
+                    updated = true;
+                }
+            } else {
+                if (cd.teamB !== null) {
+                    cd.teamB = null;
+                    updated = true;
+                }
+            }
+            
+            if (updated) {
+                cd.winner = null;
+                cd.homeScore = null;
+                cd.awayScore = null;
+                saveSemiDataToFirebase();
+            }
+        }
+
+        function renderChampionCard() {
+            const group = currentSemiGroup;
+            const cd = championData[group];
+            const tA = cd.teamA, tB = cd.teamB;
+            const champAImg = document.getElementById('championAImg');
+            const champAName = document.getElementById('championAName');
+            const champBImg = document.getElementById('championBImg');
+            const champBName = document.getElementById('championBName');
+            const champScore = document.getElementById('championScore');
+            const champWinner = document.getElementById('championWinner');
+            
+            if (tA) {
+                champAImg.src = tA.img || 'https://via.placeholder.com/60/1a1a4e/fff?text=?';
+                champAName.textContent = tA.name;
+            } else {
+                champAImg.src = 'https://via.placeholder.com/60/1a1a4e/fff?text=?';
+                champAName.textContent = 'براوەی یاری ١';
+            }
+            
+            if (tB) {
+                champBImg.src = tB.img || 'https://via.placeholder.com/60/1a1a4e/fff?text=?';
+                champBName.textContent = tB.name;
+            } else {
+                champBImg.src = 'https://via.placeholder.com/60/1a1a4e/fff?text=?';
+                champBName.textContent = 'براوەی یاری ٢';
+            }
+            
+            champScore.textContent = (cd.homeScore !== null && cd.awayScore !== null) ? `${cd.homeScore} - ${cd.awayScore}` : '-';
+            
+            if (cd.winner) {
+                champWinner.innerHTML = `<div class="match-winner"><img src="${cd.winner.img}" onerror="this.src='https://via.placeholder.com/30/1a1a4e/fff?text=?'"> براوە: ${cd.winner.name} 🏆</div>`;
+            } else {
+                champWinner.innerHTML = `<div style="color:#888;margin-top:3px;font-size:0.7rem;">براوە دیاری نەکراوە</div>`;
+            }
+        }
+
         function renderSemiFinals() {
             const m1 = semiMatchData[currentSemiGroup].match1;
             const m2 = semiMatchData[currentSemiGroup].match2;
@@ -1356,50 +1432,6 @@
             ['semiMatch1AdminControls','semiMatch2AdminControls','championAdminControls'].forEach(id => {
                 document.getElementById(id).style.display = isAdmin ? 'block' : 'none';
             });
-        }
-
-        function updateChampionFromWinners() {
-            const group = currentSemiGroup;
-            const m1 = semiMatchData[group].match1;
-            const m2 = semiMatchData[group].match2;
-            if (m1.winner && m2.winner) {
-                const currentChampion = championData[group];
-                if (currentChampion.teamA !== m1.winner || currentChampion.teamB !== m2.winner) {
-                    currentChampion.teamA = m1.winner;
-                    currentChampion.teamB = m2.winner;
-                    currentChampion.winner = null;
-                    currentChampion.homeScore = null;
-                    currentChampion.awayScore = null;
-                    saveSemiDataToFirebase();
-                }
-            } else {
-                const currentChampion = championData[group];
-                if (currentChampion.teamA !== null || currentChampion.teamB !== null) {
-                    currentChampion.teamA = null;
-                    currentChampion.teamB = null;
-                    currentChampion.winner = null;
-                    currentChampion.homeScore = null;
-                    currentChampion.awayScore = null;
-                    saveSemiDataToFirebase();
-                }
-            }
-        }
-
-        function renderChampionCard() {
-            const group = currentSemiGroup;
-            const cd = championData[group];
-            const tA = cd.teamA, tB = cd.teamB;
-            document.getElementById('championAImg').src = tA ? tA.img : 'https://via.placeholder.com/60/1a1a4e/fff?text=?';
-            document.getElementById('championAName').textContent = tA ? tA.name : 'براوەی یاری ١';
-            document.getElementById('championBImg').src = tB ? tB.img : 'https://via.placeholder.com/60/1a1a4e/fff?text=?';
-            document.getElementById('championBName').textContent = tB ? tB.name : 'براوەی یاری ٢';
-            document.getElementById('championScore').textContent = (cd.homeScore !== null && cd.awayScore !== null) ? `${cd.homeScore} - ${cd.awayScore}` : '-';
-            const wEl = document.getElementById('championWinner');
-            if (cd.winner) {
-                wEl.innerHTML = `<div class="match-winner"><img src="${cd.winner.img}" onerror="this.src='https://via.placeholder.com/30/1a1a4e/fff?text=?'"> براوە: ${cd.winner.name} 🏆</div>`;
-            } else {
-                wEl.innerHTML = `<div style="color:#888;margin-top:3px;font-size:0.7rem;">براوە دیاری نەکراوە</div>`;
-            }
         }
 
         function renderFinal() {
@@ -1752,7 +1784,14 @@
                     Object.keys(semiMatchData).forEach(g => {
                         if (val.semiMatchData[g]) {
                             Object.keys(semiMatchData[g]).forEach(m => {
-                                if (val.semiMatchData[g][m]) semiMatchData[g][m] = val.semiMatchData[g][m];
+                                if (val.semiMatchData[g][m]) {
+                                    const match = val.semiMatchData[g][m];
+                                    semiMatchData[g][m].team1 = match.team1 || null;
+                                    semiMatchData[g][m].team2 = match.team2 || null;
+                                    semiMatchData[g][m].winner = match.winner || null;
+                                    semiMatchData[g][m].homeScore = match.homeScore !== undefined ? match.homeScore : null;
+                                    semiMatchData[g][m].awayScore = match.awayScore !== undefined ? match.awayScore : null;
+                                }
                             });
                         }
                     });
@@ -1760,15 +1799,22 @@
                 if (val && val.championData) {
                     Object.keys(championData).forEach(g => {
                         if (val.championData[g]) {
-                            championData[g].teamA = val.championData[g].teamA;
-                            championData[g].teamB = val.championData[g].teamB;
-                            championData[g].winner = val.championData[g].winner;
-                            championData[g].homeScore = val.championData[g].homeScore;
-                            championData[g].awayScore = val.championData[g].awayScore;
+                            const cd = val.championData[g];
+                            championData[g].teamA = cd.teamA || null;
+                            championData[g].teamB = cd.teamB || null;
+                            championData[g].winner = cd.winner || null;
+                            championData[g].homeScore = cd.homeScore !== undefined ? cd.homeScore : null;
+                            championData[g].awayScore = cd.awayScore !== undefined ? cd.awayScore : null;
                         }
                     });
                 }
-                if (val && val.final) finalData = val.final;
+                if (val && val.final) {
+                    finalData.teamA = val.final.teamA || null;
+                    finalData.teamB = val.final.teamB || null;
+                    finalData.winner = val.final.winner || null;
+                    finalData.homeScore = val.final.homeScore !== undefined ? val.final.homeScore : null;
+                    finalData.awayScore = val.final.awayScore !== undefined ? val.final.awayScore : null;
+                }
                 renderAll();
                 renderSemiFinals();
                 renderFinal();
