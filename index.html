@@ -5,14 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>دیتەڵی تۆپی پێ</title>
     <style>
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
         body {
             background: linear-gradient(135deg, #0a0a2e, #1a1a4e, #0a0a2e);
             min-height: 100vh;
@@ -20,23 +13,21 @@
             padding: 12px;
             direction: rtl;
         }
-
-        /* ===== HEADER ===== */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255,255,255,0.08);
             flex-wrap: wrap;
             gap: 10px;
         }
         .header h1 {
-            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-size: clamp(1.3rem, 5vw, 2rem);
             background: linear-gradient(90deg, #ff6b6b, #ffd93d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -54,44 +45,23 @@
             border: none;
             padding: 8px 16px;
             border-radius: 50px;
-            font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+            font-size: clamp(0.7rem, 1.6vw, 0.9rem);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgba(102,126,234,0.3);
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        .admin-btn:hover {
-            transform: translateY(-2px) scale(1.04);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
-        }
-        .admin-btn.logout {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
-            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
-        }
-        .admin-btn.semi-btn {
-            background: linear-gradient(135deg, #f7971e, #ffd200);
-            box-shadow: 0 4px 12px rgba(247, 151, 30, 0.3);
-            color: #1a1a4e;
-        }
-        .admin-btn.final-btn {
-            background: linear-gradient(135deg, #fc4a1a, #f7b733);
-            box-shadow: 0 4px 12px rgba(252, 74, 26, 0.3);
-        }
-        .admin-btn.reset-btn {
-            background: linear-gradient(135deg, #e17055, #d63031);
-            box-shadow: 0 4px 12px rgba(225, 112, 85, 0.3);
-        }
-        .admin-btn.winner-btn {
-            background: linear-gradient(135deg, #ffd700, #f7c948);
-            color: #1a1a4e;
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
-        }
+        .admin-btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 20px rgba(102,126,234,0.5); }
+        .admin-btn.logout { background: linear-gradient(135deg, #f093fb, #f5576c); box-shadow: 0 4px 12px rgba(245,87,108,0.3); }
+        .admin-btn.semi-btn { background: linear-gradient(135deg, #f7971e, #ffd200); box-shadow: 0 4px 12px rgba(247,151,30,0.3); color: #1a1a4e; }
+        .admin-btn.final-btn { background: linear-gradient(135deg, #fc4a1a, #f7b733); box-shadow: 0 4px 12px rgba(252,74,26,0.3); }
+        .admin-btn.reset-btn { background: linear-gradient(135deg, #e17055, #d63031); box-shadow: 0 4px 12px rgba(225,112,85,0.3); }
+        .admin-btn.winner-btn { background: linear-gradient(135deg, #ffd700, #f7c948); color: #1a1a4e; box-shadow: 0 4px 12px rgba(255,215,0,0.3); }
 
-        /* ===== GROUPS CONTAINER (standings) ===== */
         .groups-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -100,160 +70,143 @@
             margin: 0 auto;
         }
         .group-card {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             backdrop-filter: blur(8px);
             border-radius: 20px;
             padding: 16px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
             transition: all 0.25s ease;
             overflow: hidden;
         }
-        .group-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
+        .group-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.15); }
         .group-title {
             text-align: center;
-            font-size: clamp(1.2rem, 2.8vw, 2rem);
+            font-size: clamp(1.3rem, 3.2vw, 2rem);
             font-weight: 800;
             padding: 8px 0 14px;
             margin-bottom: 12px;
-            border-bottom: 3px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 3px solid rgba(255,255,255,0.08);
             background: linear-gradient(90deg, #ffd93d, #ff6b6b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 1px;
         }
 
-        /* ===== TABLE ===== */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 14px;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0,0,0,0.25);
             -webkit-overflow-scrolling: touch;
             margin: 0 -4px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 480px;
+            min-width: 420px;
         }
         th {
-            background: rgba(102, 126, 234, 0.2);
-            padding: 10px 4px;
-            font-size: clamp(0.6rem, 1vw, 0.75rem);
+            background: rgba(102,126,234,0.2);
+            padding: 12px 6px;
+            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
             font-weight: 700;
             text-transform: uppercase;
             color: #ffd93d;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 2px solid rgba(255,255,255,0.06);
             letter-spacing: 0.5px;
             white-space: nowrap;
         }
         td {
-            padding: 8px 4px;
+            padding: 10px 6px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             vertical-align: middle;
-            font-size: clamp(0.65rem, 1.1vw, 0.85rem);
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
         }
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.04);
-        }
+        tr:hover td { background: rgba(255,255,255,0.04); }
 
-        /* team cell */
         .team-info {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             justify-content: center;
-            min-width: 110px;
+            min-width: 120px;
             cursor: pointer;
-            padding: 2px 0;
+            padding: 4px 0;
         }
-        .team-info:hover .team-img {
-            transform: scale(1.1);
-            border-color: #ffd93d;
-        }
+        .team-info:hover .team-img { transform: scale(1.1); border-color: #ffd93d; }
         .team-img {
-            width: clamp(28px, 3.2vw, 42px);
-            height: clamp(28px, 3.2vw, 42px);
+            width: clamp(32px, 4vw, 44px);
+            height: clamp(32px, 4vw, 44px);
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255,255,255,0.15);
             transition: all 0.3s ease;
             flex-shrink: 0;
             background: #1a1a4e;
         }
         .team-name {
             font-weight: 600;
-            font-size: clamp(0.65rem, 1vw, 0.85rem);
+            font-size: clamp(0.75rem, 1.2vw, 0.95rem);
             line-height: 1.2;
         }
 
-        /* ranking badges */
         .rank-badge {
             display: inline-block;
             background: linear-gradient(135deg, #ffd93d, #f6b93b);
             color: #1a1a4e;
             font-weight: 800;
-            width: clamp(24px, 2.6vw, 32px);
-            height: clamp(24px, 2.6vw, 32px);
-            line-height: clamp(24px, 2.6vw, 32px);
+            width: clamp(28px, 3vw, 36px);
+            height: clamp(28px, 3vw, 36px);
+            line-height: clamp(28px, 3vw, 36px);
             border-radius: 50%;
             text-align: center;
-            font-size: clamp(0.7rem, 1vw, 0.85rem);
+            font-size: clamp(0.75rem, 1.1vw, 0.9rem);
         }
-        .rank-1 { background: linear-gradient(135deg, #ffd700, #f7c948); color: #1a1a4e; }
-        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a8a8a8); color: #1a1a4e; }
-        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b87333); color: #1a1a4e; }
+        .rank-1 { background: linear-gradient(135deg, #ffd700, #f7c948); }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a8a8a8); }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b87333); }
 
-        .points {
-            font-weight: 800;
-            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
-            color: #ffd93d;
-        }
-        .goals {
-            font-weight: 600;
-        }
+        .points { font-weight: 800; font-size: clamp(1rem, 1.6vw, 1.3rem); color: #ffd93d; }
+        .goals { font-weight: 600; }
         .gd-positive { color: #00b894; }
         .gd-negative { color: #e17055; }
 
-        /* ===== RESPONSIVE TWEAKS FOR STANDINGS ===== */
         @media (max-width: 992px) {
             .groups-container { gap: 16px; }
+            table { min-width: 380px; }
         }
         @media (max-width: 768px) {
             .groups-container { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
             .header { flex-direction: column; align-items: stretch; }
             .header h1 { text-align: center; }
             .header-buttons { justify-content: center; }
-            table { min-width: 380px; }
-            .team-info { min-width: 90px; gap: 5px; }
+            table { min-width: 360px; }
+            .team-info { min-width: 100px; gap: 6px; }
+            .group-card { padding: 14px 10px; }
         }
         @media (max-width: 480px) {
             body { padding: 8px; }
             .header { padding: 10px 14px; }
-            .group-card { padding: 12px 8px; }
+            .group-card { padding: 12px 6px; }
             table { min-width: 300px; }
-            th, td { padding: 5px 2px; font-size: 0.6rem; }
-            .team-img { width: 24px; height: 24px; }
-            .team-name { font-size: 0.6rem; }
-            .rank-badge { width: 20px; height: 20px; line-height: 20px; font-size: 0.6rem; }
-            .points { font-size: 0.85rem; }
-            .admin-btn { font-size: 0.65rem; padding: 6px 12px; }
+            th, td { padding: 8px 4px; font-size: 0.65rem; }
+            .team-img { width: 28px; height: 28px; }
+            .team-name { font-size: 0.65rem; }
+            .rank-badge { width: 24px; height: 24px; line-height: 24px; font-size: 0.65rem; }
+            .points { font-size: 0.9rem; }
+            .admin-btn { font-size: 0.6rem; padding: 5px 10px; }
         }
         @media (max-width: 360px) {
             table { min-width: 260px; }
-            th { font-size: 0.5rem; padding: 4px 2px; }
-            td { font-size: 0.5rem; padding: 4px 2px; }
-            .team-img { width: 20px; height: 20px; }
-            .team-name { font-size: 0.5rem; }
-            .rank-badge { width: 18px; height: 18px; line-height: 18px; font-size: 0.5rem; }
-            .points { font-size: 0.7rem; }
+            th { font-size: 0.55rem; padding: 6px 3px; }
+            td { font-size: 0.55rem; padding: 6px 3px; }
+            .team-img { width: 24px; height: 24px; }
+            .team-name { font-size: 0.55rem; }
+            .rank-badge { width: 20px; height: 20px; line-height: 20px; font-size: 0.55rem; }
+            .points { font-size: 0.75rem; }
         }
 
-        /* ===== SEMI & FINAL (unchanged but responsive) ===== */
         .page-container { display: none; max-width: 1200px; margin: 0 auto; padding: 10px; }
         .page-container.active { display: block; }
         .back-btn {
@@ -269,7 +222,6 @@
         }
         .back-btn:hover { background: rgba(255,255,255,0.15); }
 
-        /* semi / final containers */
         .semi-final-container, .final-container {
             display: flex;
             flex-direction: column;
@@ -293,7 +245,7 @@
             width: 100%;
             max-width: 1000px;
         }
-        .match-card-semi {
+        .match-card {
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(8px);
             border-radius: 20px;
@@ -303,21 +255,21 @@
             text-align: center;
             transition: 0.3s;
         }
-        .match-card-semi:hover { transform: translateY(-4px); border-color: rgba(255,217,61,0.2); }
-        .match-card-semi .match-label {
+        .match-card:hover { transform: translateY(-4px); border-color: rgba(255,217,61,0.2); }
+        .match-card .match-label {
             font-size: clamp(1rem, 1.8vw, 1.4rem);
             font-weight: 700;
             color: #ffd93d;
             margin-bottom: 12px;
         }
-        .match-card-semi .match-teams {
+        .match-card .match-teams {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
         }
-        .match-card-semi .match-team {
+        .match-card .match-team {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -328,7 +280,7 @@
             transition: 0.3s;
             cursor: default;
         }
-        .match-card-semi .match-team img {
+        .match-card .match-team img {
             width: clamp(40px, 5vw, 70px);
             height: clamp(40px, 5vw, 70px);
             border-radius: 50%;
@@ -337,14 +289,14 @@
             transition: 0.3s;
             background: #1a1a4e;
         }
-        .match-card-semi .match-team img:hover { transform: scale(1.08); border-color: #ffd93d; }
-        .match-card-semi .match-vs {
+        .match-card .match-team img:hover { transform: scale(1.08); border-color: #ffd93d; }
+        .match-card .match-vs {
             font-size: clamp(1.2rem, 2.2vw, 2rem);
             font-weight: 800;
             color: #ff6b6b;
             padding: 0 6px;
         }
-        .match-card-semi .match-score {
+        .match-card .match-score {
             font-size: clamp(1.2rem, 2.2vw, 2rem);
             font-weight: 900;
             color: #fff;
@@ -354,7 +306,7 @@
             border-radius: 10px;
             display: inline-block;
         }
-        .match-card-semi .match-winner {
+        .match-card .match-winner {
             margin-top: 8px;
             padding: 6px 16px;
             background: linear-gradient(135deg, #ffd700, #f7c948);
@@ -364,7 +316,7 @@
             display: inline-block;
             font-size: clamp(0.8rem, 1.1vw, 1rem);
         }
-        .match-card-semi .match-winner img {
+        .match-card .match-winner img {
             width: 26px;
             height: 26px;
             border-radius: 50%;
@@ -393,7 +345,6 @@
         }
         @keyframes pulse { 0%,100%{opacity:0.5;transform:scale(1);} 50%{opacity:1;transform:scale(1.15);} }
 
-        /* FINAL CARD */
         .final-card {
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(8px);
@@ -475,7 +426,6 @@
             margin-left: 8px;
         }
 
-        /* ===== MODALS (unchanged but responsive) ===== */
         .modal {
             display: none;
             position: fixed;
@@ -560,7 +510,6 @@
         }
         .modal-content .close-modal:hover { color: #fff; }
 
-        /* edit form */
         .edit-form-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -588,7 +537,6 @@
         }
         .save-edit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,184,148,0.3); }
 
-        /* team selector grid */
         .team-select-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -627,7 +575,6 @@
         }
         .team-select-item.selected .select-badge { background: #ffd700; color: #1a1a4e; }
 
-        /* team info modal */
         .team-info-modal .team-info-header {
             display: flex;
             align-items: center;
@@ -700,7 +647,6 @@
         }
         .team-info-modal .goals-edit-group input:focus { border-color: #ffd93d; }
 
-        /* admin controls inside semi/final */
         .admin-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
         .admin-actions .admin-btn { font-size: clamp(0.6rem, 0.9vw, 0.75rem); padding: 6px 14px; }
         .score-input-group {
@@ -726,7 +672,6 @@
         .score-input-group input:focus { border-color: #ffd93d; outline: none; }
         .score-input-group label { font-size: 0.8rem; color: #aaa; margin-bottom: 0; }
 
-        /* toast */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -748,12 +693,10 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        /* scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 8px; }
         ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; }
 
-        /* loading */
         .loading { text-align: center; padding: 30px; color: #aaa; font-size: 1.1rem; }
         .combo-group { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 14px; }
         .combo-group select {
@@ -766,91 +709,10 @@
             outline: none;
         }
         .combo-group select option { background: #1a1a4e; }
-        
-        /* Match cards inside semi */
-        .match-card {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 18px 12px;
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-            text-align: center;
-            transition: 0.3s;
-        }
-        .match-card:hover { transform: translateY(-4px); border-color: rgba(255,217,61,0.2); }
-        .match-card .match-label {
-            font-size: clamp(1rem, 1.8vw, 1.4rem);
-            font-weight: 700;
-            color: #ffd93d;
-            margin-bottom: 12px;
-        }
-        .match-card .match-teams {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .match-card .match-team {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            min-width: 60px;
-            padding: 6px 8px;
-            border-radius: 12px;
-            transition: 0.3s;
-            cursor: default;
-        }
-        .match-card .match-team img {
-            width: clamp(40px, 5vw, 70px);
-            height: clamp(40px, 5vw, 70px);
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.15);
-            transition: 0.3s;
-            background: #1a1a4e;
-        }
-        .match-card .match-team img:hover { transform: scale(1.08); border-color: #ffd93d; }
-        .match-card .match-vs {
-            font-size: clamp(1.2rem, 2.2vw, 2rem);
-            font-weight: 800;
-            color: #ff6b6b;
-            padding: 0 6px;
-        }
-        .match-card .match-score {
-            font-size: clamp(1.2rem, 2.2vw, 2rem);
-            font-weight: 900;
-            color: #fff;
-            margin: 8px 0;
-            background: rgba(0,0,0,0.25);
-            padding: 4px 16px;
-            border-radius: 10px;
-            display: inline-block;
-        }
-        .match-card .match-winner {
-            margin-top: 8px;
-            padding: 6px 16px;
-            background: linear-gradient(135deg, #ffd700, #f7c948);
-            border-radius: 30px;
-            color: #1a1a4e;
-            font-weight: 700;
-            display: inline-block;
-            font-size: clamp(0.8rem, 1.1vw, 1rem);
-        }
-        .match-card .match-winner img {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            vertical-align: middle;
-            margin-left: 6px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
     <header class="header">
         <h1>⚽ دیتەڵی تۆپی پێ</h1>
         <div class="header-buttons">
@@ -860,10 +722,8 @@
         </div>
     </header>
 
-    <!-- ===== GROUPS (standings) ===== -->
     <div class="groups-container" id="groupsContainer">
         <div class="loading" id="loadingIndicator">⏳ بارکردنی داتاکان...</div>
-
         <div class="group-card" id="groupA" style="display:none;">
             <div class="group-title">گرووپ A</div>
             <div class="table-wrapper">
@@ -873,7 +733,6 @@
                 </table>
             </div>
         </div>
-
         <div class="group-card" id="groupB" style="display:none;">
             <div class="group-title">گرووپ B</div>
             <div class="table-wrapper">
@@ -885,7 +744,6 @@
         </div>
     </div>
 
-    <!-- ===== SEMI FINAL PAGE ===== -->
     <div class="page-container" id="semiFinalPage">
         <button class="back-btn" onclick="showMainPage()">🔙 گەڕانەوە بۆ پەڕەی سەرەکی</button>
         <div class="semi-final-container">
@@ -942,7 +800,6 @@
                 <div class="arrow">⬇️</div>
                 <div class="line"></div>
             </div>
-            <!-- Champion Card for selected group -->
             <div style="width:100%;max-width:700px;">
                 <div class="match-card" style="border-color:rgba(255,215,0,0.2);">
                     <div class="match-label" style="color:#ffd700;font-size:clamp(1.2rem,2.2vw,1.8rem);">🏆 Champion</div>
@@ -977,7 +834,6 @@
         </div>
     </div>
 
-    <!-- ===== FINAL PAGE ===== -->
     <div class="page-container" id="finalPage">
         <button class="back-btn" onclick="showMainPage()">🔙 گەڕانەوە بۆ پەڕەی سەرەکی</button>
         <div class="final-container">
@@ -1025,8 +881,6 @@
         </div>
     </div>
 
-    <!-- ===== MODALS ===== -->
-    <!-- Semi Team Selector -->
     <div class="modal" id="semiTeamSelectorModal">
         <div class="modal-content wide">
             <h2>🏆 هەڵبژاردنی یانە بۆ نیوە کۆتایی</h2>
@@ -1043,7 +897,6 @@
         </div>
     </div>
 
-    <!-- Final Team Selector -->
     <div class="modal" id="finalTeamSelectorModal">
         <div class="modal-content wide">
             <h2>🏆 هەڵبژاردنی یانە بۆ کۆتایی</h2>
@@ -1060,7 +913,6 @@
         </div>
     </div>
 
-    <!-- Team Info Modal -->
     <div class="modal" id="teamInfoModal">
         <div class="modal-content team-info-modal">
             <div class="team-info-header">
@@ -1095,7 +947,6 @@
         </div>
     </div>
 
-    <!-- Login Modal -->
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <h2>🔑 چوونە ژوورەوە</h2>
@@ -1108,7 +959,6 @@
         </div>
     </div>
 
-    <!-- Edit Modal -->
     <div class="modal edit-modal" id="editModal">
         <div class="modal-content">
             <h2>✏️ دەستکاری دیتەڵ</h2>
@@ -1122,7 +972,6 @@
         </div>
     </div>
 
-    <!-- ===== FIREBASE + APP ===== -->
     <script type="importmap">
         {
             "imports": {
@@ -1164,10 +1013,7 @@
             ]
         };
 
-        // ===== DATA STRUCTURES =====
         let data = { A: [], B: [] };
-        
-        // Semi match data per group - each group has 2 matches
         const semiMatchData = {
             A: {
                 match1: { team1: null, team2: null, winner: null, homeScore: null, awayScore: null },
@@ -1178,39 +1024,19 @@
                 match2: { team1: null, team2: null, winner: null, homeScore: null, awayScore: null }
             }
         };
-
-        // Champion data per group - each group has its own champion match
         const championData = {
-            A: {
-                teamA: null,
-                teamB: null,
-                winner: null,
-                homeScore: null,
-                awayScore: null
-            },
-            B: {
-                teamA: null,
-                teamB: null,
-                winner: null,
-                homeScore: null,
-                awayScore: null
-            }
+            A: { teamA: null, teamB: null, winner: null, homeScore: null, awayScore: null },
+            B: { teamA: null, teamB: null, winner: null, homeScore: null, awayScore: null }
         };
-
-        // Final data (separate from group logic)
         let finalData = { teamA: null, teamB: null, winner: null, homeScore: null, awayScore: null };
-        
-        // Temp selections
         const tempSemiSelections = {
             A: { match1: { team1: null, team2: null }, match2: { team1: null, team2: null } },
             B: { match1: { team1: null, team2: null }, match2: { team1: null, team2: null } }
         };
         let tempFinalSelection = { teamA: null, teamB: null };
-        
-        // State
         let isAdmin = false;
         let currentSemiGroup = 'A';
-        let currentSemiMatchId = 1; // 1 or 2
+        let currentSemiMatchId = 1;
         let selectedFinalGroup = 'A';
         let currentTeamInfo = null;
 
@@ -1218,7 +1044,6 @@
         const groupA = document.getElementById('groupA');
         const groupB = document.getElementById('groupB');
 
-        // ===== HELPERS =====
         function sortTeams(teams) {
             return [...teams].sort((a, b) => {
                 if (b.points !== a.points) return b.points - a.points;
@@ -1230,7 +1055,6 @@
         function getAllTeams() { return [...data.A, ...data.B]; }
         function findTeamByName(name) { return getAllTeams().find(t => t.name === name) || null; }
 
-        // ===== RENDER GROUPS =====
         function renderGroup(groupKey) {
             const tbody = document.getElementById(`group${groupKey}Tbody`);
             if (!tbody) return;
@@ -1274,7 +1098,6 @@
             groupB.style.display = 'block';
         }
 
-        // ===== SEMI RENDER =====
         function renderSemiMatch(matchNumber, matchData) {
             const containerId = matchNumber === 1 ? 'semiMatch1Teams' : 'semiMatch2Teams';
             const scoreId = matchNumber === 1 ? 'semiMatch1Score' : 'semiMatch2Score';
@@ -1307,10 +1130,7 @@
             const m2 = semiMatchData[currentSemiGroup].match2;
             renderSemiMatch(1, m1);
             renderSemiMatch(2, m2);
-            
-            // Auto-update champion from winners
             updateChampionFromWinners();
-            
             renderChampionCard();
             ['semiMatch1AdminControls','semiMatch2AdminControls','championAdminControls'].forEach(id => {
                 document.getElementById(id).style.display = isAdmin ? 'block' : 'none';
@@ -1321,23 +1141,17 @@
             const group = currentSemiGroup;
             const m1 = semiMatchData[group].match1;
             const m2 = semiMatchData[group].match2;
-            
-            // Only update if both winners exist
             if (m1.winner && m2.winner) {
-                // Check if winners have changed
                 const currentChampion = championData[group];
                 if (currentChampion.teamA !== m1.winner || currentChampion.teamB !== m2.winner) {
-                    // Reset champion match when teams change
                     currentChampion.teamA = m1.winner;
                     currentChampion.teamB = m2.winner;
                     currentChampion.winner = null;
                     currentChampion.homeScore = null;
                     currentChampion.awayScore = null;
-                    // Save to Firebase
                     saveSemiDataToFirebase();
                 }
             } else {
-                // If any winner is missing, clear champion teams
                 const currentChampion = championData[group];
                 if (currentChampion.teamA !== null || currentChampion.teamB !== null) {
                     currentChampion.teamA = null;
@@ -1367,9 +1181,7 @@
             }
         }
 
-        // ===== FINAL RENDER =====
         function renderFinal() {
-            // Final is independent - uses finalData
             document.getElementById('finalTeamAImg').src = finalData.teamA ? finalData.teamA.img : 'https://via.placeholder.com/80/1a1a4e/fff?text=?';
             document.getElementById('finalTeamAName').textContent = finalData.teamA ? finalData.teamA.name : '-';
             document.getElementById('finalTeamBImg').src = finalData.teamB ? finalData.teamB.img : 'https://via.placeholder.com/80/1a1a4e/fff?text=?';
@@ -1389,7 +1201,6 @@
             document.getElementById('finalAdminControls').style.display = isAdmin ? 'block' : 'none';
         }
 
-        // ===== GLOBAL FUNCTIONS (exposed) =====
         window.showMainPage = function() {
             document.getElementById('groupsContainer').style.display = 'grid';
             document.getElementById('semiFinalPage').classList.remove('active');
@@ -1472,7 +1283,6 @@
             showToast('✅ ژمارەکانی جام پاشەکەوت کران!', 'success');
         };
 
-        // SEMI team selector
         window.openSemiTeamSelector = function(matchNumber) {
             if (!isAdmin) { showToast('❌ تۆ ئەدمین نیت!', 'error'); return; }
             currentSemiMatchId = matchNumber;
@@ -1534,7 +1344,6 @@
             document.getElementById('semiTeamSelectorModal').classList.remove('active');
         };
 
-        // SEMI score / reset
         window.setSemiMatchScore = function(matchNumber) {
             if (!isAdmin) { showToast('❌ تۆ ئەدمین نیت!', 'error'); return; }
             const mk = matchNumber === 1 ? 'match1' : 'match2';
@@ -1562,7 +1371,6 @@
             showToast('🔄 یاری ڕێست کرا!', 'success');
         };
 
-        // CHAMPION
         window.setChampionScore = function() {
             if (!isAdmin) { showToast('❌ تۆ ئەدمین نیت!', 'error'); return; }
             const cd = championData[currentSemiGroup];
@@ -1580,8 +1388,7 @@
             if (!isAdmin) { showToast('❌ تۆ ئەدمین نیت!', 'error'); return; }
             const cd = championData[currentSemiGroup];
             if (!cd.teamA || !cd.teamB) { showToast('❌ پێویستە دوو یانە هەڵبژێریت!', 'error'); return; }
-            cd.winner = cd.winner === cd.teamA ? cd.teamB :
-                                  cd.winner === cd.teamB ? cd.teamA : cd.teamA;
+            cd.winner = cd.winner === cd.teamA ? cd.teamB : cd.winner === cd.teamB ? cd.teamA : cd.teamA;
             renderChampionCard();
             saveSemiDataToFirebase();
             showToast(`✅ براوە دیاری کرا: ${cd.winner.name}`, 'success');
@@ -1597,7 +1404,6 @@
             showToast('🔄 Champion ڕێست کرا!', 'success');
         };
 
-        // FINAL
         window.toggleFinalTeam = function(index) {
             if (!isAdmin) { showToast('❌ تۆ ئەدمین نیت!', 'error'); return; }
             openFinalTeamSelector();
@@ -1617,8 +1423,7 @@
         window.setFinalWinnerManual = function() {
             if (!isAdmin) { showToast('❌ تۆ ئەدمین نیت!', 'error'); return; }
             if (!finalData.teamA || !finalData.teamB) { showToast('❌ پێویستە دوو یانە هەڵبژێریت!', 'error'); return; }
-            finalData.winner = finalData.winner === finalData.teamA ? finalData.teamB :
-                              finalData.winner === finalData.teamB ? finalData.teamA : finalData.teamA;
+            finalData.winner = finalData.winner === finalData.teamA ? finalData.teamB : finalData.winner === finalData.teamB ? finalData.teamA : finalData.teamA;
             renderFinal();
             saveFinalDataToFirebase();
             showToast(`✅ براوە دیاری کرا: ${finalData.winner.name}`, 'success');
@@ -1633,7 +1438,6 @@
             showToast('🔄 کۆتایی ڕێست کرا!', 'success');
         };
 
-        // FINAL team selector
         window.openFinalTeamSelector = function() {
             if (!isAdmin) { showToast('❌ تۆ ئەدمین نیت!', 'error'); return; }
             tempFinalSelection.teamA = finalData.teamA ? { ...finalData.teamA } : null;
@@ -1687,7 +1491,6 @@
             document.getElementById('finalTeamSelectorModal').classList.remove('active');
         };
 
-        // ===== TOAST =====
         function showToast(msg, type = 'success') {
             const old = document.querySelector('.toast');
             if (old) old.remove();
@@ -1698,32 +1501,19 @@
             setTimeout(() => t.remove(), 3500);
         }
 
-        // ===== FIREBASE =====
         function saveSemiDataToFirebase() {
             return set(ref(db, 'footballData'), { 
-                A: data.A, 
-                B: data.B, 
-                semiMatchData, 
-                championData, 
-                final: finalData 
+                A: data.A, B: data.B, semiMatchData, championData, final: finalData 
             });
         }
         function saveFinalDataToFirebase() {
             return set(ref(db, 'footballData'), { 
-                A: data.A, 
-                B: data.B, 
-                semiMatchData, 
-                championData, 
-                final: finalData 
+                A: data.A, B: data.B, semiMatchData, championData, final: finalData 
             });
         }
         function saveAllDataToFirebase() {
             return set(ref(db, 'footballData'), { 
-                A: data.A, 
-                B: data.B, 
-                semiMatchData, 
-                championData, 
-                final: finalData 
+                A: data.A, B: data.B, semiMatchData, championData, final: finalData 
             });
         }
 
@@ -1769,7 +1559,6 @@
             });
         }
 
-        // ===== ADMIN LOGIN =====
         const loginModal = document.getElementById('loginModal');
         const adminBtn = document.getElementById('adminLoginBtn');
         const closeLogin = document.getElementById('closeLoginModal');
@@ -1812,7 +1601,6 @@
             renderFinal();
         }
 
-        // ===== EDIT MODAL =====
         const editModal = document.getElementById('editModal');
         const closeEdit = document.getElementById('closeEditModal');
         const editGroupSelect = document.getElementById('editGroupSelect');
@@ -1877,7 +1665,6 @@
             editModal.classList.remove('active');
         });
 
-        // ===== NAVIGATION =====
         document.getElementById('semiFinalBtn').addEventListener('click', () => {
             document.getElementById('groupsContainer').style.display = 'none';
             document.getElementById('semiFinalPage').classList.add('active');
@@ -1891,7 +1678,6 @@
             renderFinal();
         });
 
-        // ===== START =====
         loadDataFromFirebase();
         console.log('👋 ناوی بەکارهێنەر: z، تێپەڕەوشە: 1');
     </script>
