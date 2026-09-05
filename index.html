@@ -242,52 +242,53 @@
         .semi-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 20px;
             width: 100%;
-            max-width: 900px;
+            max-width: 960px;
         }
         .match-card {
-            background: rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.05);
             backdrop-filter: blur(8px);
-            border-radius: 16px;
-            padding: 12px 10px;
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 16px 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
             text-align: center;
             transition: 0.3s;
-            min-height: 140px;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-        .match-card:hover { transform: translateY(-3px); border-color: rgba(255,217,61,0.2); }
+        .match-card:hover { transform: translateY(-3px); border-color: rgba(255,217,61,0.25); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
         .match-card .match-label {
-            font-size: clamp(0.8rem, 1.2vw, 1rem);
+            font-size: clamp(0.9rem, 1.4vw, 1.15rem);
             font-weight: 700;
             color: #ffd93d;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
         .match-card .match-teams {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .match-card .match-team {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
-            min-width: 40px;
-            padding: 4px 4px;
-            border-radius: 10px;
+            gap: 4px;
+            min-width: 50px;
+            padding: 4px 6px;
+            border-radius: 12px;
             transition: 0.3s;
             cursor: default;
         }
         .match-card .match-team img {
-            width: clamp(30px, 3.5vw, 48px);
-            height: clamp(30px, 3.5vw, 48px);
+            width: clamp(36px, 4.5vw, 56px);
+            height: clamp(36px, 4.5vw, 56px);
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid rgba(255,255,255,0.15);
@@ -296,44 +297,44 @@
         }
         .match-card .match-team img:hover { transform: scale(1.08); border-color: #ffd93d; }
         .match-card .match-team .team-name {
-            font-size: clamp(0.5rem, 0.8vw, 0.7rem);
+            font-size: clamp(0.6rem, 0.9vw, 0.8rem);
             font-weight: 600;
-            line-height: 1.1;
+            line-height: 1.2;
         }
         .match-card .match-vs {
-            font-size: clamp(0.9rem, 1.4vw, 1.3rem);
+            font-size: clamp(1rem, 1.6vw, 1.4rem);
             font-weight: 800;
             color: #ff6b6b;
-            padding: 0 3px;
+            padding: 0 4px;
         }
         .match-card .match-score {
-            font-size: clamp(0.9rem, 1.4vw, 1.3rem);
+            font-size: clamp(1rem, 1.6vw, 1.4rem);
             font-weight: 900;
             color: #fff;
-            margin: 4px 0;
+            margin: 6px 0;
             background: rgba(0,0,0,0.25);
-            padding: 2px 12px;
-            border-radius: 8px;
+            padding: 4px 16px;
+            border-radius: 10px;
             display: inline-block;
             align-self: center;
         }
         .match-card .match-winner {
-            margin-top: 4px;
-            padding: 3px 12px;
+            margin-top: 6px;
+            padding: 4px 16px;
             background: linear-gradient(135deg, #ffd700, #f7c948);
-            border-radius: 20px;
+            border-radius: 24px;
             color: #1a1a4e;
             font-weight: 700;
             display: inline-block;
-            font-size: clamp(0.6rem, 0.8vw, 0.75rem);
+            font-size: clamp(0.7rem, 0.9vw, 0.85rem);
             align-self: center;
         }
         .match-card .match-winner img {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             vertical-align: middle;
-            margin-left: 4px;
+            margin-left: 5px;
         }
         .semi-connector {
             display: flex;
@@ -341,17 +342,17 @@
             align-items: center;
             gap: 10px;
             width: 100%;
-            max-width: 900px;
-            padding: 4px 0;
+            max-width: 960px;
+            padding: 6px 0;
         }
         .semi-connector .line {
             flex: 1;
             height: 2px;
             background: linear-gradient(90deg, rgba(255,215,0,0.2), rgba(255,215,0,0.5), rgba(255,215,0,0.2));
-            max-width: 60px;
+            max-width: 70px;
         }
         .semi-connector .arrow {
-            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            font-size: clamp(1.4rem, 2.2vw, 2rem);
             color: #ffd93d;
             animation: pulse 1.5s ease-in-out infinite;
         }
@@ -659,30 +660,30 @@
         }
         .team-info-modal .goals-edit-group input:focus { border-color: #ffd93d; }
 
-        .admin-actions { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
-        .admin-actions .admin-btn { font-size: clamp(0.5rem, 0.7vw, 0.65rem); padding: 4px 10px; }
+        .admin-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+        .admin-actions .admin-btn { font-size: clamp(0.6rem, 0.85vw, 0.75rem); padding: 5px 12px; }
         .score-input-group {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            margin: 4px 0;
+            margin: 6px 0;
         }
         .score-input-group input {
-            width: 38px;
-            padding: 4px 3px;
+            width: 44px;
+            padding: 5px 4px;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 700;
             border: 2px solid rgba(255,255,255,0.06);
-            border-radius: 6px;
+            border-radius: 8px;
             background: rgba(0,0,0,0.2);
             color: #fff;
             margin-bottom: 0;
         }
         .score-input-group input:focus { border-color: #ffd93d; outline: none; }
-        .score-input-group label { font-size: 0.7rem; color: #aaa; margin-bottom: 0; }
+        .score-input-group label { font-size: 0.75rem; color: #aaa; margin-bottom: 0; }
 
         .toast {
             position: fixed;
@@ -722,150 +723,148 @@
         }
         .combo-group select option { background: #1a1a4e; }
 
-        /* Compact Semi card admin controls */
-        .match-card .admin-actions .admin-btn {
-            font-size: clamp(0.5rem, 0.7vw, 0.6rem);
-            padding: 3px 8px;
-        }
-        .match-card .score-input-group input {
-            width: 32px;
-            padding: 3px 2px;
-            font-size: 0.7rem;
-        }
-        .match-card .score-input-group label {
-            font-size: 0.6rem;
-        }
-        .match-card .score-input-group {
-            gap: 4px;
-        }
-        .match-card #semiMatch1AdminControls,
-        .match-card #semiMatch2AdminControls {
-            margin-top: 6px;
-            padding-top: 6px;
-        }
-
-        /* Champion card compact */
         .match-card.champion-card {
-            min-height: 120px;
-            padding: 10px 8px;
+            min-height: 140px;
+            padding: 14px 12px;
+            border-color: rgba(255,215,0,0.2);
         }
         .match-card.champion-card .match-label {
-            font-size: clamp(0.9rem, 1.4vw, 1.2rem);
+            font-size: clamp(1rem, 1.6vw, 1.3rem);
         }
         .match-card.champion-card .match-team img {
-            width: clamp(32px, 3.8vw, 52px);
-            height: clamp(32px, 3.8vw, 52px);
+            width: clamp(38px, 4.8vw, 58px);
+            height: clamp(38px, 4.8vw, 58px);
         }
         .match-card.champion-card .match-team .team-name {
-            font-size: clamp(0.5rem, 0.8vw, 0.7rem);
+            font-size: clamp(0.6rem, 0.9vw, 0.8rem);
         }
         .match-card.champion-card .match-score {
-            font-size: clamp(0.9rem, 1.4vw, 1.2rem);
-            padding: 2px 12px;
+            font-size: clamp(1rem, 1.6vw, 1.4rem);
+            padding: 4px 18px;
         }
 
         @media (max-width: 768px) {
             .semi-grid {
-                gap: 10px;
+                gap: 14px;
             }
             .match-card {
-                padding: 8px 6px;
-                min-height: 110px;
+                padding: 12px 10px;
+                min-height: 130px;
             }
             .match-card .match-team img {
-                width: clamp(26px, 4vw, 36px);
-                height: clamp(26px, 4vw, 36px);
+                width: clamp(30px, 4.5vw, 42px);
+                height: clamp(30px, 4.5vw, 42px);
             }
             .match-card .match-team .team-name {
-                font-size: clamp(0.45rem, 0.9vw, 0.6rem);
+                font-size: clamp(0.5rem, 0.9vw, 0.65rem);
             }
             .match-card .match-score {
-                font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-                padding: 2px 8px;
+                font-size: clamp(0.85rem, 1.4vw, 1rem);
+                padding: 3px 12px;
             }
             .match-card .match-vs {
-                font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+                font-size: clamp(0.85rem, 1.4vw, 1.1rem);
             }
             .match-card .match-label {
-                font-size: clamp(0.6rem, 1vw, 0.8rem);
+                font-size: clamp(0.7rem, 1.1vw, 0.9rem);
             }
             .match-card .match-winner {
-                font-size: clamp(0.5rem, 0.8vw, 0.65rem);
-                padding: 2px 8px;
+                font-size: clamp(0.55rem, 0.9vw, 0.7rem);
+                padding: 3px 12px;
             }
             .match-card .match-winner img {
-                width: 14px;
-                height: 14px;
+                width: 16px;
+                height: 16px;
+            }
+            .match-card.champion-card .match-team img {
+                width: clamp(34px, 5vw, 48px);
+                height: clamp(34px, 5vw, 48px);
+            }
+            .match-card.champion-card .match-label {
+                font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+            }
+            .match-card.champion-card .match-score {
+                font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+            }
+            .match-card.champion-card {
+                min-height: 120px;
+                padding: 10px 8px;
             }
         }
 
         @media (max-width: 480px) {
             .semi-grid {
-                gap: 8px;
-                max-width: 100%;
+                gap: 10px;
             }
             .match-card {
-                padding: 6px 4px;
-                min-height: 90px;
-                border-radius: 12px;
+                padding: 10px 8px;
+                min-height: 110px;
+                border-radius: 16px;
             }
             .match-card .match-team img {
-                width: clamp(22px, 5vw, 30px);
-                height: clamp(22px, 5vw, 30px);
+                width: clamp(28px, 5.5vw, 36px);
+                height: clamp(28px, 5.5vw, 36px);
             }
             .match-card .match-team .team-name {
-                font-size: clamp(0.4rem, 1vw, 0.55rem);
+                font-size: clamp(0.45rem, 1vw, 0.6rem);
             }
             .match-card .match-score {
-                font-size: clamp(0.6rem, 1.4vw, 0.8rem);
-                padding: 1px 6px;
-                margin: 2px 0;
+                font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+                padding: 2px 10px;
+                margin: 4px 0;
             }
             .match-card .match-vs {
-                font-size: clamp(0.6rem, 1.4vw, 0.8rem);
+                font-size: clamp(0.75rem, 1.4vw, 0.9rem);
             }
             .match-card .match-label {
-                font-size: clamp(0.5rem, 1.2vw, 0.7rem);
-                margin-bottom: 2px;
+                font-size: clamp(0.6rem, 1.2vw, 0.8rem);
+                margin-bottom: 4px;
             }
             .match-card .match-winner {
-                font-size: clamp(0.4rem, 1vw, 0.55rem);
-                padding: 1px 6px;
+                font-size: clamp(0.5rem, 1vw, 0.65rem);
+                padding: 2px 10px;
             }
             .match-card .match-winner img {
-                width: 12px;
-                height: 12px;
+                width: 14px;
+                height: 14px;
             }
             .match-card .match-teams {
-                gap: 4px;
+                gap: 6px;
             }
             .semi-connector .line {
-                max-width: 30px;
+                max-width: 40px;
             }
             .semi-connector .arrow {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             .match-card.champion-card .match-team img {
-                width: clamp(28px, 6vw, 38px);
-                height: clamp(28px, 6vw, 38px);
+                width: clamp(30px, 6vw, 40px);
+                height: clamp(30px, 6vw, 40px);
             }
             .match-card.champion-card .match-label {
-                font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+                font-size: clamp(0.75rem, 1.4vw, 0.9rem);
             }
             .match-card.champion-card .match-score {
-                font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+                font-size: clamp(0.75rem, 1.4vw, 0.9rem);
             }
-            .match-card .admin-actions .admin-btn {
-                font-size: 0.5rem;
-                padding: 2px 6px;
+            .match-card.champion-card {
+                min-height: 100px;
+                padding: 8px 6px;
             }
-            .match-card .score-input-group input {
-                width: 28px;
-                padding: 2px 2px;
-                font-size: 0.6rem;
+            .admin-actions .admin-btn {
+                font-size: 0.55rem;
+                padding: 4px 10px;
             }
-            .match-card .score-input-group label {
-                font-size: 0.5rem;
+            .score-input-group input {
+                width: 36px;
+                padding: 4px 2px;
+                font-size: 0.75rem;
+            }
+            .score-input-group label {
+                font-size: 0.65rem;
+            }
+            .score-input-group {
+                gap: 4px;
             }
             .match-card #semiMatch1AdminControls,
             .match-card #semiMatch2AdminControls {
@@ -876,33 +875,49 @@
 
         @media (max-width: 360px) {
             .match-card {
-                min-height: 80px;
-                padding: 4px 3px;
+                min-height: 90px;
+                padding: 6px 4px;
+                border-radius: 12px;
             }
             .match-card .match-team img {
-                width: 20px;
-                height: 20px;
+                width: 24px;
+                height: 24px;
             }
             .match-card .match-team .team-name {
                 font-size: 0.4rem;
             }
             .match-card .match-score {
-                font-size: 0.55rem;
-                padding: 1px 4px;
+                font-size: 0.65rem;
+                padding: 1px 6px;
             }
             .match-card .match-vs {
-                font-size: 0.55rem;
+                font-size: 0.65rem;
             }
             .match-card .match-label {
-                font-size: 0.45rem;
+                font-size: 0.5rem;
+                margin-bottom: 2px;
             }
             .match-card .match-winner {
                 font-size: 0.4rem;
-                padding: 1px 4px;
+                padding: 1px 6px;
             }
             .match-card .match-winner img {
                 width: 10px;
                 height: 10px;
+            }
+            .match-card.champion-card .match-team img {
+                width: 26px;
+                height: 26px;
+            }
+            .match-card.champion-card .match-label {
+                font-size: 0.65rem;
+            }
+            .match-card.champion-card .match-score {
+                font-size: 0.65rem;
+            }
+            .match-card.champion-card {
+                min-height: 80px;
+                padding: 4px 3px;
             }
         }
     </style>
@@ -957,17 +972,17 @@
                     <div class="match-teams" id="semiMatch1Teams"></div>
                     <div class="match-score" id="semiMatch1Score">-</div>
                     <div id="semiMatch1Winner"></div>
-                    <div id="semiMatch1AdminControls" style="display:none;margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.06);">
+                    <div id="semiMatch1AdminControls" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
                         <div class="score-input-group">
                             <label>ئەنجام:</label>
                             <input type="number" id="semiMatch1HomeScore" min="0" placeholder="0">
-                            <span style="font-weight:700;color:#ff6b6b;font-size:0.8rem;">-</span>
+                            <span style="font-weight:700;color:#ff6b6b;font-size:0.9rem;">-</span>
                             <input type="number" id="semiMatch1AwayScore" min="0" placeholder="0">
                         </div>
                         <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setSemiMatchScore(1)">✅</button>
-                            <button class="admin-btn reset-btn" onclick="resetSemiMatch(1)">🔄</button>
-                            <button class="admin-btn" onclick="openSemiTeamSelector(1)">➕</button>
+                            <button class="admin-btn winner-btn" onclick="setSemiMatchScore(1)">✅ تۆمار</button>
+                            <button class="admin-btn reset-btn" onclick="resetSemiMatch(1)">🔄 ڕێست</button>
+                            <button class="admin-btn" onclick="openSemiTeamSelector(1)">➕ یانە</button>
                         </div>
                     </div>
                 </div>
@@ -976,17 +991,17 @@
                     <div class="match-teams" id="semiMatch2Teams"></div>
                     <div class="match-score" id="semiMatch2Score">-</div>
                     <div id="semiMatch2Winner"></div>
-                    <div id="semiMatch2AdminControls" style="display:none;margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.06);">
+                    <div id="semiMatch2AdminControls" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
                         <div class="score-input-group">
                             <label>ئەنجام:</label>
                             <input type="number" id="semiMatch2HomeScore" min="0" placeholder="0">
-                            <span style="font-weight:700;color:#ff6b6b;font-size:0.8rem;">-</span>
+                            <span style="font-weight:700;color:#ff6b6b;font-size:0.9rem;">-</span>
                             <input type="number" id="semiMatch2AwayScore" min="0" placeholder="0">
                         </div>
                         <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setSemiMatchScore(2)">✅</button>
-                            <button class="admin-btn reset-btn" onclick="resetSemiMatch(2)">🔄</button>
-                            <button class="admin-btn" onclick="openSemiTeamSelector(2)">➕</button>
+                            <button class="admin-btn winner-btn" onclick="setSemiMatchScore(2)">✅ تۆمار</button>
+                            <button class="admin-btn reset-btn" onclick="resetSemiMatch(2)">🔄 ڕێست</button>
+                            <button class="admin-btn" onclick="openSemiTeamSelector(2)">➕ یانە</button>
                         </div>
                     </div>
                 </div>
@@ -1012,17 +1027,17 @@
                     </div>
                     <div class="match-score" id="championScore">-</div>
                     <div id="championWinner"></div>
-                    <div id="championAdminControls" style="display:none;margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.06);">
+                    <div id="championAdminControls" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
                         <div class="score-input-group">
                             <label>ئەنجام:</label>
                             <input type="number" id="championHomeScore" min="0" placeholder="0">
-                            <span style="font-weight:700;color:#ff6b6b;font-size:0.8rem;">-</span>
+                            <span style="font-weight:700;color:#ff6b6b;font-size:0.9rem;">-</span>
                             <input type="number" id="championAwayScore" min="0" placeholder="0">
                         </div>
                         <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setChampionScore()">✅</button>
-                            <button class="admin-btn winner-btn" onclick="setChampionWinnerManual()">🏆</button>
-                            <button class="admin-btn reset-btn" onclick="resetChampionMatch()">🔄</button>
+                            <button class="admin-btn winner-btn" onclick="setChampionScore()">✅ تۆمار</button>
+                            <button class="admin-btn winner-btn" onclick="setChampionWinnerManual()">🏆 براوە</button>
+                            <button class="admin-btn reset-btn" onclick="resetChampionMatch()">🔄 ڕێست</button>
                         </div>
                     </div>
                 </div>
@@ -1303,11 +1318,11 @@
             let html = '';
             if (matchData.team1) {
                 html += `<div class="match-team selected"><img src="${matchData.team1.img}" onerror="this.src='https://via.placeholder.com/60/1a1a4e/fff?text=?'"><span class="team-name">${matchData.team1.name}</span></div>`;
-            } else { html += `<div class="match-team" style="opacity:0.3;min-width:40px;"><span>?</span></div>`; }
+            } else { html += `<div class="match-team" style="opacity:0.3;min-width:50px;"><span>?</span></div>`; }
             html += `<div class="match-vs">VS</div>`;
             if (matchData.team2) {
                 html += `<div class="match-team selected"><img src="${matchData.team2.img}" onerror="this.src='https://via.placeholder.com/60/1a1a4e/fff?text=?'"><span class="team-name">${matchData.team2.name}</span></div>`;
-            } else { html += `<div class="match-team" style="opacity:0.3;min-width:40px;"><span>?</span></div>`; }
+            } else { html += `<div class="match-team" style="opacity:0.3;min-width:50px;"><span>?</span></div>`; }
             container.innerHTML = html;
             const scoreEl = document.getElementById(scoreId);
             if (scoreEl) scoreEl.textContent = (matchData.homeScore !== null && matchData.awayScore !== null) ? `${matchData.homeScore} - ${matchData.awayScore}` : '-';
@@ -1316,7 +1331,7 @@
                 if (matchData.winner) {
                     winnerEl.innerHTML = `<div class="match-winner"><img src="${matchData.winner.img}" onerror="this.src='https://via.placeholder.com/30/1a1a4e/fff?text=?'"> براوە: ${matchData.winner.name} 🏆</div>`;
                 } else {
-                    winnerEl.innerHTML = `<div style="color:#888;margin-top:2px;font-size:0.65rem;">براوە دیاری نەکراوە</div>`;
+                    winnerEl.innerHTML = `<div style="color:#888;margin-top:2px;font-size:0.7rem;">براوە دیاری نەکراوە</div>`;
                 }
             }
         }
@@ -1373,7 +1388,7 @@
             if (cd.winner) {
                 wEl.innerHTML = `<div class="match-winner"><img src="${cd.winner.img}" onerror="this.src='https://via.placeholder.com/30/1a1a4e/fff?text=?'"> براوە: ${cd.winner.name} 🏆</div>`;
             } else {
-                wEl.innerHTML = `<div style="color:#888;margin-top:2px;font-size:0.65rem;">براوە دیاری نەکراوە</div>`;
+                wEl.innerHTML = `<div style="color:#888;margin-top:2px;font-size:0.7rem;">براوە دیاری نەکراوە</div>`;
             }
         }
 
