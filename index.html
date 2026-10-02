@@ -6,6 +6,227 @@
 <title>دیتەڵی تۆپی پێ - سیستەمی تەواو</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+
+/* ============ MODERN TAP/CLICK HIGHLIGHT ============ */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* Remove default focus outlines but keep accessibility */
+*:focus {
+    outline: none;
+}
+*:focus-visible {
+    outline: 2px solid rgba(102, 126, 234, 0.6);
+    outline-offset: 2px;
+}
+
+/* Smooth interaction base for all clickable elements */
+button,
+.nav-tab,
+.team-info,
+.admin-btn,
+.close-modal,
+.match-card,
+.trophy-row,
+.confirm-buttons button {
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    transition: 
+        background-color 0.25s ease,
+        box-shadow 0.3s ease,
+        transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+        border-color 0.25s ease;
+    will-change: transform, box-shadow;
+}
+
+/* ============ ACTIVE (TAP/CLICK) STATE ============ */
+button:active,
+.admin-btn:active,
+.nav-tab:active,
+.close-modal:active,
+.login-submit:active,
+.save-edit-btn:active,
+.save-trophies-btn:active,
+.confirm-buttons button:active {
+    transform: scale(0.96);
+    background-color: rgba(102, 126, 234, 0.25) !important;
+    box-shadow: 
+        0 0 0 2px rgba(102, 126, 234, 0.5),
+        0 0 20px rgba(102, 126, 234, 0.4),
+        inset 0 0 20px rgba(102, 126, 234, 0.15) !important;
+    transition: 
+        transform 0.1s ease,
+        background-color 0.1s ease,
+        box-shadow 0.1s ease;
+}
+
+/* Team rows in tables */
+.team-info:active {
+    transform: scale(0.97);
+    background: rgba(102, 126, 234, 0.15);
+    border-radius: 12px;
+    box-shadow: 
+        0 0 0 1px rgba(102, 126, 234, 0.4),
+        0 0 16px rgba(102, 126, 234, 0.35);
+}
+
+/* Team rows inside table cells */
+.team-info:active .team-img {
+    border-color: #a78bfa;
+    box-shadow: 0 0 16px rgba(167, 139, 250, 0.7);
+    transform: scale(1.08);
+}
+
+/* Match cards */
+.match-card:active {
+    transform: scale(0.985);
+    background: rgba(102, 126, 234, 0.12);
+    border-color: rgba(167, 139, 250, 0.5);
+    box-shadow: 
+        0 0 0 1px rgba(167, 139, 250, 0.4),
+        0 0 24px rgba(102, 126, 234, 0.35),
+        0 12px 30px rgba(0,0,0,0.4);
+}
+
+/* Trophy rows */
+.trophy-row:active {
+    transform: scale(0.98);
+    background: rgba(255, 215, 0, 0.08);
+    border-color: rgba(255, 215, 0, 0.4);
+    box-shadow: 
+        0 0 0 1px rgba(255, 215, 0, 0.3),
+        0 0 16px rgba(255, 215, 0, 0.25);
+}
+
+/* Nav tabs - special purple treatment */
+.nav-tab:active:not(.active) {
+    background: rgba(102, 126, 234, 0.2) !important;
+    border-color: rgba(167, 139, 250, 0.5) !important;
+    color: #fff !important;
+    box-shadow: 
+        0 0 0 1px rgba(167, 139, 250, 0.4),
+        0 0 18px rgba(102, 126, 234, 0.4) !important;
+}
+
+/* Active (current) nav tab - subtle pulse */
+.nav-tab.active:active {
+    transform: scale(0.96);
+    box-shadow: 
+        0 0 0 2px rgba(167, 139, 250, 0.6),
+        0 0 24px rgba(102, 126, 234, 0.6) !important;
+}
+
+/* Admin buttons - keep their unique gradient, add glow */
+.admin-btn:active {
+    background: linear-gradient(135deg, #7b8ff0, #8b5cb8) !important;
+}
+
+.admin-btn.winner-btn:active {
+    background: linear-gradient(135deg, #ffe14d, #ffd93d) !important;
+    color: #1a1a4e !important;
+    box-shadow: 
+        0 0 0 2px rgba(255, 215, 0, 0.6),
+        0 0 24px rgba(255, 215, 0, 0.5) !important;
+}
+
+.admin-btn.danger-btn:active,
+.admin-btn.reset-btn:active {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+}
+
+/* Close modal links */
+.close-modal:active {
+    color: #fff !important;
+    transform: scale(0.95);
+    text-shadow: 0 0 12px rgba(102, 126, 234, 0.8);
+}
+
+/* Login/save buttons */
+.login-submit:active,
+.save-edit-btn:active {
+    background: linear-gradient(135deg, #7b8ff0, #8b5cb8) !important;
+    box-shadow: 
+        0 0 0 2px rgba(167, 139, 250, 0.5),
+        0 0 24px rgba(102, 126, 234, 0.5) !important;
+}
+
+.save-trophies-btn:active {
+    box-shadow: 
+        0 0 0 2px rgba(255, 215, 0, 0.5),
+        0 0 28px rgba(255, 215, 0, 0.6) !important;
+}
+
+/* Confirm modal buttons */
+.confirm-yes:active {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+    box-shadow: 
+        0 0 0 2px rgba(231, 76, 60, 0.5),
+        0 0 20px rgba(231, 76, 60, 0.5) !important;
+}
+
+.confirm-no:active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Table rows - subtle tap feedback */
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+tbody tr:active td {
+    background: rgba(102, 126, 234, 0.08);
+}
+
+/* Prevent tap highlight on images */
+img {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Re-enable pointer events for clickable images */
+.team-info .team-img,
+.match-team img {
+    pointer-events: auto;
+}
+
+/* ============ RIPPLE EFFECT ============ */
+.ripple-host {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.6) 0%, rgba(102, 126, 234, 0.3) 40%, transparent 70%);
+    transform: scale(0);
+    animation: rippleExpand 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes rippleExpand {
+    to {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+/* ============ REDUCED MOTION SUPPORT ============ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 html, body { overflow-x: hidden; max-width: 100vw; }
 body {
     background: linear-gradient(135deg, #0a0a2e, #1a1a4e, #0a0a2e);
@@ -817,7 +1038,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     margin-bottom: 12px;
 }
 
-/* ============ ADMIN ONLY (hidden until login) ============ */
+/* ============ ADMIN ONLY ============ */
 .admin-only { display: none !important; }
 body.is-admin .admin-only { display: inline-flex !important; }
 body.is-admin #laligaAdminBar.admin-only { display: flex !important; }
@@ -921,7 +1142,6 @@ body.is-admin .trophy-input.admin-only { display: block !important; }
         margin-bottom: 8px;
     }
 
-    /* ============ TABLE - گەورەتر بۆ مۆبایل ============ */
     .table-wrapper {
         overflow-x: hidden;
         border-radius: 10px;
@@ -1102,7 +1322,6 @@ body.is-admin .trophy-input.admin-only { display: block !important; }
         max-width: 60px;
     }
 
-    /* ✅ Popups لە ناوەڕاست */
     .modal {
         padding: 10px;
         align-items: center;
@@ -1814,7 +2033,6 @@ let isInitialLoad = true;
 let isSaving = false;
 let currentTeamInfoName = null;
 
-// ✅ دەستکاری کردنی دۆخی ئەدمین لە body
 function updateAdminUI() {
     if (isAdmin) {
         document.body.classList.add('is-admin');
@@ -2568,6 +2786,66 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
 
 loadState();
 console.log('👋 Admin: z / 1');
+
+/* ============ MODERN RIPPLE EFFECT ============ */
+(function initRippleEffect() {
+    const rippleTargets = [
+        'button',
+        '.nav-tab',
+        '.admin-btn',
+        '.close-modal',
+        '.login-submit',
+        '.save-edit-btn',
+        '.save-trophies-btn',
+        '.confirm-buttons button',
+        '.match-card',
+        '.team-info'
+    ];
+
+    const selector = rippleTargets.join(',');
+
+    document.addEventListener('pointerdown', function(e) {
+        const target = e.target.closest(selector);
+        if (!target) return;
+
+        // Skip if element is disabled
+        if (target.disabled) return;
+
+        // Prepare host
+        if (!target.classList.contains('ripple-host')) {
+            target.classList.add('ripple-host');
+        }
+
+        // Calculate ripple position
+        const rect = target.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        // Create ripple element
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+
+        // Append and clean up
+        target.appendChild(ripple);
+        ripple.addEventListener('animationend', () => {
+            ripple.remove();
+            if (!target.querySelector('.ripple')) {
+                target.classList.remove('ripple-host');
+            }
+        });
+    }, { passive: true });
+
+    document.addEventListener('pointerup', function(e) {
+        const target = e.target.closest('.ripple-host');
+        if (target && !target.querySelector('.ripple')) {
+            target.classList.remove('ripple-host');
+        }
+    }, { passive: true });
+})();
 </script>
 </body>
 </html>
