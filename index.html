@@ -6,6 +6,7 @@
 <title>دیتەڵی تۆپی پێ - سیستەمی تەواو</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+html, body { overflow-x: hidden; max-width: 100vw; }
 body {
     background: linear-gradient(135deg, #0a0a2e, #1a1a4e, #0a0a2e);
     min-height: 100vh;
@@ -105,7 +106,7 @@ body {
     background: rgba(0,0,0,0.25);
     -webkit-overflow-scrolling: touch;
 }
-table { width: 100%; border-collapse: collapse; min-width: 420px; }
+table { width: 100%; border-collapse: collapse; }
 th {
     background: rgba(102,126,234,0.2);
     padding: 12px 6px;
@@ -208,6 +209,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
 .champion-banner .champion-team {
     display: flex; justify-content: center; align-items: center; gap: 12px;
     margin-top: 8px;
+    flex-wrap: wrap;
 }
 .champion-banner .champion-team img {
     width: clamp(55px, 8vw, 90px);
@@ -239,6 +241,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     text-align: center;
     transition: 0.3s;
+    min-width: 0;
 }
 .match-card:hover { transform: translateY(-3px); border-color: rgba(255,217,61,0.25); }
 .match-card.final-match {
@@ -516,6 +519,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     display: flex;
     flex-direction: column;
     gap: 4px;
+    min-width: 0;
 }
 .trophy-label {
     font-weight: 700;
@@ -813,25 +817,408 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     margin-bottom: 12px;
 }
 
-/* ============ RESPONSIVE ============ */
+/* ============================================================
+   📱 MOBILE OPTIMIZATIONS - شاشە بچووکەکان
+   ============================================================ */
 @media (max-width: 768px) {
-    .header { flex-direction: column; align-items: stretch; }
-    .header h1 { text-align: center; }
-    .header-buttons { justify-content: center; }
-    .match-grid { grid-template-columns: 1fr; }
-    .edit-form-group { grid-template-columns: 1fr; }
-    .admin-actions .admin-btn { font-size: 0.65rem; padding: 5px 10px; }
-}
-@media (max-width: 480px) {
     body { padding: 8px; }
-    .header { padding: 10px 12px; }
-    .nav-tab { padding: 6px 12px; font-size: 0.65rem; }
-    .score-input-group input { width: 44px; font-size: 0.85rem; }
-    .match-team img { width: 36px; height: 36px; }
-    .team-info .team-img { width: 32px; height: 32px; }
-    .team-info .team-name { font-size: 0.7rem; }
-    .trophy-row img { width: 42px; height: 42px; }
-    .trophy-input { width: 70px !important; }
+
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+        border-radius: 16px;
+        margin-bottom: 14px;
+    }
+    .header h1 {
+        text-align: center;
+        font-size: 1.3rem;
+    }
+    .header-buttons {
+        justify-content: center;
+        width: 100%;
+    }
+    .admin-btn {
+        padding: 8px 14px;
+        font-size: 0.78rem;
+        flex: 1;
+        justify-content: center;
+    }
+
+    /* Nav Tabs - 2 لە هەر ڕیز */
+    .nav-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        padding: 8px;
+        border-radius: 14px;
+    }
+    .nav-tab {
+        padding: 10px 6px;
+        font-size: 0.72rem;
+        text-align: center;
+        white-space: normal;
+        line-height: 1.2;
+    }
+
+    /* Cards */
+    .card {
+        padding: 12px 10px;
+        border-radius: 16px;
+        margin-bottom: 14px;
+    }
+    .card-title {
+        font-size: 1.15rem;
+        padding: 6px 0 10px;
+        margin-bottom: 10px;
+    }
+
+    /* Admin Bar - ستاک */
+    #laligaAdminBar,
+    #clAdminBar,
+    #elAdminBar {
+        display: flex !important;
+        flex-direction: column;
+        gap: 6px;
+        align-items: stretch;
+        margin-bottom: 10px;
+    }
+    #laligaAdminBar .admin-btn,
+    #clAdminBar .admin-btn,
+    #elAdminBar .admin-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 9px 12px;
+        font-size: 0.75rem;
+    }
+
+    /* ============ TABLE - ڕێکخراو بۆ مۆبایل ============ */
+    .table-wrapper {
+        overflow-x: hidden;
+        border-radius: 12px;
+    }
+    table {
+        width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+    }
+    th, td {
+        padding: 8px 2px;
+        font-size: 0.68rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    /* کۆلۆنەکان بە ڕێژە */
+    th:nth-child(1), td:nth-child(1) { width: 10%; }
+    th:nth-child(2), td:nth-child(2) { width: 38%; }
+    th:nth-child(3), td:nth-child(3) { width: 13%; }
+    th:nth-child(4), td:nth-child(4) { width: 13%; }
+    th:nth-child(5), td:nth-child(5) { width: 13%; }
+    th:nth-child(6), td:nth-child(6) { width: 13%; }
+
+    /* سەردێڕەکان کورتتر */
+    th { 
+        font-size: 0.6rem;
+        padding: 8px 1px;
+        letter-spacing: 0;
+        white-space: nowrap;
+    }
+
+    /* تیمی info - ڕێکخراو */
+    .team-info {
+        min-width: 0;
+        gap: 3px;
+        padding: 2px 0;
+    }
+    .team-info .team-img {
+        width: 30px;
+        height: 30px;
+        border-width: 1.5px;
+    }
+    .team-info .team-name {
+        font-size: 0.62rem;
+        white-space: normal;
+        line-height: 1.1;
+        max-width: 100%;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .rank-badge {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 0.68rem;
+    }
+    .points {
+        font-size: 0.85rem;
+    }
+
+    /* Champion Banner */
+    .champion-banner {
+        padding: 14px 10px;
+        border-radius: 16px;
+    }
+    .champion-banner .champion-team {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .champion-banner .champion-team img {
+        width: 65px;
+        height: 65px;
+    }
+    .champion-banner .champion-team .champion-name {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    /* Match Grid - یەک کۆلۆن */
+    .match-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .match-card {
+        padding: 14px 10px;
+        border-radius: 16px;
+    }
+    .match-label {
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+    }
+    .match-teams {
+        gap: 8px;
+    }
+    .match-team {
+        min-width: 60px;
+        flex: 1;
+    }
+    .match-team img {
+        width: 44px;
+        height: 44px;
+    }
+    .match-team .team-name {
+        font-size: 0.68rem;
+        white-space: normal;
+        line-height: 1.1;
+        text-align: center;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .match-vs {
+        font-size: 1rem;
+    }
+    .match-score {
+        font-size: 1.05rem;
+        padding: 6px 16px;
+    }
+    .match-winner {
+        font-size: 0.72rem;
+        padding: 5px 12px;
+    }
+    .match-winner img {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Score Input - گەورەتر بۆ پەنجە */
+    .score-input-group {
+        gap: 6px;
+        margin: 10px 0;
+    }
+    .score-input-group input {
+        width: 54px;
+        padding: 8px 4px;
+        font-size: 1rem;
+    }
+    .admin-actions {
+        gap: 6px;
+    }
+    .admin-actions .admin-btn {
+        flex: 1;
+        justify-content: center;
+        padding: 8px 10px;
+        font-size: 0.72rem;
+    }
+
+    /* Connector - کەمتر مەودا */
+    .connector {
+        padding: 8px 0;
+    }
+    .connector .arrow {
+        font-size: 1.2rem;
+    }
+
+    /* Modals */
+    .modal {
+        padding: 8px;
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+    .modal-content {
+        padding: 16px 14px;
+        border-radius: 18px;
+        max-height: 88vh;
+    }
+    .modal-content h2 {
+        font-size: 1.15rem;
+        margin-bottom: 12px;
+    }
+
+    /* Team Info Modal */
+    .team-info-header {
+        gap: 10px;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+    }
+    .team-info-header img {
+        width: 60px;
+        height: 60px;
+        border-width: 2.5px;
+    }
+    .team-info-header h2 {
+        font-size: 1.15rem;
+    }
+    .trophy-section {
+        padding: 12px 10px;
+        margin-top: 12px;
+    }
+    .trophy-section-title {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+    .trophy-row {
+        padding: 8px 10px;
+        gap: 10px;
+        margin-bottom: 6px;
+    }
+    .trophy-row img {
+        width: 40px;
+        height: 40px;
+    }
+    .trophy-label {
+        font-size: 0.78rem;
+    }
+    .trophy-count-display {
+        font-size: 1rem;
+    }
+    .trophy-input {
+        width: 65px !important;
+        padding: 6px 6px !important;
+        font-size: 0.9rem !important;
+    }
+    .theme-badge {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+        top: 8px;
+        left: 8px;
+    }
+
+    /* Edit Form */
+    .edit-form-group {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+        padding: 12px 10px;
+    }
+    .edit-form-group .full-width { grid-column: 1 / -1; }
+    .edit-team-header {
+        font-size: 0.8rem;
+        padding-bottom: 5px;
+        margin-bottom: 6px;
+    }
+    .edit-form-group label {
+        font-size: 0.68rem;
+        margin-bottom: 3px;
+    }
+    .edit-form-group input {
+        padding: 7px 6px;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    /* Toast */
+    .toast {
+        bottom: 12px;
+        right: 12px;
+        left: 12px;
+        max-width: none;
+        text-align: center;
+        font-size: 0.8rem;
+        padding: 10px 16px;
+    }
+
+    /* Confirm Modal */
+    .confirm-modal .confirm-buttons {
+        flex-direction: column;
+    }
+}
+
+/* ============ شاشە زۆر بچووک (≤380px) ============ */
+@media (max-width: 380px) {
+    body { padding: 6px; }
+
+    .header h1 { font-size: 1.1rem; }
+    .admin-btn {
+        font-size: 0.7rem;
+        padding: 7px 10px;
+    }
+
+    .nav-tab {
+        font-size: 0.65rem;
+        padding: 8px 4px;
+    }
+
+    .card-title { font-size: 1rem; }
+
+    /* Table - دەستکاری زیاتر */
+    th, td {
+        padding: 7px 1px;
+        font-size: 0.62rem;
+    }
+    th { font-size: 0.55rem; }
+
+    .team-info .team-img {
+        width: 26px;
+        height: 26px;
+    }
+    .team-info .team-name {
+        font-size: 0.58rem;
+    }
+    .rank-badge {
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        font-size: 0.6rem;
+    }
+    .points { font-size: 0.78rem; }
+
+    .match-team img {
+        width: 38px;
+        height: 38px;
+    }
+    .match-team .team-name {
+        font-size: 0.6rem;
+    }
+
+    .score-input-group input {
+        width: 48px;
+        font-size: 0.9rem;
+    }
+
+    .trophy-row img {
+        width: 34px;
+        height: 34px;
+    }
+    .trophy-label { font-size: 0.72rem; }
+    .trophy-count-display { font-size: 0.9rem; }
+    .trophy-input {
+        width: 58px !important;
+        font-size: 0.85rem !important;
+    }
 }
 </style>
 </head>
@@ -875,7 +1262,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                         <th>#</th>
                         <th>هەڵبژاردە</th>
                         <th>گۆڵ</th>
-                        <th>گۆڵ لێکران</th>
+                        <th>گ.لێکران</th>
                         <th>جیاوازی</th>
                         <th>خاڵ</th>
                     </tr>
@@ -1262,13 +1649,11 @@ function addTrophy(teamName, trophyType) {
     return true;
 }
 
-// ✅ کۆی گشتی جامەکان
 function getTotalTrophies(team) {
     if (!team) return 0;
     return (team.champions || 0) + (team.europa || 0) + (team.super || 0) + (team.superEuropa || 0);
 }
 
-// ✅ دیاریکردنی تیمی دیزاین بەپێی کۆی جامەکان
 function getTeamTheme(team) {
     const total = getTotalTrophies(team);
     if (total >= 15) return 'crown';
@@ -1962,18 +2347,15 @@ window.openTeamInfo = function(name) {
     });
     document.getElementById('saveTrophiesBtn').style.display = isAdminMode ? 'block' : 'none';
     
-    // ✅ دیاریکردنی دیزاین بەپێی کۆی جامەکان
     applyTeamTheme(t);
     
     document.getElementById('teamInfoModal').classList.add('active');
 };
 
-// ✅ دیاریکردنی دیزاینی تایبەت بۆ popup
 function applyTeamTheme(team) {
     const modalContent = document.getElementById('teamInfoModalContent');
     const themeBadge = document.getElementById('themeBadge');
     
-    // لابردنی هەموو کلاسەکانی پێشوو
     modalContent.classList.remove('theme-fire', 'theme-diamond', 'theme-crown');
     themeBadge.classList.remove('badge-fire', 'badge-diamond', 'badge-crown');
     themeBadge.style.display = 'none';
@@ -2035,9 +2417,7 @@ function buildEditForm() {
     state.laliga.forEach((t, i) => {
         html += `
             <div class="edit-form-group" data-index="${i}">
-                <div class="edit-team-header">یانەی ${i+1}</div>
-                <div class="full-width"><label>ناوی یانە</label><input type="text" class="edit-name" value="${t.name}"></div>
-                <div class="full-width"><label>لینکی وێنە</label><input type="text" class="edit-img" value="${t.img}"></div>
+                <div class="edit-team-header">یانەی ${i+1} — ${t.name}</div>
                 <div><label>گۆڵ</label><input type="number" class="edit-goals" value="${t.goals}" min="0"></div>
                 <div><label>گۆڵ لێکران</label><input type="number" class="edit-ga" value="${t.goalsAgainst}" min="0"></div>
                 <div><label>خاڵ</label><input type="number" class="edit-points" value="${t.points}" min="0"></div>
@@ -2052,12 +2432,10 @@ document.getElementById('saveEditBtn').addEventListener('click', () => {
     const groups = document.querySelectorAll('#editFormContainer .edit-form-group');
     const newTeams = [];
     groups.forEach(g => {
-        const name = g.querySelector('.edit-name').value.trim();
-        if (!name) return;
         const oldTeam = state.laliga[parseInt(g.dataset.index)] || {};
         newTeams.push({
-            name,
-            img: g.querySelector('.edit-img').value.trim() || 'https://via.placeholder.com/40/1a1a4e/fff?text=?',
+            name: oldTeam.name || '',
+            img: oldTeam.img || 'https://via.placeholder.com/40/1a1a4e/fff?text=?',
             goals: parseInt(g.querySelector('.edit-goals').value) || 0,
             goalsAgainst: parseInt(g.querySelector('.edit-ga').value) || 0,
             points: parseInt(g.querySelector('.edit-points').value) || 0,
