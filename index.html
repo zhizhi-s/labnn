@@ -358,8 +358,11 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.75);
     backdrop-filter: blur(6px);
-    z-index: 1000; justify-content: center;
-    align-items: center; padding: 16px;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    overflow-y: auto;
 }
 .modal.active { display: flex; }
 .modal-content {
@@ -373,6 +376,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     max-height: 92vh; overflow-y: auto;
     position: relative;
     transition: all 0.5s ease;
+    margin: auto;
 }
 @keyframes modalIn {
     from { transform: scale(0.85) translateY(20px); opacity: 0; }
@@ -578,7 +582,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     overflow: hidden;
 }
 
-/* 🔥 FIRE THEME */
 .team-info-modal-content.theme-fire {
     background: linear-gradient(135deg, #4a1500, #7a2200, #3d0f00);
     border: 2px solid rgba(255,100,0,0.6);
@@ -622,7 +625,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     text-shadow: 0 0 20px rgba(255,120,0,0.7);
 }
 
-/* 💎 DIAMOND THEME */
 .team-info-modal-content.theme-diamond {
     background: linear-gradient(135deg, #001a33, #003366, #001a33);
     border: 2px solid rgba(0,200,255,0.7);
@@ -666,7 +668,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     text-shadow: 0 0 25px rgba(0,220,255,0.9);
 }
 
-/* 👑 CROWN THEME */
 .team-info-modal-content.theme-crown {
     background: linear-gradient(135deg, #2a1a00, #4a3500, #2a1a00);
     border: 3px solid #ffd700;
@@ -816,16 +817,26 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     margin-bottom: 12px;
 }
 
-/* ============================================================
-   📱 MOBILE - هەموو شت بچووک و ڕێک
-   ============================================================ */
-@media (max-width: 768px) {
-    body { 
-        padding: 6px; 
-        font-size: 13px;
-    }
+/* ============ ADMIN ONLY (hidden until login) ============ */
+.admin-only { display: none !important; }
+body.is-admin .admin-only { display: inline-flex !important; }
+body.is-admin #laligaAdminBar.admin-only { display: flex !important; }
+body.is-admin #clAdminBar.admin-only,
+body.is-admin #elAdminBar.admin-only { display: block !important; }
+body.is-admin #clSemi1Admin.admin-only,
+body.is-admin #clSemi2Admin.admin-only,
+body.is-admin #clFinalAdmin.admin-only,
+body.is-admin #elSemi1Admin.admin-only,
+body.is-admin #elSemi2Admin.admin-only,
+body.is-admin #elFinalAdmin.admin-only,
+body.is-admin #slAdmin.admin-only { display: block !important; }
+body.is-admin #saveTrophiesBtn.admin-only { display: block !important; }
+body.is-admin .trophy-input.admin-only { display: block !important; }
 
-    /* Header بچووک */
+/* ============ RESPONSIVE - MOBILE ============ */
+@media (max-width: 768px) {
+    body { padding: 6px; }
+
     .header {
         padding: 8px 12px;
         border-radius: 14px;
@@ -845,7 +856,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         border-radius: 10px;
     }
 
-    /* Nav Tabs - 4 لە ڕیزێک بچووک */
     .nav-tabs {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -866,7 +876,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         text-overflow: ellipsis;
     }
 
-    /* Cards بچووک */
     .card {
         padding: 8px 6px;
         border-radius: 12px;
@@ -880,9 +889,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         letter-spacing: 0.5px;
     }
 
-    /* Admin Bar - 3 دوگمە لە ڕیزێک */
     #laligaAdminBar {
-        display: flex !important;
         flex-direction: row !important;
         gap: 4px;
         margin-bottom: 8px;
@@ -898,10 +905,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         text-overflow: ellipsis;
     }
 
-    #clAdminBar, #elAdminBar {
-        display: flex !important;
-        margin-top: 8px !important;
-    }
     #clAdminBar .admin-btn,
     #elAdminBar .admin-btn {
         width: 100%;
@@ -918,7 +921,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         margin-bottom: 8px;
     }
 
-    /* ============ TABLE - بچووک و ڕێک ============ */
+    /* ============ TABLE - گەورەتر بۆ مۆبایل ============ */
     .table-wrapper {
         overflow-x: hidden;
         border-radius: 10px;
@@ -929,42 +932,40 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         table-layout: fixed;
     }
     th, td {
-        padding: 6px 1px;
+        padding: 8px 2px;
         overflow: hidden;
         text-overflow: ellipsis;
-        font-size: 0.62rem;
+        font-size: 0.78rem;
     }
-    /* کۆلۆنەکان */
-    th:nth-child(1), td:nth-child(1) { width: 9%; }
-    th:nth-child(2), td:nth-child(2) { width: 39%; }
-    th:nth-child(3), td:nth-child(3) { width: 13%; }
-    th:nth-child(4), td:nth-child(4) { width: 13%; }
-    th:nth-child(5), td:nth-child(5) { width: 13%; }
-    th:nth-child(6), td:nth-child(6) { width: 13%; }
+    th:nth-child(1), td:nth-child(1) { width: 10%; }
+    th:nth-child(2), td:nth-child(2) { width: 36%; }
+    th:nth-child(3), td:nth-child(3) { width: 13.5%; }
+    th:nth-child(4), td:nth-child(4) { width: 13.5%; }
+    th:nth-child(5), td:nth-child(5) { width: 13.5%; }
+    th:nth-child(6), td:nth-child(6) { width: 13.5%; }
 
     th { 
-        font-size: 0.55rem;
-        padding: 7px 1px;
+        font-size: 0.72rem;
+        padding: 9px 2px;
         letter-spacing: 0;
         white-space: nowrap;
         color: #ffd93d;
     }
 
-    /* تیمی info */
     .team-info {
         min-width: 0;
-        gap: 2px;
-        padding: 1px 0;
+        gap: 3px;
+        padding: 2px 0;
     }
     .team-info .team-img {
-        width: 24px;
-        height: 24px;
+        width: 32px;
+        height: 32px;
         border-width: 1.5px;
     }
     .team-info .team-name {
-        font-size: 0.58rem;
+        font-size: 0.72rem;
         white-space: normal;
-        line-height: 1.05;
+        line-height: 1.1;
         max-width: 100%;
         word-break: break-word;
         display: -webkit-box;
@@ -973,19 +974,18 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         overflow: hidden;
     }
     .rank-badge {
-        width: 18px;
-        height: 18px;
-        line-height: 18px;
-        font-size: 0.55rem;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 0.72rem;
     }
     .points {
-        font-size: 0.7rem;
+        font-size: 0.88rem;
     }
     td.goals {
-        font-size: 0.62rem;
+        font-size: 0.78rem;
     }
 
-    /* Champion Banner بچووک */
     .champion-banner {
         padding: 10px 8px;
         border-radius: 12px;
@@ -1009,7 +1009,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         font-size: 1rem;
     }
 
-    /* Match Cards بچووک */
     .match-grid {
         grid-template-columns: 1fr;
         gap: 8px;
@@ -1071,7 +1070,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         margin-left: 4px;
     }
 
-    /* Score Input بچووک */
     .score-input-group {
         gap: 4px;
         margin: 6px 0;
@@ -1094,7 +1092,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         border-radius: 8px;
     }
 
-    /* Connector بچووک */
     .connector {
         padding: 6px 0;
     }
@@ -1105,17 +1102,18 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         max-width: 60px;
     }
 
-    /* Modals بچووک */
+    /* ✅ Popups لە ناوەڕاست */
     .modal {
-        padding: 6px;
-        align-items: flex-start;
-        padding-top: 12px;
+        padding: 10px;
+        align-items: center;
+        justify-content: center;
     }
     .modal-content {
         padding: 12px 10px;
         border-radius: 14px;
-        max-height: 94vh;
+        max-height: 90vh;
         max-width: 100%;
+        margin: auto;
     }
     .modal-content h2 {
         font-size: 0.95rem;
@@ -1141,7 +1139,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         margin-top: 10px;
     }
 
-    /* Team Info Modal بچووک */
     .team-info-header {
         gap: 8px;
         margin-bottom: 10px;
@@ -1204,7 +1201,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         border-radius: 20px;
     }
 
-    /* Edit Form بچووک - 3 کۆلۆن */
     .edit-form-group {
         grid-template-columns: 1fr 1fr 1fr;
         gap: 4px;
@@ -1233,7 +1229,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         border-radius: 8px;
     }
 
-    /* Toast بچووک */
     .toast {
         bottom: 10px;
         right: 10px;
@@ -1245,7 +1240,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         border-radius: 10px;
     }
 
-    /* Confirm Modal */
     .confirm-modal .modal-content {
         max-width: 320px;
         padding: 14px 12px;
@@ -1279,7 +1273,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     }
 }
 
-/* ============ شاشە زۆر بچووک (≤380px) ============ */
 @media (max-width: 380px) {
     body { padding: 4px; }
 
@@ -1315,29 +1308,27 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         padding: 5px 2px;
     }
 
-    /* Table */
     th, td {
-        padding: 5px 1px;
-        font-size: 0.55rem;
+        padding: 7px 1px;
+        font-size: 0.72rem;
     }
-    th { font-size: 0.48rem; }
+    th { font-size: 0.66rem; }
     .team-info .team-img {
-        width: 20px;
-        height: 20px;
+        width: 28px;
+        height: 28px;
     }
     .team-info .team-name {
-        font-size: 0.52rem;
+        font-size: 0.66rem;
     }
     .rank-badge {
-        width: 15px;
-        height: 15px;
-        line-height: 15px;
-        font-size: 0.5rem;
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        font-size: 0.66rem;
     }
-    .points { font-size: 0.62rem; }
-    td.goals { font-size: 0.55rem; }
+    .points { font-size: 0.82rem; }
+    td.goals { font-size: 0.72rem; }
 
-    /* Match Card */
     .match-card {
         padding: 8px 6px;
         border-radius: 10px;
@@ -1373,7 +1364,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         padding: 4px 6px;
     }
 
-    /* Champion Banner */
     .champion-banner {
         padding: 8px 6px;
     }
@@ -1387,7 +1377,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         font-size: 0.85rem;
     }
 
-    /* Team Info */
     .team-info-header img {
         width: 38px;
         height: 38px;
@@ -1415,7 +1404,6 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
         font-size: 0.68rem !important;
     }
 
-    /* Edit Form */
     .edit-form-group {
         padding: 6px;
         gap: 3px;
@@ -1461,7 +1449,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
 <div class="page-container active" id="laligaPage">
     <div class="card">
         <div class="card-title">🏆 LALIGA</div>
-        <div id="laligaAdminBar" style="display:none;text-align:center;margin-bottom:12px;">
+        <div id="laligaAdminBar" class="admin-only" style="text-align:center;margin-bottom:12px;display:none;">
             <button class="admin-btn winner-btn" id="finishLaligaBtn">🏁 کۆتایی</button>
             <button class="admin-btn danger-btn" id="resetLaligaBtn">🔄 ڕێست</button>
             <button class="admin-btn" id="editLaligaBtn">✏️ دەستکاری</button>
@@ -1505,7 +1493,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <div class="match-teams" id="clSemi1Teams"></div>
                     <div class="match-score" id="clSemi1Score">-</div>
                     <div id="clSemi1Winner"></div>
-                    <div id="clSemi1Admin" style="display:none;">
+                    <div id="clSemi1Admin" class="admin-only" style="display:none;">
                         <div class="score-input-group">
                             <input type="number" id="clSemi1Home" min="0" placeholder="0">
                             <span style="color:#ff6b6b;font-weight:700;">-</span>
@@ -1522,7 +1510,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <div class="match-teams" id="clSemi2Teams"></div>
                     <div class="match-score" id="clSemi2Score">-</div>
                     <div id="clSemi2Winner"></div>
-                    <div id="clSemi2Admin" style="display:none;">
+                    <div id="clSemi2Admin" class="admin-only" style="display:none;">
                         <div class="score-input-group">
                             <input type="number" id="clSemi2Home" min="0" placeholder="0">
                             <span style="color:#ff6b6b;font-weight:700;">-</span>
@@ -1546,7 +1534,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <div class="match-teams" id="clFinalTeams"></div>
                     <div class="match-score" id="clFinalScore">-</div>
                     <div id="clFinalWinner"></div>
-                    <div id="clFinalAdmin" style="display:none;">
+                    <div id="clFinalAdmin" class="admin-only" style="display:none;">
                         <div class="score-input-group">
                             <input type="number" id="clFinalHome" min="0" placeholder="0">
                             <span style="color:#ff6b6b;font-weight:700;">-</span>
@@ -1561,7 +1549,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
             </div>
             <div id="clChampionBanner"></div>
         </div>
-        <div id="clAdminBar" style="display:none;text-align:center;margin-top:12px;">
+        <div id="clAdminBar" class="admin-only" style="text-align:center;margin-top:12px;display:none;">
             <button class="admin-btn danger-btn" onclick="resetChampionsLeague()">🔄 ڕێستکردنی CL</button>
         </div>
     </div>
@@ -1584,7 +1572,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <div class="match-teams" id="elSemi1Teams"></div>
                     <div class="match-score" id="elSemi1Score">-</div>
                     <div id="elSemi1Winner"></div>
-                    <div id="elSemi1Admin" style="display:none;">
+                    <div id="elSemi1Admin" class="admin-only" style="display:none;">
                         <div class="score-input-group">
                             <input type="number" id="elSemi1Home" min="0" placeholder="0">
                             <span style="color:#ff6b6b;font-weight:700;">-</span>
@@ -1601,7 +1589,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <div class="match-teams" id="elSemi2Teams"></div>
                     <div class="match-score" id="elSemi2Score">-</div>
                     <div id="elSemi2Winner"></div>
-                    <div id="elSemi2Admin" style="display:none;">
+                    <div id="elSemi2Admin" class="admin-only" style="display:none;">
                         <div class="score-input-group">
                             <input type="number" id="elSemi2Home" min="0" placeholder="0">
                             <span style="color:#ff6b6b;font-weight:700;">-</span>
@@ -1625,7 +1613,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <div class="match-teams" id="elFinalTeams"></div>
                     <div class="match-score" id="elFinalScore">-</div>
                     <div id="elFinalWinner"></div>
-                    <div id="elFinalAdmin" style="display:none;">
+                    <div id="elFinalAdmin" class="admin-only" style="display:none;">
                         <div class="score-input-group">
                             <input type="number" id="elFinalHome" min="0" placeholder="0">
                             <span style="color:#ff6b6b;font-weight:700;">-</span>
@@ -1640,7 +1628,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
             </div>
             <div id="elChampionBanner"></div>
         </div>
-        <div id="elAdminBar" style="display:none;text-align:center;margin-top:12px;">
+        <div id="elAdminBar" class="admin-only" style="text-align:center;margin-top:12px;display:none;">
             <button class="admin-btn danger-btn" onclick="resetEuropaLeague()">🔄 ڕێستکردنی EL</button>
         </div>
     </div>
@@ -1663,7 +1651,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <div class="match-teams" id="slTeams"></div>
                     <div class="match-score" id="slScore">-</div>
                     <div id="slWinner"></div>
-                    <div id="slAdmin" style="display:none;">
+                    <div id="slAdmin" class="admin-only" style="display:none;">
                         <div class="score-input-group">
                             <input type="number" id="slHome" min="0" placeholder="0">
                             <span style="color:#ff6b6b;font-weight:700;">-</span>
@@ -1720,7 +1708,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <span class="trophy-label">چامپیۆنس لیگ</span>
                     <span class="trophy-count-display" id="teamInfoCLDisplay">0</span>
                 </div>
-                <input type="number" class="trophy-input" id="teamInfoCLInput" min="0" value="0" style="display:none;">
+                <input type="number" class="trophy-input admin-only" id="teamInfoCLInput" min="0" value="0" style="display:none;">
             </div>
             <div class="trophy-row">
                 <img src="https://i.ibb.co/hxnt3RVs/confras.png" alt="EL">
@@ -1728,7 +1716,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <span class="trophy-label">یۆڕۆپالیگ</span>
                     <span class="trophy-count-display" id="teamInfoELDisplay">0</span>
                 </div>
-                <input type="number" class="trophy-input" id="teamInfoELInput" min="0" value="0" style="display:none;">
+                <input type="number" class="trophy-input admin-only" id="teamInfoELInput" min="0" value="0" style="display:none;">
             </div>
             <div class="trophy-row">
                 <img src="https://i.ibb.co/zWPn4k0s/file-0000000090a88210bfb52ff76f305877.png" alt="LALIGA">
@@ -1736,7 +1724,7 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <span class="trophy-label">لالیگا</span>
                     <span class="trophy-count-display" id="teamInfoSLDisplay">0</span>
                 </div>
-                <input type="number" class="trophy-input" id="teamInfoSLInput" min="0" value="0" style="display:none;">
+                <input type="number" class="trophy-input admin-only" id="teamInfoSLInput" min="0" value="0" style="display:none;">
             </div>
             <div class="trophy-row">
                 <img src="https://i.ibb.co/JM4S1zF/file-0000000081f08243a64038889907d681.png" alt="SUPER EUROPA">
@@ -1744,9 +1732,9 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
                     <span class="trophy-label">سووپەری ئەوروپا</span>
                     <span class="trophy-count-display" id="teamInfoSEDisplay">0</span>
                 </div>
-                <input type="number" class="trophy-input" id="teamInfoSEInput" min="0" value="0" style="display:none;">
+                <input type="number" class="trophy-input admin-only" id="teamInfoSEInput" min="0" value="0" style="display:none;">
             </div>
-            <button class="save-trophies-btn" id="saveTrophiesBtn" style="display:none;">💾 پاشەکەوتکردن</button>
+            <button class="save-trophies-btn admin-only" id="saveTrophiesBtn" style="display:none;">💾 پاشەکەوتکردن</button>
         </div>
         <span class="close-modal" onclick="closeTeamInfoModal()" style="position:relative;z-index:2;">داخستن</span>
     </div>
@@ -1825,6 +1813,15 @@ let isAdmin = false;
 let isInitialLoad = true;
 let isSaving = false;
 let currentTeamInfoName = null;
+
+// ✅ دەستکاری کردنی دۆخی ئەدمین لە body
+function updateAdminUI() {
+    if (isAdmin) {
+        document.body.classList.add('is-admin');
+    } else {
+        document.body.classList.remove('is-admin');
+    }
+}
 
 function showToast(msg, type='success') {
     const old = document.querySelector('.toast');
@@ -2002,7 +1999,6 @@ function renderLaliga() {
             </div>
         `;
     } else banner.innerHTML = '';
-    document.getElementById('laligaAdminBar').style.display = isAdmin ? 'flex' : 'none';
     document.getElementById('finishLaligaBtn').style.display = state.laligaFinished ? 'none' : 'inline-flex';
     document.getElementById('laligaLockedNotice').style.display = (state.laligaFinished && !isAdmin) ? 'block' : 'none';
 }
@@ -2011,7 +2007,6 @@ function renderCL() {
     const clLocked = !state.laligaFinished;
     document.getElementById('clLockedNotice').style.display = clLocked ? 'block' : 'none';
     document.getElementById('clContent').style.display = clLocked ? 'none' : 'block';
-    document.getElementById('clAdminBar').style.display = isAdmin ? 'block' : 'none';
     if (clLocked) return;
     const cl = state.championsLeague;
     const top4 = sortLaliga(state.laliga).slice(0, 4);
@@ -2026,9 +2021,6 @@ function renderCL() {
     renderMatch('clSemi1', cl.semi1);
     renderMatch('clSemi2', cl.semi2);
     renderMatch('clFinal', cl.final);
-    document.getElementById('clSemi1Admin').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('clSemi2Admin').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('clFinalAdmin').style.display = isAdmin ? 'block' : 'none';
     const banner = document.getElementById('clChampionBanner');
     if (cl.final.winner) {
         const champ = getTeamByName(cl.final.winner);
@@ -2049,7 +2041,6 @@ function renderEL() {
     const elLocked = !state.laligaFinished;
     document.getElementById('elLockedNotice').style.display = elLocked ? 'block' : 'none';
     document.getElementById('elContent').style.display = elLocked ? 'none' : 'block';
-    document.getElementById('elAdminBar').style.display = isAdmin ? 'block' : 'none';
     if (elLocked) return;
     const el = state.europaLeague;
     const sorted = sortLaliga(state.laliga);
@@ -2064,9 +2055,6 @@ function renderEL() {
     renderMatch('elSemi1', el.semi1);
     renderMatch('elSemi2', el.semi2);
     renderMatch('elFinal', el.final);
-    document.getElementById('elSemi1Admin').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('elSemi2Admin').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('elFinalAdmin').style.display = isAdmin ? 'block' : 'none';
     const banner = document.getElementById('elChampionBanner');
     if (el.final.winner) {
         const champ = getTeamByName(el.final.winner);
@@ -2102,7 +2090,6 @@ function renderSL() {
         }
     }
     renderMatch('sl', sl);
-    document.getElementById('slAdmin').style.display = isAdmin ? 'block' : 'none';
     const banner = document.getElementById('slChampionBanner');
     if (sl.winner) {
         const champ = getTeamByName(sl.winner);
@@ -2542,6 +2529,7 @@ document.getElementById('adminLoginBtn').addEventListener('click', () => {
         isAdmin = false;
         adminBtn.textContent = '🔐 پەنەلی ئەدمین';
         adminBtn.classList.remove('logout');
+        updateAdminUI();
         showToast('👋 دەرچوویت!', 'success');
         renderAll();
     } else loginModal.classList.add('active');
@@ -2558,6 +2546,7 @@ document.getElementById('loginSubmit').addEventListener('click', () => {
         adminBtn.classList.add('logout');
         document.getElementById('usernameInput').value = '';
         document.getElementById('passwordInput').value = '';
+        updateAdminUI();
         showToast('✅ بەخێربێی!', 'success');
         renderAll();
     } else {
