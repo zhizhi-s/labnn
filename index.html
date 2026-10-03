@@ -353,6 +353,17 @@ tr.champion-row td {
 tr.cl-row td { background: rgba(30,58,138,0.15); }
 tr.el-row td { background: rgba(234,88,12,0.12); }
 
+/* ============ RELEGATION ROW (9 & 10) ============ */
+tr.relegation-row td {
+    background: rgba(214, 48, 49, 0.18);
+    border-bottom: 1px solid rgba(214, 48, 49, 0.4);
+}
+tr.relegation-row .rank-badge {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+    box-shadow: 0 0 12px rgba(231, 76, 60, 0.7) !important;
+    color: #fff !important;
+}
+
 /* Team Info - centered, vertical layout */
 .team-info {
     display: flex;
@@ -402,6 +413,11 @@ tr.el-row td { background: rgba(234,88,12,0.12); }
     background: linear-gradient(135deg, #f97316, #ea580c);
     color: #fff;
     box-shadow: 0 0 12px rgba(249,115,22,0.5);
+}
+.rank-badge.rank-red {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(231,76,60,0.5);
 }
 
 .points { font-weight: 800; font-size: clamp(1rem, 1.6vw, 1.3rem); color: #ffd93d; }
@@ -2006,7 +2022,9 @@ const DEFAULT_TEAMS = [
     { name: 'ڤیاڕیاڵ', img: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Villarreal_CF_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 1, super: 0, superEuropa: 0 },
     { name: 'ڕیال بێتیس', img: 'https://upload.wikimedia.org/wikipedia/commons/1/13/Real_betis_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 0, super: 0, superEuropa: 0 },
     { name: 'ڕیال سۆسیداد', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Real_Sociedad_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 0, super: 0, superEuropa: 0 },
-    { name: 'ڤالێنسیا', img: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Valencia_CF_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 1, super: 2, superEuropa: 0 }
+    { name: 'ڤالێنسیا', img: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Valencia_CF_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 1, super: 2, superEuropa: 0 },
+    { name: 'حەمە', img: 'https://images.seeklogo.com/logo-png/0/2/ac-milan-logo-png_seeklogo-2258.png', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 0, super: 0, superEuropa: 0 },
+    { name: 'هەریاد', img: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/1280px-FC_Internazionale_Milano_2021.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 0, super: 0, superEuropa: 0 }
 ];
 
 let state = {
@@ -2182,12 +2200,14 @@ function renderLaliga() {
         const rank = idx + 1;
         let cls = 'rank-badge';
         if (rank >= 1 && rank <= 4) cls += ' rank-blue';
-        else cls += ' rank-orange';
+        else if (rank >= 5 && rank <= 8) cls += ' rank-orange';
+        else cls += ' rank-red';
         const diff = team.goals - team.goalsAgainst;
         const tr = document.createElement('tr');
         if (state.laligaFinished && state.laligaChampion === team.name) tr.classList.add('champion-row');
         else if (state.laligaFinished && qualCL.includes(team.name)) tr.classList.add('cl-row');
         else if (state.laligaFinished && qualEL.includes(team.name)) tr.classList.add('el-row');
+        else if (state.laligaFinished && rank >= 9) tr.classList.add('relegation-row');
         tr.innerHTML = `
             <td><span class="${cls}">${rank}</span></td>
             <td>
@@ -2717,7 +2737,7 @@ document.getElementById('saveEditBtn').addEventListener('click', () => {
             superEuropa: oldTeam.superEuropa || 0
         });
     });
-    if (newTeams.length !== 8) return showToast('❌ 8 یانە!', 'error');
+    if (newTeams.length !== 10) return showToast('❌ 10 یانە!', 'error');
     state.laliga = newTeams;
     editModal.classList.remove('active');
     renderAll(); saveState();
