@@ -1,2871 +1,1237 @@
 <!DOCTYPE html>
-<html lang="ku">
+<html lang="ku" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>دیتەڵی تۆپی پێ - سیستەمی تەواو</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-
-/* ============ MODERN TAP/CLICK HIGHLIGHT ============ */
-* {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-}
-
-/* Remove default focus outlines but keep accessibility */
-*:focus {
-    outline: none;
-}
-*:focus-visible {
-    outline: 2px solid rgba(102, 126, 234, 0.6);
-    outline-offset: 2px;
-}
-
-/* Smooth interaction base for all clickable elements */
-button,
-.nav-tab,
-.team-info,
-.admin-btn,
-.close-modal,
-.match-card,
-.trophy-row,
-.confirm-buttons button {
-    -webkit-tap-highlight-color: transparent;
-    position: relative;
-    transition: 
-        background-color 0.25s ease,
-        box-shadow 0.3s ease,
-        transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
-        border-color 0.25s ease;
-    will-change: transform, box-shadow;
-}
-
-/* ============ ACTIVE (TAP/CLICK) STATE ============ */
-button:active,
-.admin-btn:active,
-.nav-tab:active,
-.close-modal:active,
-.login-submit:active,
-.save-edit-btn:active,
-.save-trophies-btn:active,
-.confirm-buttons button:active {
-    transform: scale(0.96);
-    background-color: rgba(102, 126, 234, 0.25) !important;
-    box-shadow: 
-        0 0 0 2px rgba(102, 126, 234, 0.5),
-        0 0 20px rgba(102, 126, 234, 0.4),
-        inset 0 0 20px rgba(102, 126, 234, 0.15) !important;
-    transition: 
-        transform 0.1s ease,
-        background-color 0.1s ease,
-        box-shadow 0.1s ease;
-}
-
-/* Team rows in tables */
-.team-info:active {
-    transform: scale(0.97);
-    background: rgba(102, 126, 234, 0.15);
-    border-radius: 12px;
-    box-shadow: 
-        0 0 0 1px rgba(102, 126, 234, 0.4),
-        0 0 16px rgba(102, 126, 234, 0.35);
-}
-
-/* Team rows inside table cells */
-.team-info:active .team-img {
-    border-color: #a78bfa;
-    box-shadow: 0 0 16px rgba(167, 139, 250, 0.7);
-    transform: scale(1.08);
-}
-
-/* Match cards */
-.match-card:active {
-    transform: scale(0.985);
-    background: rgba(102, 126, 234, 0.12);
-    border-color: rgba(167, 139, 250, 0.5);
-    box-shadow: 
-        0 0 0 1px rgba(167, 139, 250, 0.4),
-        0 0 24px rgba(102, 126, 234, 0.35),
-        0 12px 30px rgba(0,0,0,0.4);
-}
-
-/* Trophy rows */
-.trophy-row:active {
-    transform: scale(0.98);
-    background: rgba(255, 215, 0, 0.08);
-    border-color: rgba(255, 215, 0, 0.4);
-    box-shadow: 
-        0 0 0 1px rgba(255, 215, 0, 0.3),
-        0 0 16px rgba(255, 215, 0, 0.25);
-}
-
-/* Nav tabs - special purple treatment */
-.nav-tab:active:not(.active) {
-    background: rgba(102, 126, 234, 0.2) !important;
-    border-color: rgba(167, 139, 250, 0.5) !important;
-    color: #fff !important;
-    box-shadow: 
-        0 0 0 1px rgba(167, 139, 250, 0.4),
-        0 0 18px rgba(102, 126, 234, 0.4) !important;
-}
-
-/* Active (current) nav tab - subtle pulse */
-.nav-tab.active:active {
-    transform: scale(0.96);
-    box-shadow: 
-        0 0 0 2px rgba(167, 139, 250, 0.6),
-        0 0 24px rgba(102, 126, 234, 0.6) !important;
-}
-
-/* Admin buttons - keep their unique gradient, add glow */
-.admin-btn:active {
-    background: linear-gradient(135deg, #7b8ff0, #8b5cb8) !important;
-}
-
-.admin-btn.winner-btn:active {
-    background: linear-gradient(135deg, #ffe14d, #ffd93d) !important;
-    color: #1a1a4e !important;
-    box-shadow: 
-        0 0 0 2px rgba(255, 215, 0, 0.6),
-        0 0 24px rgba(255, 215, 0, 0.5) !important;
-}
-
-.admin-btn.danger-btn:active,
-.admin-btn.reset-btn:active {
-    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
-}
-
-/* Close modal links */
-.close-modal:active {
-    color: #fff !important;
-    transform: scale(0.95);
-    text-shadow: 0 0 12px rgba(102, 126, 234, 0.8);
-}
-
-/* Login/save buttons */
-.login-submit:active,
-.save-edit-btn:active {
-    background: linear-gradient(135deg, #7b8ff0, #8b5cb8) !important;
-    box-shadow: 
-        0 0 0 2px rgba(167, 139, 250, 0.5),
-        0 0 24px rgba(102, 126, 234, 0.5) !important;
-}
-
-.save-trophies-btn:active {
-    box-shadow: 
-        0 0 0 2px rgba(255, 215, 0, 0.5),
-        0 0 28px rgba(255, 215, 0, 0.6) !important;
-}
-
-/* Confirm modal buttons */
-.confirm-yes:active {
-    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
-    box-shadow: 
-        0 0 0 2px rgba(231, 76, 60, 0.5),
-        0 0 20px rgba(231, 76, 60, 0.5) !important;
-}
-
-.confirm-no:active {
-    background: rgba(255, 255, 255, 0.2) !important;
-    box-shadow: 0 0 16px rgba(255, 255, 255, 0.2) !important;
-}
-
-/* Table rows - subtle tap feedback */
-tbody tr {
-    transition: background-color 0.2s ease;
-}
-tbody tr:active td {
-    background: rgba(102, 126, 234, 0.08);
-}
-
-/* Prevent tap highlight on images */
-img {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-user-drag: none;
-    user-select: none;
-    pointer-events: none;
-}
-
-/* Re-enable pointer events for clickable images */
-.team-info .team-img,
-.match-team img {
-    pointer-events: auto;
-}
-
-/* ============ RIPPLE EFFECT ============ */
-.ripple-host {
-    position: relative;
-    overflow: hidden;
-}
-
-.ripple {
-    position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(167, 139, 250, 0.6) 0%, rgba(102, 126, 234, 0.3) 40%, transparent 70%);
-    transform: scale(0);
-    animation: rippleExpand 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-    z-index: 1;
-}
-
-@keyframes rippleExpand {
-    to {
-        transform: scale(3);
-        opacity: 0;
-    }
-}
-
-/* ============ REDUCED MOTION SUPPORT ============ */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-html, body { overflow-x: hidden; max-width: 100vw; }
-body {
-    background: linear-gradient(135deg, #0a0a2e, #1a1a4e, #0a0a2e);
-    min-height: 100vh;
-    color: #fff;
-    padding: 12px;
-    direction: rtl;
-}
-
-/* ============ HEADER ============ */
-.header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 20px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255,255,255,0.08);
-    flex-wrap: wrap; gap: 10px;
-}
-.header h1 {
-    font-size: clamp(1.2rem, 4.5vw, 1.9rem);
-    background: linear-gradient(90deg, #ff6b6b, #ffd93d);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    font-weight: 900; letter-spacing: 1px;
-}
-.header-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-
-.admin-btn {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff; border: none; padding: 8px 16px;
-    border-radius: 50px; font-size: clamp(0.7rem, 1.6vw, 0.9rem);
-    font-weight: 600; cursor: pointer; transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(102,126,234,0.3);
-    white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;
-}
-.admin-btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 20px rgba(102,126,234,0.5); }
-.admin-btn.logout { background: linear-gradient(135deg, #f093fb, #f5576c); }
-.admin-btn.reset-btn { background: linear-gradient(135deg, #e17055, #d63031); }
-.admin-btn.winner-btn { background: linear-gradient(135deg, #ffd700, #f7c948); color: #1a1a4e; }
-.admin-btn.danger-btn { background: linear-gradient(135deg, #d63031, #c0392b); }
-
-/* ============ NAV TABS ============ */
-.nav-tabs {
-    display: flex; gap: 8px; flex-wrap: wrap;
-    justify-content: center; margin-bottom: 16px;
-    padding: 8px; background: rgba(255,255,255,0.03);
-    border-radius: 16px; max-width: 1500px; margin-left: auto; margin-right: auto;
-}
-.nav-tab {
-    padding: 8px 18px; border-radius: 50px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: #ccc; cursor: pointer; font-weight: 600;
-    font-size: clamp(0.7rem, 1.4vw, 0.9rem);
-    transition: 0.3s; white-space: nowrap;
-}
-.nav-tab:hover { background: rgba(255,255,255,0.1); color: #fff; }
-.nav-tab.active {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff; border-color: transparent;
-    box-shadow: 0 4px 14px rgba(102,126,234,0.4);
-}
-
-/* ============ PAGE CONTAINER ============ */
-.page-container { display: none; max-width: 1500px; margin: 0 auto; padding: 4px; }
-.page-container.active { display: block; }
-
-/* ============ CARD ============ */
-.card {
-    background: rgba(255,255,255,0.04);
-    backdrop-filter: blur(8px);
-    border-radius: 20px;
-    padding: 16px 14px;
-    border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-    transition: all 0.25s ease;
-    margin-bottom: 18px;
-}
-.card:hover { border-color: rgba(255,255,255,0.15); }
-
-.card-title {
-    text-align: center;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    font-weight: 800;
-    padding: 8px 0 14px;
-    margin-bottom: 12px;
-    border-bottom: 3px solid rgba(255,255,255,0.08);
-    background: linear-gradient(90deg, #ffd93d, #ff6b6b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 1px;
-}
-
-/* ============ TABLE ============ */
-.table-wrapper {
-    overflow-x: auto; border-radius: 14px;
-    background: rgba(0,0,0,0.25);
-    -webkit-overflow-scrolling: touch;
-}
-table { width: 100%; border-collapse: collapse; }
-th {
-    background: rgba(102,126,234,0.2);
-    padding: 12px 6px;
-    font-size: clamp(0.7rem, 1.2vw, 0.85rem);
-    font-weight: 700; text-transform: uppercase;
-    color: #ffd93d;
-    border-bottom: 2px solid rgba(255,255,255,0.06);
-    white-space: nowrap;
-}
-td {
-    padding: 10px 6px; text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    vertical-align: middle;
-    font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-}
-tr:hover td { background: rgba(255,255,255,0.04); }
-
-tr.champion-row td {
-    background: linear-gradient(90deg, rgba(0,184,148,0.28), rgba(0,184,148,0.10));
-    border-bottom: 2px solid rgba(0,184,148,0.6);
-    font-weight: 700;
-}
-tr.cl-row td { background: rgba(30,58,138,0.15); }
-tr.el-row td { background: rgba(234,88,12,0.12); }
-
-/* ============ RELEGATION ROW (9 & 10) ============ */
-tr.relegation-row td {
-    background: rgba(214, 48, 49, 0.18);
-    border-bottom: 1px solid rgba(214, 48, 49, 0.4);
-}
-tr.relegation-row .rank-badge {
-    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
-    box-shadow: 0 0 12px rgba(231, 76, 60, 0.7) !important;
-    color: #fff !important;
-}
-
-/* Team Info - centered, vertical layout */
-.team-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    min-width: 100px;
-    cursor: pointer;
-    padding: 4px 0;
-    margin: 0 auto;
-}
-.team-info:hover .team-img { transform: scale(1.1); border-color: #ffd93d; }
-.team-info .team-img {
-    width: clamp(34px, 4vw, 46px);
-    height: clamp(34px, 4vw, 46px);
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(255,255,255,0.15);
-    transition: all 0.3s ease;
-    background: #1a1a4e;
-    flex-shrink: 0;
-}
-.team-info .team-name {
-    font-weight: 600;
-    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
-    text-align: center;
-    white-space: nowrap;
-}
-
-.rank-badge {
-    display: inline-block;
-    font-weight: 800;
-    width: clamp(26px, 3vw, 34px);
-    height: clamp(26px, 3vw, 34px);
-    line-height: clamp(26px, 3vw, 34px);
-    border-radius: 50%;
-    text-align: center;
-    font-size: clamp(0.7rem, 1.1vw, 0.9rem);
-}
-.rank-badge.rank-blue {
-    background: linear-gradient(135deg, #3b82f6, #1e40af);
-    color: #fff;
-    box-shadow: 0 0 12px rgba(59,130,246,0.5);
-}
-.rank-badge.rank-orange {
-    background: linear-gradient(135deg, #f97316, #ea580c);
-    color: #fff;
-    box-shadow: 0 0 12px rgba(249,115,22,0.5);
-}
-.rank-badge.rank-red {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: #fff;
-    box-shadow: 0 0 12px rgba(231,76,60,0.5);
-}
-
-.points { font-weight: 800; font-size: clamp(1rem, 1.6vw, 1.3rem); color: #ffd93d; }
-.gd-positive { color: #00b894; }
-.gd-negative { color: #e17055; }
-
-/* ============ CHAMPION BANNER ============ */
-.champion-banner {
-    margin-top: 16px; padding: 20px 16px;
-    background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,107,107,0.15));
-    border: 2px solid rgba(255,215,0,0.5);
-    border-radius: 20px; text-align: center;
-    box-shadow: 0 0 40px rgba(255,215,0,0.25);
-    animation: championGlow 2s ease-in-out infinite alternate;
-}
-@keyframes championGlow {
-    from { box-shadow: 0 0 20px rgba(255,215,0,0.2); }
-    to { box-shadow: 0 0 45px rgba(255,215,0,0.5); }
-}
-.champion-banner .trophy { font-size: clamp(2rem, 5vw, 3.5rem); }
-.champion-banner .champion-label {
-    font-size: clamp(1rem, 2vw, 1.4rem);
-    color: #ffd700; font-weight: 800; margin: 6px 0;
-    letter-spacing: 1px;
-}
-.champion-banner .champion-team {
-    display: flex; justify-content: center; align-items: center; gap: 12px;
-    margin-top: 8px;
-    flex-wrap: wrap;
-}
-.champion-banner .champion-team img {
-    width: clamp(55px, 8vw, 90px);
-    height: clamp(55px, 8vw, 90px);
-    border-radius: 50%; border: 4px solid #ffd700;
-    background: #1a1a4e; object-fit: cover;
-    box-shadow: 0 0 30px rgba(255,215,0,0.6);
-}
-.champion-banner .champion-team .champion-name {
-    font-size: clamp(1.1rem, 2.5vw, 1.8rem);
-    font-weight: 900;
-    background: linear-gradient(90deg, #ffd700, #ff6b6b);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-
-/* ============ MATCH CARD ============ */
-.match-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-    margin-bottom: 16px;
-}
-.match-card {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(8px);
-    border-radius: 20px;
-    padding: 16px 14px;
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    text-align: center;
-    transition: 0.3s;
-    min-width: 0;
-}
-.match-card:hover { transform: translateY(-3px); border-color: rgba(255,217,61,0.25); }
-.match-card.final-match {
-    border: 2px solid rgba(255,215,0,0.4);
-    background: linear-gradient(135deg, rgba(255,215,0,0.06), rgba(255,255,255,0.03));
-}
-.match-card.super-match {
-    border: 2px solid rgba(124,58,237,0.5);
-    background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(236,72,153,0.08));
-}
-.match-label {
-    font-size: clamp(0.85rem, 1.3vw, 1.1rem);
-    font-weight: 700; color: #ffd93d;
-    margin-bottom: 10px; letter-spacing: 0.5px;
-}
-.match-teams {
-    display: flex; justify-content: center;
-    align-items: center; gap: 10px; flex-wrap: wrap;
-    margin-bottom: 8px;
-}
-.match-team {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 4px; min-width: 70px;
-    padding: 4px 6px; border-radius: 12px;
-}
-.match-team img {
-    width: clamp(42px, 5vw, 62px);
-    height: clamp(42px, 5vw, 62px);
-    border-radius: 50%; object-fit: cover;
-    border: 2px solid rgba(255,255,255,0.15);
-    background: #1a1a4e;
-}
-.match-team .team-name { font-size: clamp(0.65rem, 0.95vw, 0.85rem); font-weight: 600; }
-.match-team.winner-team img { border-color: #ffd700; box-shadow: 0 0 20px rgba(255,215,0,0.5); }
-.match-team.winner-team .team-name { color: #ffd700; }
-.match-vs {
-    font-size: clamp(1rem, 1.5vw, 1.4rem);
-    font-weight: 800; color: #ff6b6b; padding: 0 4px;
-}
-.match-score {
-    font-size: clamp(1rem, 1.5vw, 1.4rem);
-    font-weight: 900; color: #fff;
-    background: rgba(0,0,0,0.3);
-    padding: 6px 18px; border-radius: 10px;
-    display: inline-block; margin: 6px 0;
-}
-.match-winner {
-    margin-top: 6px;
-    padding: 6px 18px;
-    background: linear-gradient(135deg, #ffd700, #f7c948);
-    border-radius: 24px; color: #1a1a4e;
-    font-weight: 700; display: inline-block;
-    font-size: clamp(0.7rem, 1vw, 0.9rem);
-}
-.match-winner img {
-    width: 22px; height: 22px;
-    border-radius: 50%; vertical-align: middle;
-    margin-left: 6px;
-}
-.match-card .awaiting {
-    color: #888; font-style: italic;
-    font-size: clamp(0.75rem, 1vw, 0.85rem);
-    padding: 8px 0;
-}
-
-/* ============ SCORE INPUT ============ */
-.score-input-group {
-    display: flex; gap: 8px;
-    justify-content: center; align-items: center;
-    flex-wrap: wrap; margin: 8px 0;
-}
-.score-input-group input {
-    width: 52px; padding: 6px 4px;
-    text-align: center;
-    font-size: 0.95rem; font-weight: 700;
-    border: 2px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    background: rgba(0,0,0,0.3);
-    color: #fff; outline: none;
-    transition: 0.3s;
-}
-.score-input-group input:focus { border-color: #ffd93d; }
-.score-input-group label { font-size: 0.8rem; color: #aaa; }
-
-.admin-actions {
-    display: flex; gap: 6px;
-    justify-content: center; flex-wrap: wrap;
-    margin-top: 8px;
-}
-.admin-actions .admin-btn {
-    font-size: clamp(0.6rem, 0.85vw, 0.75rem);
-    padding: 5px 12px;
-}
-
-/* ============ CONNECTOR ============ */
-.connector {
-    display: flex; justify-content: center;
-    align-items: center; gap: 10px;
-    padding: 12px 0;
-}
-.connector .line {
-    flex: 1; max-width: 100px; height: 2px;
-    background: linear-gradient(90deg, rgba(255,215,0,0.1), rgba(255,215,0,0.5), rgba(255,215,0,0.1));
-}
-.connector .arrow {
-    font-size: 1.5rem; color: #ffd93d;
-    animation: pulse 1.5s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100%{opacity:0.5;transform:scale(1);} 50%{opacity:1;transform:scale(1.15);} }
-
-/* ============ MODAL ============ */
-.modal {
-    display: none; position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(6px);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    overflow-y: auto;
-}
-.modal.active { display: flex; }
-.modal-content {
-    background: linear-gradient(135deg, #1a1a4e, #2d2d7a);
-    padding: clamp(18px, 3.5vw, 30px);
-    border-radius: 24px; width: 100%;
-    max-width: 460px;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-    animation: modalIn 0.3s ease;
-    max-height: 92vh; overflow-y: auto;
-    position: relative;
-    transition: all 0.5s ease;
-    margin: auto;
-}
-@keyframes modalIn {
-    from { transform: scale(0.85) translateY(20px); opacity: 0; }
-    to { transform: scale(1) translateY(0); opacity: 1; }
-}
-.modal-content h2 {
-    text-align: center;
-    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
-    margin-bottom: 16px; color: #ffd93d;
-}
-.modal-content label {
-    display: block; margin-bottom: 6px;
-    font-weight: 600; color: #ccc;
-    font-size: clamp(0.8rem, 1vw, 0.9rem);
-}
-.modal-content input, .modal-content select {
-    width: 100%; padding: 10px 14px;
-    border: 2px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    background: rgba(0,0,0,0.3);
-    color: #fff;
-    font-size: clamp(0.85rem, 1.1vw, 1rem);
-    margin-bottom: 14px; outline: none;
-    transition: 0.3s;
-}
-.modal-content input:focus, .modal-content select:focus {
-    border-color: #667eea;
-    box-shadow: 0 0 16px rgba(102,126,234,0.2);
-}
-.modal-content select option { background: #1a1a4e; }
-.login-submit {
-    width: 100%; padding: 12px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff; border: none;
-    border-radius: 12px;
-    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
-    font-weight: 700; cursor: pointer;
-    transition: 0.3s;
-}
-.login-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,0.4); }
-.close-modal {
-    display: block; text-align: center;
-    margin-top: 14px; color: #aaa;
-    cursor: pointer; transition: 0.3s;
-    font-size: clamp(0.8rem, 1vw, 0.9rem);
-}
-.close-modal:hover { color: #fff; }
-
-/* ============ EDIT FORM ============ */
-.edit-form-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 12px;
-    padding: 14px;
-    background: rgba(0,0,0,0.2);
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.05);
-}
-.edit-form-group .full-width { grid-column: 1 / -1; }
-.edit-form-group label {
-    font-size: clamp(0.65rem, 0.9vw, 0.75rem);
-    color: #aaa; margin-bottom: 4px;
-}
-.edit-form-group input {
-    padding: 6px 10px;
-    font-size: clamp(0.75rem, 0.9vw, 0.85rem);
-    margin-bottom: 0;
-}
-.edit-team-header {
-    grid-column: 1/-1;
-    font-weight: 700; color: #ffd93d;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    padding-bottom: 6px; margin-bottom: 4px;
-    font-size: 0.9rem;
-}
-.save-edit-btn {
-    width: 100%; padding: 12px;
-    background: linear-gradient(135deg, #00b894, #00a86b);
-    color: #fff; border: none;
-    border-radius: 12px;
-    font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-    font-weight: 700; cursor: pointer;
-    transition: 0.3s; margin-top: 6px;
-}
-.save-edit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,184,148,0.35); }
-
-/* ============ TEAM INFO MODAL ============ */
-.team-info-header {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 16px; padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    position: relative;
-    z-index: 2;
-}
-.team-info-header img {
-    width: 75px; height: 75px;
-    border-radius: 50%; object-fit: cover;
-    border: 3px solid #ffd93d;
-    background: #1a1a4e;
-    transition: all 0.4s ease;
-}
-.team-info-header h2 { margin: 0; font-size: clamp(1.3rem, 2.2vw, 1.8rem); }
-
-/* ============ TROPHY SECTION ============ */
-.trophy-section {
-    margin-top: 16px;
-    padding: 16px;
-    background: rgba(0,0,0,0.25);
-    border-radius: 16px;
-    border: 1px solid rgba(255,215,0,0.15);
-    position: relative;
-    z-index: 2;
-}
-.trophy-section-title {
-    font-weight: 800;
-    color: #ffd93d;
-    margin-bottom: 14px;
-    font-size: clamp(1rem, 1.6vw, 1.2rem);
-    text-align: center;
-    letter-spacing: 1px;
-    text-shadow: 0 0 20px rgba(255,215,0,0.4);
-}
-.trophy-row {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.06);
-    transition: 0.25s;
-}
-.trophy-row:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,215,0,0.25); }
-.trophy-row img {
-    width: 52px; height: 52px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(255,215,0,0.5));
-    flex-shrink: 0;
-}
-.trophy-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
-}
-.trophy-label {
-    font-weight: 700;
-    font-size: clamp(0.8rem, 1.1vw, 0.95rem);
-    color: #fff;
-}
-.trophy-count-display {
-    font-weight: 800;
-    font-size: clamp(1rem, 1.4vw, 1.2rem);
-    color: #ffd93d;
-    text-shadow: 0 0 15px rgba(255,215,0,0.5);
-}
-.trophy-input {
-    width: 90px !important;
-    padding: 8px 10px !important;
-    text-align: center !important;
-    font-size: 1rem !important;
-    font-weight: 800 !important;
-    background: rgba(0,0,0,0.4) !important;
-    border: 2px solid rgba(255,215,0,0.3) !important;
-    border-radius: 10px !important;
-    color: #ffd93d !important;
-    margin: 0 !important;
-    flex-shrink: 0;
-}
-.trophy-input:focus {
-    border-color: #ffd93d !important;
-    box-shadow: 0 0 16px rgba(255,215,0,0.4) !important;
-}
-.trophy-input::-webkit-outer-spin-button,
-.trophy-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-.trophy-input[type=number] { -moz-appearance: textfield; appearance: textfield; }
-
-.save-trophies-btn {
-    width: 100%;
-    padding: 12px;
-    margin-top: 14px;
-    background: linear-gradient(135deg, #ffd700, #f7c948);
-    color: #1a1a4e;
-    border: none;
-    border-radius: 12px;
-    font-size: clamp(0.9rem, 1.2vw, 1rem);
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.3s;
-    letter-spacing: 0.5px;
-}
-.save-trophies-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,215,0,0.5); }
-
-/* ============ TEAM INFO SPECIAL THEMES ============ */
-.team-info-modal-content {
-    position: relative;
-    overflow: hidden;
-}
-
-.team-info-modal-content.theme-fire {
-    background: linear-gradient(135deg, #4a1500, #7a2200, #3d0f00);
-    border: 2px solid rgba(255,100,0,0.6);
-    box-shadow: 0 0 60px rgba(255,80,0,0.5), inset 0 0 80px rgba(255,60,0,0.15);
-    animation: fireGlow 1.8s ease-in-out infinite alternate;
-}
-@keyframes fireGlow {
-    from { box-shadow: 0 0 40px rgba(255,80,0,0.4), inset 0 0 60px rgba(255,60,0,0.1); }
-    to { box-shadow: 0 0 80px rgba(255,120,0,0.8), inset 0 0 100px rgba(255,60,0,0.25); }
-}
-.team-info-modal-content.theme-fire::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 20% 100%, rgba(255,120,0,0.35) 0%, transparent 50%),
-        radial-gradient(circle at 80% 100%, rgba(255,60,0,0.35) 0%, transparent 50%),
-        radial-gradient(circle at 50% 100%, rgba(255,200,0,0.25) 0%, transparent 60%);
-    pointer-events: none;
-    animation: fireFlicker 1.2s ease-in-out infinite alternate;
-    z-index: 1;
-}
-@keyframes fireFlicker {
-    from { opacity: 0.7; transform: scaleY(1); }
-    to { opacity: 1; transform: scaleY(1.08); }
-}
-.team-info-modal-content.theme-fire .team-info-header img {
-    border-color: #ff6b00;
-    box-shadow: 0 0 30px rgba(255,100,0,0.9);
-}
-.team-info-modal-content.theme-fire h2 {
-    color: #ff8c00;
-    text-shadow: 0 0 20px rgba(255,100,0,0.8);
-}
-.team-info-modal-content.theme-fire .trophy-section {
-    border-color: rgba(255,120,0,0.4);
-    background: rgba(60,15,0,0.5);
-}
-.team-info-modal-content.theme-fire .trophy-section-title {
-    color: #ff8c00;
-    text-shadow: 0 0 20px rgba(255,120,0,0.7);
-}
-
-.team-info-modal-content.theme-diamond {
-    background: linear-gradient(135deg, #001a33, #003366, #001a33);
-    border: 2px solid rgba(0,200,255,0.7);
-    box-shadow: 0 0 60px rgba(0,200,255,0.6), inset 0 0 80px rgba(0,180,255,0.15);
-    animation: diamondShine 2.5s ease-in-out infinite alternate;
-}
-@keyframes diamondShine {
-    from { box-shadow: 0 0 40px rgba(0,200,255,0.5), inset 0 0 60px rgba(0,180,255,0.1); }
-    to { box-shadow: 0 0 90px rgba(0,230,255,0.9), inset 0 0 120px rgba(0,220,255,0.3); }
-}
-.team-info-modal-content.theme-diamond::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(135deg, transparent 30%, rgba(0,220,255,0.15) 50%, transparent 70%),
-        linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
-    background-size: 200% 200%;
-    pointer-events: none;
-    animation: diamondShift 3s linear infinite;
-    z-index: 1;
-}
-@keyframes diamondShift {
-    0% { background-position: 0% 0%, 0% 0%; }
-    100% { background-position: 200% 200%, 200% 200%; }
-}
-.team-info-modal-content.theme-diamond .team-info-header img {
-    border-color: #00d4ff;
-    box-shadow: 0 0 35px rgba(0,220,255,0.95);
-}
-.team-info-modal-content.theme-diamond h2 {
-    color: #00e0ff;
-    text-shadow: 0 0 25px rgba(0,220,255,0.9);
-}
-.team-info-modal-content.theme-diamond .trophy-section {
-    border-color: rgba(0,220,255,0.5);
-    background: rgba(0,30,60,0.5);
-}
-.team-info-modal-content.theme-diamond .trophy-section-title {
-    color: #00e0ff;
-    text-shadow: 0 0 25px rgba(0,220,255,0.9);
-}
-
-.team-info-modal-content.theme-crown {
-    background: linear-gradient(135deg, #2a1a00, #4a3500, #2a1a00);
-    border: 3px solid #ffd700;
-    box-shadow: 0 0 70px rgba(255,215,0,0.7), inset 0 0 100px rgba(255,200,0,0.15);
-    animation: crownRoyal 2s ease-in-out infinite alternate;
-}
-@keyframes crownRoyal {
-    from { box-shadow: 0 0 50px rgba(255,215,0,0.6), inset 0 0 80px rgba(255,200,0,0.1); }
-    to { box-shadow: 0 0 100px rgba(255,230,0,1), inset 0 0 130px rgba(255,220,0,0.3); }
-}
-.team-info-modal-content.theme-crown::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 50% 0%, rgba(255,230,0,0.3) 0%, transparent 40%),
-        radial-gradient(circle at 0% 50%, rgba(255,215,0,0.2) 0%, transparent 30%),
-        radial-gradient(circle at 100% 50%, rgba(255,215,0,0.2) 0%, transparent 30%);
-    pointer-events: none;
-    animation: crownSparkle 1.8s ease-in-out infinite alternate;
-    z-index: 1;
-}
-@keyframes crownSparkle {
-    from { opacity: 0.6; }
-    to { opacity: 1; }
-}
-.team-info-modal-content.theme-crown .team-info-header img {
-    border-color: #ffd700;
-    box-shadow: 0 0 40px rgba(255,215,0,1);
-    animation: crownImgPulse 1.5s ease-in-out infinite alternate;
-}
-@keyframes crownImgPulse {
-    from { transform: scale(1); }
-    to { transform: scale(1.05); }
-}
-.team-info-modal-content.theme-crown h2 {
-    color: #ffd700;
-    text-shadow: 0 0 30px rgba(255,215,0,1), 0 0 60px rgba(255,180,0,0.6);
-}
-.team-info-modal-content.theme-crown .trophy-section {
-    border-color: rgba(255,215,0,0.6);
-    background: rgba(40,25,0,0.6);
-}
-.team-info-modal-content.theme-crown .trophy-section-title {
-    color: #ffd700;
-    text-shadow: 0 0 30px rgba(255,215,0,1);
-}
-
-.theme-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    padding: 6px 14px;
-    border-radius: 30px;
-    font-weight: 800;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-    z-index: 3;
-    animation: badgePulse 1.5s ease-in-out infinite alternate;
-}
-@keyframes badgePulse {
-    from { transform: scale(1); }
-    to { transform: scale(1.08); }
-}
-.theme-badge.badge-fire {
-    background: linear-gradient(135deg, #ff4500, #ff8c00);
-    color: #fff;
-    box-shadow: 0 0 20px rgba(255,100,0,0.9);
-}
-.theme-badge.badge-diamond {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: #fff;
-    box-shadow: 0 0 20px rgba(0,200,255,0.9);
-}
-.theme-badge.badge-crown {
-    background: linear-gradient(135deg, #ffd700, #ff8c00);
-    color: #2a1a00;
-    box-shadow: 0 0 25px rgba(255,215,0,1);
-}
-
-/* ============ TOAST ============ */
-.toast {
-    position: fixed; bottom: 20px; right: 20px;
-    padding: 12px 22px; border-radius: 14px;
-    font-weight: 600; z-index: 2000;
-    animation: slideUp 0.4s ease;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    font-size: clamp(0.8rem, 1vw, 0.95rem);
-    max-width: 90%;
-}
-.toast.success { background: linear-gradient(135deg, #00b894, #00a86b); color: #fff; }
-.toast.error { background: linear-gradient(135deg, #e17055, #d63031); color: #fff; }
-.toast.warning { background: linear-gradient(135deg, #f7971e, #ffd200); color: #1a1a4e; }
-@keyframes slideUp {
-    from { transform: translateY(40px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-/* ============ CONFIRM MODAL ============ */
-.confirm-modal .modal-content { max-width: 400px; text-align: center; }
-.confirm-modal .confirm-icon { font-size: 3rem; margin-bottom: 10px; }
-.confirm-modal p {
-    color: #ccc; font-size: 0.95rem;
-    line-height: 1.6; margin-bottom: 20px;
-}
-.confirm-modal .confirm-buttons {
-    display: flex; gap: 10px; justify-content: center;
-}
-.confirm-modal .confirm-buttons button {
-    flex: 1; padding: 12px;
-    border-radius: 12px; border: none;
-    font-weight: 700; cursor: pointer;
-    font-size: 0.9rem; transition: 0.3s;
-}
-.confirm-yes {
-    background: linear-gradient(135deg, #d63031, #c0392b);
-    color: #fff;
-}
-.confirm-yes:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214,48,49,0.4); }
-.confirm-no {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.15) !important;
-}
-.confirm-no:hover { background: rgba(255,255,255,0.15); }
-
-/* ============ LOADING ============ */
-.loading { text-align: center; padding: 40px; color: #aaa; font-size: 1.1rem; }
-
-/* ============ SCROLLBAR ============ */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 8px; }
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 8px;
-}
-
-/* ============ LOCKED NOTICE ============ */
-.locked-notice {
-    padding: 12px 16px;
-    background: rgba(255,215,0,0.08);
-    border: 1px solid rgba(255,215,0,0.2);
-    border-radius: 12px;
-    color: #ffd93d;
-    font-size: 0.85rem;
-    text-align: center;
-    margin-bottom: 12px;
-}
-
-/* ============ ADMIN ONLY ============ */
-.admin-only { display: none !important; }
-body.is-admin .admin-only { display: inline-flex !important; }
-body.is-admin #laligaAdminBar.admin-only { display: flex !important; }
-body.is-admin #clAdminBar.admin-only,
-body.is-admin #elAdminBar.admin-only { display: block !important; }
-body.is-admin #clSemi1Admin.admin-only,
-body.is-admin #clSemi2Admin.admin-only,
-body.is-admin #clFinalAdmin.admin-only,
-body.is-admin #elSemi1Admin.admin-only,
-body.is-admin #elSemi2Admin.admin-only,
-body.is-admin #elFinalAdmin.admin-only,
-body.is-admin #slAdmin.admin-only { display: block !important; }
-body.is-admin #saveTrophiesBtn.admin-only { display: block !important; }
-body.is-admin .trophy-input.admin-only { display: block !important; }
-
-/* ============ RESPONSIVE - MOBILE ============ */
-@media (max-width: 768px) {
-    body { padding: 6px; }
-
-    .header {
-        padding: 8px 12px;
-        border-radius: 14px;
-        margin-bottom: 10px;
-        gap: 6px;
-    }
-    .header h1 {
-        font-size: 1rem;
-        letter-spacing: 0.5px;
-    }
-    .header-buttons { width: 100%; }
-    .admin-btn {
-        padding: 6px 12px;
-        font-size: 0.7rem;
-        width: 100%;
-        justify-content: center;
-        border-radius: 10px;
-    }
-
-    .nav-tabs {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 4px;
-        padding: 4px;
-        border-radius: 12px;
-        margin-bottom: 10px;
-    }
-    .nav-tab {
-        padding: 8px 2px;
-        font-size: 0.58rem;
-        text-align: center;
-        white-space: nowrap;
-        border-radius: 8px;
-        font-weight: 700;
-        letter-spacing: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .card {
-        padding: 8px 6px;
-        border-radius: 12px;
-        margin-bottom: 8px;
-    }
-    .card-title {
-        font-size: 0.9rem;
-        padding: 4px 0 8px;
-        margin-bottom: 8px;
-        border-bottom-width: 2px;
-        letter-spacing: 0.5px;
-    }
-
-    #laligaAdminBar {
-        flex-direction: row !important;
-        gap: 4px;
-        margin-bottom: 8px;
-    }
-    #laligaAdminBar .admin-btn {
-        flex: 1;
-        padding: 6px 4px;
-        font-size: 0.58rem;
-        justify-content: center;
-        border-radius: 8px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    #clAdminBar .admin-btn,
-    #elAdminBar .admin-btn {
-        width: 100%;
-        padding: 6px 10px;
-        font-size: 0.65rem;
-        justify-content: center;
-        border-radius: 8px;
-    }
-
-    .locked-notice {
-        padding: 8px 10px;
-        font-size: 0.68rem;
-        border-radius: 8px;
-        margin-bottom: 8px;
-    }
-
-    .table-wrapper {
-        overflow-x: hidden;
-        border-radius: 10px;
-    }
-    table {
-        width: 100%;
-        min-width: 0;
-        table-layout: fixed;
-    }
-    th, td {
-        padding: 8px 2px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 0.78rem;
-    }
-    th:nth-child(1), td:nth-child(1) { width: 10%; }
-    th:nth-child(2), td:nth-child(2) { width: 36%; }
-    th:nth-child(3), td:nth-child(3) { width: 13.5%; }
-    th:nth-child(4), td:nth-child(4) { width: 13.5%; }
-    th:nth-child(5), td:nth-child(5) { width: 13.5%; }
-    th:nth-child(6), td:nth-child(6) { width: 13.5%; }
-
-    th { 
-        font-size: 0.72rem;
-        padding: 9px 2px;
-        letter-spacing: 0;
-        white-space: nowrap;
-        color: #ffd93d;
-    }
-
-    .team-info {
-        min-width: 0;
-        gap: 3px;
-        padding: 2px 0;
-    }
-    .team-info .team-img {
-        width: 32px;
-        height: 32px;
-        border-width: 1.5px;
-    }
-    .team-info .team-name {
-        font-size: 0.72rem;
-        white-space: normal;
-        line-height: 1.1;
-        max-width: 100%;
-        word-break: break-word;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    .rank-badge {
-        width: 24px;
-        height: 24px;
-        line-height: 24px;
-        font-size: 0.72rem;
-    }
-    .points {
-        font-size: 0.88rem;
-    }
-    td.goals {
-        font-size: 0.78rem;
-    }
-
-    .champion-banner {
-        padding: 10px 8px;
-        border-radius: 12px;
-        margin-top: 8px;
-    }
-    .champion-banner .trophy { font-size: 1.8rem; }
-    .champion-banner .champion-label {
-        font-size: 0.8rem;
-        margin: 4px 0;
-    }
-    .champion-banner .champion-team {
-        gap: 8px;
-        margin-top: 4px;
-    }
-    .champion-banner .champion-team img {
-        width: 50px;
-        height: 50px;
-        border-width: 3px;
-    }
-    .champion-banner .champion-team .champion-name {
-        font-size: 1rem;
-    }
-
-    .match-grid {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        margin-bottom: 8px;
-    }
-    .match-card {
-        padding: 10px 8px;
-        border-radius: 12px;
-    }
-    .match-label {
-        font-size: 0.7rem;
-        margin-bottom: 6px;
-        letter-spacing: 0;
-    }
-    .match-teams {
-        gap: 6px;
-        margin-bottom: 4px;
-    }
-    .match-team {
-        min-width: 50px;
-        flex: 1;
-        padding: 2px 3px;
-    }
-    .match-team img {
-        width: 34px;
-        height: 34px;
-        border-width: 1.5px;
-    }
-    .match-team .team-name {
-        font-size: 0.58rem;
-        white-space: normal;
-        line-height: 1.05;
-        text-align: center;
-        word-break: break-word;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    .match-vs {
-        font-size: 0.85rem;
-        padding: 0 2px;
-    }
-    .match-score {
-        font-size: 0.9rem;
-        padding: 4px 12px;
-        margin: 4px 0;
-        border-radius: 8px;
-    }
-    .match-winner {
-        font-size: 0.6rem;
-        padding: 4px 10px;
-        margin-top: 4px;
-        border-radius: 20px;
-    }
-    .match-winner img {
-        width: 14px;
-        height: 14px;
-        margin-left: 4px;
-    }
-
-    .score-input-group {
-        gap: 4px;
-        margin: 6px 0;
-    }
-    .score-input-group input {
-        width: 42px;
-        padding: 5px 3px;
-        font-size: 0.8rem;
-        border-radius: 8px;
-    }
-    .admin-actions {
-        gap: 4px;
-        margin-top: 6px;
-    }
-    .admin-actions .admin-btn {
-        flex: 1;
-        justify-content: center;
-        padding: 5px 8px;
-        font-size: 0.6rem;
-        border-radius: 8px;
-    }
-
-    .connector {
-        padding: 6px 0;
-    }
-    .connector .arrow {
-        font-size: 1rem;
-    }
-    .connector .line {
-        max-width: 60px;
-    }
-
-    .modal {
-        padding: 10px;
-        align-items: center;
-        justify-content: center;
-    }
-    .modal-content {
-        padding: 12px 10px;
-        border-radius: 14px;
-        max-height: 90vh;
-        max-width: 100%;
-        margin: auto;
-    }
-    .modal-content h2 {
-        font-size: 0.95rem;
-        margin-bottom: 10px;
-    }
-    .modal-content label {
-        font-size: 0.7rem;
-        margin-bottom: 4px;
-    }
-    .modal-content input {
-        padding: 8px 10px;
-        font-size: 0.8rem;
-        margin-bottom: 10px;
-        border-radius: 8px;
-    }
-    .login-submit {
-        padding: 10px;
-        font-size: 0.85rem;
-        border-radius: 8px;
-    }
-    .close-modal {
-        font-size: 0.75rem;
-        margin-top: 10px;
-    }
-
-    .team-info-header {
-        gap: 8px;
-        margin-bottom: 10px;
-        padding-bottom: 8px;
-    }
-    .team-info-header img {
-        width: 45px;
-        height: 45px;
-        border-width: 2px;
-    }
-    .team-info-header h2 {
-        font-size: 0.95rem;
-    }
-    .trophy-section {
-        padding: 8px;
-        margin-top: 8px;
-        border-radius: 10px;
-    }
-    .trophy-section-title {
-        font-size: 0.78rem;
-        margin-bottom: 8px;
-        letter-spacing: 0.5px;
-    }
-    .trophy-row {
-        padding: 6px 8px;
-        gap: 8px;
-        margin-bottom: 5px;
-        border-radius: 8px;
-    }
-    .trophy-row img {
-        width: 30px;
-        height: 30px;
-    }
-    .trophy-info {
-        gap: 2px;
-    }
-    .trophy-label {
-        font-size: 0.65rem;
-    }
-    .trophy-count-display {
-        font-size: 0.85rem;
-    }
-    .trophy-input {
-        width: 52px !important;
-        padding: 5px 4px !important;
-        font-size: 0.75rem !important;
-        border-radius: 6px !important;
-    }
-    .save-trophies-btn {
-        padding: 9px;
-        font-size: 0.75rem;
-        margin-top: 10px;
-        border-radius: 8px;
-    }
-    .theme-badge {
-        font-size: 0.58rem;
-        padding: 3px 8px;
-        top: 6px;
-        left: 6px;
-        border-radius: 20px;
-    }
-
-    .edit-form-group {
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 4px;
-        padding: 8px;
-        border-radius: 10px;
-        margin-bottom: 6px;
-    }
-    .edit-team-header {
-        font-size: 0.68rem;
-        padding-bottom: 4px;
-        margin-bottom: 4px;
-    }
-    .edit-form-group label {
-        font-size: 0.58rem;
-        margin-bottom: 2px;
-    }
-    .edit-form-group input {
-        padding: 5px 3px;
-        font-size: 0.72rem;
-        text-align: center;
-        border-radius: 6px;
-    }
-    .save-edit-btn {
-        padding: 10px;
-        font-size: 0.85rem;
-        border-radius: 8px;
-    }
-
-    .toast {
-        bottom: 10px;
-        right: 10px;
-        left: 10px;
-        max-width: none;
-        text-align: center;
-        font-size: 0.7rem;
-        padding: 8px 12px;
-        border-radius: 10px;
-    }
-
-    .confirm-modal .modal-content {
-        max-width: 320px;
-        padding: 14px 12px;
-    }
-    .confirm-modal .confirm-icon {
-        font-size: 2rem;
-        margin-bottom: 6px;
-    }
-    .confirm-modal h2 {
-        font-size: 0.95rem !important;
-        margin-bottom: 8px !important;
-    }
-    .confirm-modal p {
-        font-size: 0.72rem;
-        line-height: 1.4;
-        margin-bottom: 12px;
-    }
-    .confirm-modal .confirm-buttons {
-        flex-direction: row;
-        gap: 6px;
-    }
-    .confirm-modal .confirm-buttons button {
-        padding: 8px;
-        font-size: 0.72rem;
-        border-radius: 8px;
-    }
-
-    .loading {
-        padding: 20px;
-        font-size: 0.85rem;
-    }
-}
-
-@media (max-width: 380px) {
-    body { padding: 4px; }
-
-    .header {
-        padding: 6px 10px;
-        border-radius: 10px;
-    }
-    .header h1 { font-size: 0.85rem; }
-    .admin-btn {
-        font-size: 0.62rem;
-        padding: 5px 8px;
-        border-radius: 8px;
-    }
-
-    .nav-tab {
-        font-size: 0.5rem;
-        padding: 6px 1px;
-        border-radius: 6px;
-    }
-
-    .card {
-        padding: 6px 4px;
-        border-radius: 10px;
-    }
-    .card-title { 
-        font-size: 0.78rem; 
-        padding: 3px 0 6px;
-        margin-bottom: 6px;
-    }
-
-    #laligaAdminBar .admin-btn {
-        font-size: 0.5rem;
-        padding: 5px 2px;
-    }
-
-    th, td {
-        padding: 7px 1px;
-        font-size: 0.72rem;
-    }
-    th { font-size: 0.66rem; }
-    .team-info .team-img {
-        width: 28px;
-        height: 28px;
-    }
-    .team-info .team-name {
-        font-size: 0.66rem;
-    }
-    .rank-badge {
-        width: 22px;
-        height: 22px;
-        line-height: 22px;
-        font-size: 0.66rem;
-    }
-    .points { font-size: 0.82rem; }
-    td.goals { font-size: 0.72rem; }
-
-    .match-card {
-        padding: 8px 6px;
-        border-radius: 10px;
-    }
-    .match-label {
-        font-size: 0.6rem;
-        margin-bottom: 5px;
-    }
-    .match-team img {
-        width: 28px;
-        height: 28px;
-    }
-    .match-team .team-name {
-        font-size: 0.5rem;
-    }
-    .match-vs { font-size: 0.75rem; }
-    .match-score {
-        font-size: 0.8rem;
-        padding: 3px 10px;
-    }
-    .match-winner {
-        font-size: 0.55rem;
-        padding: 3px 8px;
-    }
-
-    .score-input-group input {
-        width: 36px;
-        font-size: 0.7rem;
-        padding: 4px 2px;
-    }
-    .admin-actions .admin-btn {
-        font-size: 0.55rem;
-        padding: 4px 6px;
-    }
-
-    .champion-banner {
-        padding: 8px 6px;
-    }
-    .champion-banner .trophy { font-size: 1.5rem; }
-    .champion-banner .champion-label { font-size: 0.7rem; }
-    .champion-banner .champion-team img {
-        width: 40px;
-        height: 40px;
-    }
-    .champion-banner .champion-team .champion-name {
-        font-size: 0.85rem;
-    }
-
-    .team-info-header img {
-        width: 38px;
-        height: 38px;
-    }
-    .team-info-header h2 { font-size: 0.82rem; }
-    .trophy-section {
-        padding: 6px;
-    }
-    .trophy-section-title {
-        font-size: 0.68rem;
-        margin-bottom: 6px;
-    }
-    .trophy-row {
-        padding: 5px 6px;
-        gap: 6px;
-    }
-    .trophy-row img {
-        width: 26px;
-        height: 26px;
-    }
-    .trophy-label { font-size: 0.58rem; }
-    .trophy-count-display { font-size: 0.75rem; }
-    .trophy-input {
-        width: 44px !important;
-        font-size: 0.68rem !important;
-    }
-
-    .edit-form-group {
-        padding: 6px;
-        gap: 3px;
-    }
-    .edit-team-header {
-        font-size: 0.6rem;
-    }
-    .edit-form-group label {
-        font-size: 0.52rem;
-    }
-    .edit-form-group input {
-        font-size: 0.65rem;
-        padding: 4px 2px;
-    }
-
-    .modal-content h2 { font-size: 0.85rem; }
-    .close-modal { font-size: 0.68rem; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zhi Zhi - پانێڵی بەڕێوەبەر</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+        }
+
+        :root {
+            --bg: #f7faf9;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --green: #10b981;
+            --green-dark: #059669;
+            --green-light: #d1fae5;
+            --green-bg: #ecfdf5;
+            --border: #e9edf0;
+            --shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+            --shadow-hover: 0 12px 32px rgba(16, 185, 129, 0.15);
+            --radius: 20px;
+            --radius-sm: 14px;
+            --radius-full: 9999px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.08);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            height: 64px;
+        }
+
+        .header-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .header-logo span {
+            color: var(--green-dark);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .logout-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: var(--green-bg);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--green-dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: var(--green-light);
+            transform: scale(1.04);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-primary);
+            padding: 20px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .section-title i {
+            color: var(--green-dark);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .admin-login-box {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            max-width: 400px;
+            margin: 40px auto;
+        }
+
+        .admin-login-box h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .admin-login-box h2 i { color: var(--green-dark); }
+
+        .form-group { margin-bottom: 16px; }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            background: var(--bg);
+            transition: var(--transition);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+            background: #fff;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            background: var(--bg);
+            transition: var(--transition);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: var(--green-dark);
+            color: #fff;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .login-btn:hover {
+            background: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            background: #fef2f2;
+            color: #dc2626;
+            font-weight: 600;
+            font-size: 14px;
+            display: none;
+            margin-bottom: 16px;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert.show { display: flex; }
+
+        .admin-tabs {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 4px 0 16px;
+            scrollbar-width: none;
+        }
+
+        .admin-tabs::-webkit-scrollbar { display: none; }
+
+        .admin-tab {
+            flex-shrink: 0;
+            padding: 10px 18px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .admin-tab:hover { border-color: var(--green); }
+
+        .admin-tab.active {
+            background: var(--green-dark);
+            color: #fff;
+            border-color: var(--green-dark);
+        }
+
+        .admin-tab-content {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .admin-tab-content.active { display: block; }
+
+        .admin-form-container {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .admin-form-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .admin-form-title i { color: var(--green-dark); }
+
+        .admin-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .admin-form-group.full-width { grid-column: 1 / -1; }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 0;
+            font-weight: 500;
+            font-size: 14px;
+            justify-content: center;
+        }
+
+        .form-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--green-dark);
+        }
+
+        .admin-form-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .admin-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-btn-primary { background: var(--green-dark); color: #fff; }
+        .admin-btn-primary:hover { background: #047857; transform: translateY(-2px); }
+
+        .admin-btn-secondary {
+            background: var(--bg);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .admin-btn-secondary:hover { background: var(--border); }
+
+        .admin-action-btn {
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .admin-action-btn.edit { background: var(--green-bg); color: var(--green-dark); }
+        .admin-action-btn.edit:hover { background: var(--green-light); }
+
+        .admin-action-btn.delete { background: #fef2f2; color: #dc2626; }
+        .admin-action-btn.delete:hover { background: #fee2e2; }
+
+        .admin-app-actions {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            display: flex;
+            gap: 6px;
+            z-index: 5;
+        }
+
+        .edit-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(8px);
+            z-index: 3500;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .edit-modal.active { display: flex; }
+
+        .edit-modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            max-width: 620px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 28px 24px 24px;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+            animation: modalIn 0.3s ease;
+            position: relative;
+        }
+
+        .edit-modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .edit-modal-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.94) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .edit-modal-close {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 5;
+        }
+
+        .edit-modal-close:hover { background: var(--border); }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding-bottom: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .card-img {
+            width: 100%;
+            padding-top: 100%;
+            position: relative;
+            background: var(--green-bg);
+            overflow: hidden;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .card-img .image-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16%;
+        }
+
+        .card-img .image-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: calc(var(--radius) + 4px);
+            overflow: hidden;
+            position: relative;
+            background: var(--card-bg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: calc(var(--radius) + 4px);
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.04);
+        }
+
+        .card-img .placeholder-icon {
+            font-size: 40px;
+            color: var(--green);
+            opacity: 0.3;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .pin-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 13px;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            z-index: 3;
+            animation: pinPulse 2s ease-in-out infinite;
+        }
+
+        .pin-badge i {
+            transform: rotate(-45deg);
+        }
+
+        @keyframes pinPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4); }
+            50% { transform: scale(1.08); box-shadow: 0 6px 18px rgba(245, 158, 11, 0.6); }
+        }
+
+        .card-body {
+            padding: 12px 14px 14px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card-category {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--green-dark);
+            background: var(--green-bg);
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+        }
+
+        .card-version {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .card-downloads {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-downloads i {
+            color: var(--green-dark);
+            font-size: 12px;
+        }
+
+        .loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .loading i {
+            font-size: 28px;
+            color: var(--green);
+            animation: spin 1s linear infinite;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .no-items {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .no-items i {
+            font-size: 32px;
+            color: var(--text-muted);
+            opacity: 0.3;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .hidden { display: none !important; }
+
+        @media (min-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (min-width: 960px) {
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 24px;
+            }
+            .container { padding: 0 32px; }
+            .section-title { font-size: 24px; }
+        }
+
+        @media (max-width: 640px) {
+            .admin-form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content { height: 56px; padding: 8px 0; }
+            .header-logo { font-size: 17px; }
+            .logout-btn { width: 36px; height: 36px; font-size: 15px; }
+
+            .card-title { font-size: 14px; }
+            .card-body { padding: 10px 12px 12px; }
+            .card-img .image-wrapper { padding: 12%; }
+
+            .edit-modal-content { padding: 24px 16px 20px; }
+        }
+
+        @media (max-width: 380px) {
+            .grid { gap: 12px; }
+            .card-body { padding: 8px 10px 10px; }
+            .card-title { font-size: 13px; }
+            .card-category, .card-version { font-size: 9px; }
+            .card-img .image-wrapper { padding: 10%; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
-<!-- ============ HEADER ============ -->
-<header class="header">
-    <h1>⚽ دیتەڵی تۆپی پێ</h1>
-    <div class="header-buttons">
-        <button class="admin-btn" id="adminLoginBtn">🔐 پەنەلی ئەدمین</button>
-    </div>
-</header>
-
-<!-- ============ NAV TABS ============ -->
-<div class="nav-tabs">
-    <div class="nav-tab active" data-page="laligaPage">🏆 LALIGA</div>
-    <div class="nav-tab" data-page="clPage">🔵 CHAMPIONS</div>
-    <div class="nav-tab" data-page="elPage">🟠 EUROPA</div>
-    <div class="nav-tab" data-page="slPage">🟣 SUPER</div>
-</div>
-
-<!-- ============ LOADING ============ -->
-<div class="loading" id="loadingIndicator">⏳ بارکردنی داتاکان...</div>
-
-<!-- ============ LALIGA PAGE ============ -->
-<div class="page-container active" id="laligaPage">
-    <div class="card">
-        <div class="card-title">🏆 LALIGA</div>
-        <div id="laligaAdminBar" class="admin-only" style="text-align:center;margin-bottom:12px;display:none;">
-            <button class="admin-btn winner-btn" id="finishLaligaBtn">🏁 کۆتایی</button>
-            <button class="admin-btn danger-btn" id="resetLaligaBtn">🔄 ڕێست</button>
-            <button class="admin-btn" id="editLaligaBtn">✏️ دەستکاری</button>
-        </div>
-        <div class="locked-notice" id="laligaLockedNotice" style="display:none;">
-            🔒 LALIGA کۆتایی هاتووە.
-        </div>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>هەڵبژاردە</th>
-                        <th>گۆڵ</th>
-                        <th>گ.لێکران</th>
-                        <th>جیاوازی</th>
-                        <th>خاڵ</th>
-                    </tr>
-                </thead>
-                <tbody id="laligaTbody"></tbody>
-            </table>
-        </div>
-        <div id="laligaChampionBanner"></div>
-    </div>
-</div>
-
-<!-- ============ CHAMPIONS LEAGUE PAGE ============ -->
-<div class="page-container" id="clPage">
-    <div class="card">
-        <div class="card-title">🔵 CHAMPIONS LEAGUE</div>
-        <div id="clLockedNotice" class="locked-notice" style="display:none;">
-            ⏳ چاوەڕێی LALIGA بکە.
-        </div>
-        <div id="clContent" style="display:none;">
-            <div style="text-align:center;margin-bottom:8px;color:#aaa;font-size:0.7rem;">
-                پلەی 1، 2، 3، 4 لە LALIGA
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-logo">
+                    Zhi<span>Zhi</span> Admin
+                </div>
+                <div class="header-right">
+                    <button class="logout-btn" id="logoutBtn" title="چوونەدەرەوە">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
             </div>
-            <div class="match-grid" id="clSemiGrid">
-                <div class="match-card" id="clSemi1Card">
-                    <div class="match-label">🥇 SEMI 1 — 1 vs 4</div>
-                    <div class="match-teams" id="clSemi1Teams"></div>
-                    <div class="match-score" id="clSemi1Score">-</div>
-                    <div id="clSemi1Winner"></div>
-                    <div id="clSemi1Admin" class="admin-only" style="display:none;">
-                        <div class="score-input-group">
-                            <input type="number" id="clSemi1Home" min="0" placeholder="0">
-                            <span style="color:#ff6b6b;font-weight:700;">-</span>
-                            <input type="number" id="clSemi1Away" min="0" placeholder="0">
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="admin-login-page" class="content-section active">
+            <div class="admin-login-box">
+                <h2><i class="fas fa-user-shield"></i> چوونەژوورەوەی ئەدمین</h2>
+                <div class="alert" id="login-error"><i class="fas fa-exclamation-circle"></i> ناوی بەکارهێنەر یان وشەی نهێنی هەڵەیە.</div>
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label>ناوی بەکارهێنەر</label>
+                        <input type="text" id="username" class="form-control" placeholder="ناوی بەکارهێنەر" required>
+                    </div>
+                    <div class="form-group">
+                        <label>وشەی نهێنی</label>
+                        <input type="password" id="password" class="form-control" placeholder="وشەی نهێنی" required>
+                    </div>
+                    <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> چوونەژوورەوە</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="admin-panel-page" class="content-section">
+            <div class="section-title"><i class="fas fa-cogs"></i> بەڕێوەبەری</div>
+
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="add-app"><i class="fas fa-plus-circle"></i> زیادکردن</button>
+                <button class="admin-tab" data-tab="manage-apps"><i class="fas fa-mobile-alt"></i> ئەپەکان</button>
+                <button class="admin-tab" data-tab="manage-games"><i class="fas fa-gamepad"></i> یاریەکان</button>
+                <button class="admin-tab" data-tab="manage-ios"><i class="fab fa-apple"></i> IOS</button>
+            </div>
+
+            <div class="admin-tab-content active" id="add-app-tab">
+                <div class="admin-form-container">
+                    <div class="admin-form-title"><i class="fas fa-plus-circle"></i> زیادکردنی بەرنامەی نوێ</div>
+                    <form id="add-app-form">
+                        <div class="admin-form-row">
+                            <div class="admin-form-group">
+                                <label>جۆر</label>
+                                <select id="app-type" class="form-select" required>
+                                    <option value="">هەڵبژێرە</option>
+                                    <option value="app">ئەپ</option>
+                                    <option value="game">یاری</option>
+                                    <option value="ios">IOS</option>
+                                </select>
+                            </div>
+                            <div class="admin-form-group">
+                                <label>ناو</label>
+                                <input type="text" id="app-name" class="form-control" placeholder="ناوی بەرنامە" required>
+                            </div>
                         </div>
-                        <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setCLSemiScore(1)">✅ تۆمار</button>
-                            <button class="admin-btn reset-btn" onclick="resetCLSemi(1)">🔄 ڕێست</button>
+                        <div class="admin-form-row">
+                            <div class="admin-form-group">
+                                <label>ڤێرژن</label>
+                                <input type="text" id="app-version" class="form-control" placeholder="نمونە: 1.0.0" value="1.0.0">
+                            </div>
+                            <div class="admin-form-group">
+                                <label>پلاتفۆرم</label>
+                                <select id="app-platform" class="form-select">
+                                    <option value="android">Android</option>
+                                    <option value="ios">iOS</option>
+                                </select>
+                            </div>
                         </div>
+                        <div class="admin-form-row">
+                            <div class="admin-form-group full-width">
+                                <label>Description (تەواو)</label>
+                                <textarea id="app-description-long" class="form-control" rows="4" placeholder="Description ی تەواو بۆ پەڕەی داگرتن..."></textarea>
+                            </div>
+                        </div>
+                        <div class="admin-form-row">
+                            <div class="admin-form-group full-width">
+                                <label>زانیارییەکان (Info)</label>
+                                <textarea id="app-info" class="form-control" rows="3" placeholder="زانیارییەکانی یاری وەک: وەشان، قەبارە، پێداویستی..."></textarea>
+                            </div>
+                        </div>
+                        <div class="admin-form-row">
+                            <div class="admin-form-group">
+                                <label>لینکی وێنە</label>
+                                <input type="url" id="app-image" class="form-control" placeholder="https://example.com/image.png">
+                            </div>
+                            <div class="admin-form-group">
+                                <label>لینکی داگرتن</label>
+                                <input type="url" id="app-download" class="form-control" placeholder="https://example.com/download" required>
+                            </div>
+                        </div>
+                        <div class="admin-form-row">
+                            <div class="admin-form-group">
+                                <label class="form-checkbox">
+                                    <input type="checkbox" id="app-featured">
+                                    پاڵێوراو بکە
+                                </label>
+                            </div>
+                        </div>
+                        <div class="admin-form-buttons">
+                            <button type="submit" class="admin-btn admin-btn-primary"><i class="fas fa-save"></i> زیادکردن</button>
+                            <button type="reset" class="admin-btn admin-btn-secondary"><i class="fas fa-redo"></i> پاککردنەوە</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="admin-tab-content" id="manage-apps-tab">
+                <div class="admin-form-title"><i class="fas fa-mobile-alt"></i> بەڕێوەبردنی ئەپەکان</div>
+                <div class="grid" id="admin-apps-grid">
+                    <div class="loading"><i class="fas fa-spinner"></i> بار دەکرێن...</div>
+                </div>
+            </div>
+
+            <div class="admin-tab-content" id="manage-games-tab">
+                <div class="admin-form-title"><i class="fas fa-gamepad"></i> بەڕێوەبردنی یاریەکان</div>
+                <div class="grid" id="admin-games-grid">
+                    <div class="loading"><i class="fas fa-spinner"></i> بار دەکرێن...</div>
+                </div>
+            </div>
+
+            <div class="admin-tab-content" id="manage-ios-tab">
+                <div class="admin-form-title"><i class="fab fa-apple"></i> بەڕێوەبردنی IOS</div>
+                <div class="grid" id="admin-ios-grid">
+                    <div class="loading"><i class="fas fa-spinner"></i> بار دەکرێن...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== EDIT MODAL (POPUP) ===== -->
+    <div class="edit-modal" id="editModal">
+        <div class="edit-modal-content">
+            <button class="edit-modal-close" id="editModalCloseBtn"><i class="fas fa-times"></i></button>
+            <div class="admin-form-title" style="margin-top:8px;"><i class="fas fa-edit"></i> نوێکردنەوەی بەرنامە</div>
+            <form id="edit-app-form">
+                <input type="hidden" id="edit-app-id">
+                <input type="hidden" id="edit-app-type">
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label>ناو</label>
+                        <input type="text" id="edit-app-name" class="form-control" required>
+                    </div>
+                    <div class="admin-form-group">
+                        <label>پاڵێوراو</label>
+                        <select id="edit-app-featured" class="form-select">
+                            <option value="false">نەخێر</option>
+                            <option value="true">بەڵێ</option>
+                        </select>
                     </div>
                 </div>
-                <div class="match-card" id="clSemi2Card">
-                    <div class="match-label">🥈 SEMI 2 — 2 vs 3</div>
-                    <div class="match-teams" id="clSemi2Teams"></div>
-                    <div class="match-score" id="clSemi2Score">-</div>
-                    <div id="clSemi2Winner"></div>
-                    <div id="clSemi2Admin" class="admin-only" style="display:none;">
-                        <div class="score-input-group">
-                            <input type="number" id="clSemi2Home" min="0" placeholder="0">
-                            <span style="color:#ff6b6b;font-weight:700;">-</span>
-                            <input type="number" id="clSemi2Away" min="0" placeholder="0">
-                        </div>
-                        <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setCLSemiScore(2)">✅ تۆمار</button>
-                            <button class="admin-btn reset-btn" onclick="resetCLSemi(2)">🔄 ڕێست</button>
-                        </div>
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label>ڤێرژن</label>
+                        <input type="text" id="edit-app-version" class="form-control" placeholder="نمونە: 1.0.0">
+                    </div>
+                    <div class="admin-form-group">
+                        <label>پلاتفۆرم</label>
+                        <select id="edit-app-platform" class="form-select">
+                            <option value="android">Android</option>
+                            <option value="ios">iOS</option>
+                        </select>
                     </div>
                 </div>
-            </div>
-            <div class="connector">
-                <div class="line"></div>
-                <div class="arrow">⬇️</div>
-                <div class="line"></div>
-            </div>
-            <div class="match-grid" style="grid-template-columns:1fr;max-width:600px;margin:0 auto;">
-                <div class="match-card final-match" id="clFinalCard">
-                    <div class="match-label">🏆 FINAL</div>
-                    <div class="match-teams" id="clFinalTeams"></div>
-                    <div class="match-score" id="clFinalScore">-</div>
-                    <div id="clFinalWinner"></div>
-                    <div id="clFinalAdmin" class="admin-only" style="display:none;">
-                        <div class="score-input-group">
-                            <input type="number" id="clFinalHome" min="0" placeholder="0">
-                            <span style="color:#ff6b6b;font-weight:700;">-</span>
-                            <input type="number" id="clFinalAway" min="0" placeholder="0">
-                        </div>
-                        <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setCLFinalScore()">✅ تۆمار</button>
-                            <button class="admin-btn reset-btn" onclick="resetCLFinal()">🔄 ڕێست</button>
-                        </div>
+                <div class="admin-form-row">
+                    <div class="admin-form-group full-width">
+                        <label>Description (تەواو)</label>
+                        <textarea id="edit-app-description-long" class="form-control" rows="4"></textarea>
                     </div>
                 </div>
-            </div>
-            <div id="clChampionBanner"></div>
-        </div>
-        <div id="clAdminBar" class="admin-only" style="text-align:center;margin-top:12px;display:none;">
-            <button class="admin-btn danger-btn" onclick="resetChampionsLeague()">🔄 ڕێستکردنی CL</button>
-        </div>
-    </div>
-</div>
-
-<!-- ============ EUROPA LEAGUE PAGE ============ -->
-<div class="page-container" id="elPage">
-    <div class="card">
-        <div class="card-title">🟠 EUROPA LEAGUE</div>
-        <div id="elLockedNotice" class="locked-notice" style="display:none;">
-            ⏳ چاوەڕێی LALIGA بکە.
-        </div>
-        <div id="elContent" style="display:none;">
-            <div style="text-align:center;margin-bottom:8px;color:#aaa;font-size:0.7rem;">
-                پلەی 5، 6، 7، 8 لە LALIGA
-            </div>
-            <div class="match-grid" id="elSemiGrid">
-                <div class="match-card" id="elSemi1Card">
-                    <div class="match-label">🥇 SEMI 1 — 5 vs 8</div>
-                    <div class="match-teams" id="elSemi1Teams"></div>
-                    <div class="match-score" id="elSemi1Score">-</div>
-                    <div id="elSemi1Winner"></div>
-                    <div id="elSemi1Admin" class="admin-only" style="display:none;">
-                        <div class="score-input-group">
-                            <input type="number" id="elSemi1Home" min="0" placeholder="0">
-                            <span style="color:#ff6b6b;font-weight:700;">-</span>
-                            <input type="number" id="elSemi1Away" min="0" placeholder="0">
-                        </div>
-                        <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setELSemiScore(1)">✅ تۆمار</button>
-                            <button class="admin-btn reset-btn" onclick="resetELSemi(1)">🔄 ڕێست</button>
-                        </div>
+                <div class="admin-form-row">
+                    <div class="admin-form-group full-width">
+                        <label>زانیارییەکان (Info)</label>
+                        <textarea id="edit-app-info" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
-                <div class="match-card" id="elSemi2Card">
-                    <div class="match-label">🥈 SEMI 2 — 6 vs 7</div>
-                    <div class="match-teams" id="elSemi2Teams"></div>
-                    <div class="match-score" id="elSemi2Score">-</div>
-                    <div id="elSemi2Winner"></div>
-                    <div id="elSemi2Admin" class="admin-only" style="display:none;">
-                        <div class="score-input-group">
-                            <input type="number" id="elSemi2Home" min="0" placeholder="0">
-                            <span style="color:#ff6b6b;font-weight:700;">-</span>
-                            <input type="number" id="elSemi2Away" min="0" placeholder="0">
-                        </div>
-                        <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setELSemiScore(2)">✅ تۆمار</button>
-                            <button class="admin-btn reset-btn" onclick="resetELSemi(2)">🔄 ڕێست</button>
-                        </div>
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label>لینکی وێنە</label>
+                        <input type="url" id="edit-app-image" class="form-control">
+                    </div>
+                    <div class="admin-form-group">
+                        <label>لینکی داگرتن</label>
+                        <input type="url" id="edit-app-download" class="form-control" required>
                     </div>
                 </div>
-            </div>
-            <div class="connector">
-                <div class="line"></div>
-                <div class="arrow">⬇️</div>
-                <div class="line"></div>
-            </div>
-            <div class="match-grid" style="grid-template-columns:1fr;max-width:600px;margin:0 auto;">
-                <div class="match-card final-match" id="elFinalCard">
-                    <div class="match-label">🏆 FINAL</div>
-                    <div class="match-teams" id="elFinalTeams"></div>
-                    <div class="match-score" id="elFinalScore">-</div>
-                    <div id="elFinalWinner"></div>
-                    <div id="elFinalAdmin" class="admin-only" style="display:none;">
-                        <div class="score-input-group">
-                            <input type="number" id="elFinalHome" min="0" placeholder="0">
-                            <span style="color:#ff6b6b;font-weight:700;">-</span>
-                            <input type="number" id="elFinalAway" min="0" placeholder="0">
-                        </div>
-                        <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setELFinalScore()">✅ تۆمار</button>
-                            <button class="admin-btn reset-btn" onclick="resetELFinal()">🔄 ڕێست</button>
-                        </div>
-                    </div>
+                <div class="admin-form-buttons">
+                    <button type="submit" class="admin-btn admin-btn-primary"><i class="fas fa-save"></i> نوێکردنەوە</button>
+                    <button type="button" id="cancel-edit" class="admin-btn admin-btn-secondary"><i class="fas fa-times"></i> هەڵوەشاندنەوە</button>
                 </div>
-            </div>
-            <div id="elChampionBanner"></div>
-        </div>
-        <div id="elAdminBar" class="admin-only" style="text-align:center;margin-top:12px;display:none;">
-            <button class="admin-btn danger-btn" onclick="resetEuropaLeague()">🔄 ڕێستکردنی EL</button>
+            </form>
         </div>
     </div>
-</div>
 
-<!-- ============ SUPER LEAGUE PAGE ============ -->
-<div class="page-container" id="slPage">
-    <div class="card">
-        <div class="card-title">🟣 SUPER LEAGUE</div>
-        <div id="slLockedNotice" class="locked-notice" style="display:none;">
-            ⏳ چاوەڕێی CL و EL بکە.
-        </div>
-        <div id="slContent" style="display:none;">
-            <div style="text-align:center;margin-bottom:8px;color:#aaa;font-size:0.7rem;">
-                🏆 CL Winner vs EL Winner
-            </div>
-            <div class="match-grid" style="grid-template-columns:1fr;max-width:600px;margin:0 auto;">
-                <div class="match-card super-match" id="slMatchCard">
-                    <div class="match-label">🏆 SUPER LEAGUE FINAL</div>
-                    <div class="match-teams" id="slTeams"></div>
-                    <div class="match-score" id="slScore">-</div>
-                    <div id="slWinner"></div>
-                    <div id="slAdmin" class="admin-only" style="display:none;">
-                        <div class="score-input-group">
-                            <input type="number" id="slHome" min="0" placeholder="0">
-                            <span style="color:#ff6b6b;font-weight:700;">-</span>
-                            <input type="number" id="slAway" min="0" placeholder="0">
-                        </div>
-                        <div class="admin-actions">
-                            <button class="admin-btn winner-btn" onclick="setSLScore()">✅ تۆمار</button>
-                            <button class="admin-btn reset-btn" onclick="resetSuperLeague()">🔄 ڕێست</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="slChampionBanner"></div>
-        </div>
-    </div>
-</div>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js">
+    </script>
 
-<!-- ============ LOGIN MODAL ============ -->
-<div class="modal" id="loginModal">
-    <div class="modal-content">
-        <h2>🔑 چوونە ژوورەوە</h2>
-        <label>ناوی بەکارهێنەر</label>
-        <input type="text" id="usernameInput" placeholder="ناوی بەکارهێنەر">
-        <label>تێپەڕەوشە</label>
-        <input type="password" id="passwordInput" placeholder="تێپەڕەوشە">
-        <button class="login-submit" id="loginSubmit">چوونە ژوورەوە</button>
-        <span class="close-modal" id="closeLoginModal">داخستن</span>
-    </div>
-</div>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDf8v2t0GzChcIc1wP6vmNdTZsI5Y-rCfU",
+            authDomain: "zhi-zhii.firebaseapp.com",
+            projectId: "zhi-zhii",
+            storageBucket: "zhi-zhii.firebasestorage.app",
+            messagingSenderId: "660343070228",
+            appId: "1:660343070228:web:7d360db626016ad4541101",
+            measurementId: "G-WLGWYNH6L4"
+        };
 
-<!-- ============ EDIT MODAL ============ -->
-<div class="modal" id="editModal">
-    <div class="modal-content" style="max-width:560px;">
-        <h2>✏️ دەستکاری یانەکان</h2>
-        <div id="editFormContainer"></div>
-        <button class="save-edit-btn" id="saveEditBtn">💾 پاشەکەوتکردن</button>
-        <span class="close-modal" id="closeEditModal">داخستن</span>
-    </div>
-</div>
-
-<!-- ============ TEAM INFO MODAL ============ -->
-<div class="modal" id="teamInfoModal">
-    <div class="modal-content team-info-modal-content" id="teamInfoModalContent" style="max-width:480px;">
-        <div class="theme-badge" id="themeBadge" style="display:none;"></div>
-        <div class="team-info-header">
-            <img id="teamInfoImg" src="" alt="">
-            <h2 id="teamInfoName">-</h2>
-        </div>
-        <div class="trophy-section">
-            <div class="trophy-section-title">🏆 جامەکان</div>
-            <div class="trophy-row">
-                <img src="https://i.ibb.co/QvWdNK51/ch.png" alt="CL">
-                <div class="trophy-info">
-                    <span class="trophy-label">چامپیۆنس لیگ</span>
-                    <span class="trophy-count-display" id="teamInfoCLDisplay">0</span>
-                </div>
-                <input type="number" class="trophy-input admin-only" id="teamInfoCLInput" min="0" value="0" style="display:none;">
-            </div>
-            <div class="trophy-row">
-                <img src="https://i.ibb.co/hxnt3RVs/confras.png" alt="EL">
-                <div class="trophy-info">
-                    <span class="trophy-label">یۆڕۆپالیگ</span>
-                    <span class="trophy-count-display" id="teamInfoELDisplay">0</span>
-                </div>
-                <input type="number" class="trophy-input admin-only" id="teamInfoELInput" min="0" value="0" style="display:none;">
-            </div>
-            <div class="trophy-row">
-                <img src="https://i.ibb.co/zWPn4k0s/file-0000000090a88210bfb52ff76f305877.png" alt="LALIGA">
-                <div class="trophy-info">
-                    <span class="trophy-label">لالیگا</span>
-                    <span class="trophy-count-display" id="teamInfoSLDisplay">0</span>
-                </div>
-                <input type="number" class="trophy-input admin-only" id="teamInfoSLInput" min="0" value="0" style="display:none;">
-            </div>
-            <div class="trophy-row">
-                <img src="https://i.ibb.co/JM4S1zF/file-0000000081f08243a64038889907d681.png" alt="SUPER EUROPA">
-                <div class="trophy-info">
-                    <span class="trophy-label">سووپەری ئەوروپا</span>
-                    <span class="trophy-count-display" id="teamInfoSEDisplay">0</span>
-                </div>
-                <input type="number" class="trophy-input admin-only" id="teamInfoSEInput" min="0" value="0" style="display:none;">
-            </div>
-            <button class="save-trophies-btn admin-only" id="saveTrophiesBtn" style="display:none;">💾 پاشەکەوتکردن</button>
-        </div>
-        <span class="close-modal" onclick="closeTeamInfoModal()" style="position:relative;z-index:2;">داخستن</span>
-    </div>
-</div>
-
-<!-- ============ CONFIRM MODAL ============ -->
-<div class="modal confirm-modal" id="confirmModal">
-    <div class="modal-content">
-        <div class="confirm-icon">⚠️</div>
-        <h2 id="confirmTitle">دڵنیایت؟</h2>
-        <p id="confirmMessage">ئەم کارە ناگەڕێتەوە.</p>
-        <div class="confirm-buttons">
-            <button class="confirm-yes" id="confirmYesBtn">بەڵێ</button>
-            <button class="confirm-no" id="confirmNoBtn">نەخێر</button>
-        </div>
-    </div>
-</div>
-
-<script type="importmap">
-{
-    "imports": {
-        "firebase/app": "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js",
-        "firebase/database": "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js"
-    }
-}
-</script>
-
-<script type="module">
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, set } from "firebase/database";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyBx-Ff2YcFX4H2kpdJvlhWZcIyJ1JRfJmY",
-    authDomain: "sun4-6f764.firebaseapp.com",
-    projectId: "sun4-6f764",
-    storageBucket: "sun4-6f764.firebasestorage.app",
-    messagingSenderId: "1071133630664",
-    appId: "1:1071133630664:web:752ba657845b2005f745fd",
-    measurementId: "G-YELRYLN23N"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-const DEFAULT_TEAMS = [
-    { name: 'ریال مەدرید', img: 'https://upload.wikimedia.org/wikipedia/commons/5/56/Real_Madrid_CF.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 15, europa: 0, super: 5, superEuropa: 6 },
-    { name: 'بارسێلۆنا', img: 'https://upload.wikimedia.org/wikipedia/commons/4/47/FC_Barcelona_%28crest%29.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 5, europa: 0, super: 3, superEuropa: 5 },
-    { name: 'ئەتلەتیکۆ مەدرید', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Atletico_Madrid_2017_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 3, super: 3, superEuropa: 3 },
-    { name: 'سێڤیلیا', img: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/Sevilla_FC_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 7, super: 1, superEuropa: 1 },
-    { name: 'ڤیاڕیاڵ', img: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Villarreal_CF_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 1, super: 0, superEuropa: 0 },
-    { name: 'ڕیال بێتیس', img: 'https://upload.wikimedia.org/wikipedia/commons/1/13/Real_betis_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 0, super: 0, superEuropa: 0 },
-    { name: 'ڕیال سۆسیداد', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Real_Sociedad_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 0, super: 0, superEuropa: 0 },
-    { name: 'ڤالێنسیا', img: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Valencia_CF_logo.svg', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 1, super: 2, superEuropa: 0 },
-    { name: 'حەمە', img: 'https://images.seeklogo.com/logo-png/0/2/ac-milan-logo-png_seeklogo-2258.png', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 0, super: 0, superEuropa: 0 },
-    { name: 'هەریاد', img: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/1280px-FC_Internazionale_Milano_2021.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail', goals: 0, goalsAgainst: 0, points: 0, champions: 0, europa: 0, super: 0, superEuropa: 0 }
-];
-
-let state = {
-    laliga: JSON.parse(JSON.stringify(DEFAULT_TEAMS)),
-    laligaFinished: false,
-    laligaChampion: null,
-    championsLeague: {
-        semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-        semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-        final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null }
-    },
-    europaLeague: {
-        semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-        semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-        final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null }
-    },
-    superLeague: {
-        teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null
-    }
-};
-
-let isAdmin = false;
-let isInitialLoad = true;
-let isSaving = false;
-let currentTeamInfoName = null;
-
-function updateAdminUI() {
-    if (isAdmin) {
-        document.body.classList.add('is-admin');
-    } else {
-        document.body.classList.remove('is-admin');
-    }
-}
-
-function showToast(msg, type='success') {
-    const old = document.querySelector('.toast');
-    if (old) old.remove();
-    const t = document.createElement('div');
-    t.className = `toast ${type}`;
-    t.textContent = msg;
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 3500);
-}
-
-function sortLaliga(teams) {
-    return [...teams].sort((a, b) => {
-        if (b.points !== a.points) return b.points - a.points;
-        const dA = a.goals - a.goalsAgainst, dB = b.goals - b.goalsAgainst;
-        if (dB !== dA) return dB - dA;
-        if (b.goals !== a.goals) return b.goals - a.goals;
-        return a.name.localeCompare(b.name);
-    });
-}
-
-function getTeamByName(name) {
-    return state.laliga.find(t => t.name === name) || null;
-}
-
-function addTrophy(teamName, trophyType) {
-    const team = getTeamByName(teamName);
-    if (!team) return false;
-    if (trophyType === 'laliga') team.super = (team.super || 0) + 1;
-    else if (trophyType === 'cl') team.champions = (team.champions || 0) + 1;
-    else if (trophyType === 'el') team.europa = (team.europa || 0) + 1;
-    else if (trophyType === 'sl') team.superEuropa = (team.superEuropa || 0) + 1;
-    return true;
-}
-
-function getTotalTrophies(team) {
-    if (!team) return 0;
-    return (team.champions || 0) + (team.europa || 0) + (team.super || 0) + (team.superEuropa || 0);
-}
-
-function getTeamTheme(team) {
-    const total = getTotalTrophies(team);
-    if (total >= 15) return 'crown';
-    if (total >= 10) return 'diamond';
-    if (total >= 5) return 'fire';
-    return null;
-}
-
-function saveState() {
-    isSaving = true;
-    const cleanState = {
-        laliga: state.laliga.map(t => ({
-            name: t.name, img: t.img,
-            goals: t.goals || 0, goalsAgainst: t.goalsAgainst || 0, points: t.points || 0,
-            champions: t.champions || 0, europa: t.europa || 0, super: t.super || 0, superEuropa: t.superEuropa || 0
-        })),
-        laligaFinished: state.laligaFinished || false,
-        laligaChampion: state.laligaChampion || null,
-        championsLeague: state.championsLeague,
-        europaLeague: state.europaLeague,
-        superLeague: state.superLeague
-    };
-    return set(ref(db, 'footballSystem'), cleanState).then(() => {
-        setTimeout(() => { isSaving = false; }, 500);
-    }).catch(err => {
-        isSaving = false;
-        console.error('Save error:', err);
-    });
-}
-
-function loadState() {
-    const dbRef = ref(db, 'footballSystem');
-    setTimeout(() => {
-        const li = document.getElementById('loadingIndicator');
-        if (li) li.style.display = 'none';
-    }, 5000);
-    onValue(dbRef, (snap) => {
+        let app, db;
         try {
-            const val = snap.val();
-            if (isSaving) return;
-            if (val && val.laliga && Array.isArray(val.laliga)) {
-                state.laliga = val.laliga.map((t, i) => {
-                    const def = DEFAULT_TEAMS.find(d => d.name === t.name) || DEFAULT_TEAMS[i] || {};
-                    return {
-                        name: t.name || def.name || '',
-                        img: t.img || def.img || 'https://via.placeholder.com/40/1a1a4e/fff?text=?',
-                        goals: t.goals !== undefined ? t.goals : 0,
-                        goalsAgainst: t.goalsAgainst !== undefined ? t.goalsAgainst : 0,
-                        points: t.points !== undefined ? t.points : 0,
-                        champions: t.champions !== undefined ? t.champions : (def.champions || 0),
-                        europa: t.europa !== undefined ? t.europa : (def.europa || 0),
-                        super: t.super !== undefined ? t.super : (def.super || 0),
-                        superEuropa: t.superEuropa !== undefined ? t.superEuropa : (def.superEuropa || 0)
-                    };
+            app = firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            console.log("✅ Firebase initialized");
+            testFirebaseConnection();
+        } catch (error) {
+            console.error("❌ Firebase error:", error);
+        }
+
+        let apps = [], games = [], iosApps = [];
+        let isAdminLoggedIn = false;
+        let unsubscribeApps = null, unsubscribeGames = null, unsubscribeIos = null;
+
+        const adminAppsGrid = document.getElementById('admin-apps-grid');
+        const adminGamesGrid = document.getElementById('admin-games-grid');
+        const adminIosGrid = document.getElementById('admin-ios-grid');
+
+        const editModal = document.getElementById('editModal');
+
+        function testFirebaseConnection() {
+            if (!db) return;
+            db.collection("zhi-zhi").limit(1).get()
+                .then(() => { console.log("✅ Firebase connected");
+                    loadAllData();
+                    setupRealtimeListeners(); })
+                .catch(e => { console.error("❌ Firebase connection error:", e); });
+        }
+
+        function loadAllData() { if (db) { loadApps(); loadGames(); loadIos(); } }
+
+        function loadApps() {
+            if (!db) return;
+            db.collection("zhi-zhi").where("type", "==", "app").get()
+                .then(snap => {
+                    apps = [];
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        apps.push({ id: doc.id, ...d, name: d.name || "بێ ناو", description: d.description || "",
+                            descriptionLong: d.descriptionLong || "", info: d.info || "",
+                            imgurl: d.imgurl || "", downloadurl: d.downloadurl || "#", downloads: d.downloads || 0,
+                            featured: d.featured || false, version: d.version || "1.0.0",
+                            platform: d.platform || "android",
+                            createdAt: d.createdAt || new Date().toISOString() });
+                    });
+                    if (isAdminLoggedIn) renderAdminApps();
+                })
+                .catch(e => console.error("❌ loadApps error:", e));
+        }
+
+        function loadGames() {
+            if (!db) return;
+            db.collection("zhi-zhi").where("type", "==", "game").get()
+                .then(snap => {
+                    games = [];
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        games.push({ id: doc.id, ...d, name: d.name || "بێ ناو", description: d.description || "",
+                            descriptionLong: d.descriptionLong || "", info: d.info || "",
+                            imgurl: d.imgurl || "", downloadurl: d.downloadurl || "#", downloads: d.downloads || 0,
+                            featured: d.featured || false, version: d.version || "1.0.0",
+                            platform: d.platform || "android",
+                            createdAt: d.createdAt || new Date().toISOString() });
+                    });
+                    if (isAdminLoggedIn) renderAdminGames();
+                })
+                .catch(e => console.error("❌ loadGames error:", e));
+        }
+
+        function loadIos() {
+            if (!db) return;
+            db.collection("zhi-zhi").where("type", "==", "ios").get()
+                .then(snap => {
+                    iosApps = [];
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        iosApps.push({ id: doc.id, ...d, name: d.name || "بێ ناو", description: d.description || "",
+                            descriptionLong: d.descriptionLong || "", info: d.info || "",
+                            imgurl: d.imgurl || "", downloadurl: d.downloadurl || "#", downloads: d.downloads || 0,
+                            featured: d.featured || false, version: d.version || "1.0.0",
+                            platform: d.platform || "ios",
+                            createdAt: d.createdAt || new Date().toISOString() });
+                    });
+                    if (isAdminLoggedIn) renderAdminIos();
+                })
+                .catch(e => console.error("❌ loadIos error:", e));
+        }
+
+        function setupRealtimeListeners() {
+            if (!db) return;
+            if (unsubscribeApps) unsubscribeApps();
+            if (unsubscribeGames) unsubscribeGames();
+            if (unsubscribeIos) unsubscribeIos();
+            unsubscribeApps = db.collection("zhi-zhi").where("type", "==", "app").onSnapshot(() => loadApps());
+            unsubscribeGames = db.collection("zhi-zhi").where("type", "==", "game").onSnapshot(() => loadGames());
+            unsubscribeIos = db.collection("zhi-zhi").where("type", "==", "ios").onSnapshot(() => loadIos());
+        }
+
+        function sortFeaturedFirst(arr) {
+            return arr.sort((a, b) => {
+                if (a.featured && !b.featured) return -1;
+                if (!a.featured && b.featured) return 1;
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            });
+        }
+
+        function adminLogin(username, password) {
+            if (username === "zhs12" && password === "zhizhisun") {
+                isAdminLoggedIn = true;
+                showPage('admin-panel');
+                renderAdminApps(); renderAdminGames(); renderAdminIos(); setupAdminTabs();
+                return true;
+            } else {
+                document.getElementById('login-error').classList.add('show');
+                setTimeout(() => document.getElementById('login-error').classList.remove('show'), 3000);
+                return false;
+            }
+        }
+
+        function renderAdminApps() {
+            adminAppsGrid.innerHTML = '';
+            if (apps.length === 0) { adminAppsGrid.innerHTML = '<div class="no-items"><i class="fas fa-mobile-alt"></i> هیچ ئەپێک بوونی نیە</div>'; return; }
+            sortFeaturedFirst(apps).forEach(app => renderAdminCard(adminAppsGrid, app, 'app'));
+        }
+
+        function renderAdminGames() {
+            adminGamesGrid.innerHTML = '';
+            if (games.length === 0) { adminGamesGrid.innerHTML = '<div class="no-items"><i class="fas fa-gamepad"></i> هیچ یارییەک بوونی نیە</div>'; return; }
+            sortFeaturedFirst(games).forEach(game => renderAdminCard(adminGamesGrid, game, 'game'));
+        }
+
+        function renderAdminIos() {
+            adminIosGrid.innerHTML = '';
+            if (iosApps.length === 0) { adminIosGrid.innerHTML = '<div class="no-items"><i class="fab fa-apple"></i> هیچ بەرنامەیەکی IOS بوونی نیە</div>'; return; }
+            sortFeaturedFirst(iosApps).forEach(ios => renderAdminCard(adminIosGrid, ios, 'ios'));
+        }
+
+        function renderAdminCard(container, item, type) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            const icon = type === 'app' ? 'fa-mobile-alt' : type === 'game' ? 'fa-gamepad' : 'fa-apple';
+            const version = item.version || '1.0.0';
+            const platform = item.platform || (type === 'ios' ? 'ios' : 'android');
+            const platformLabel = platform === 'ios' ? 'iOS' : 'Android';
+
+            let pinHTML = '';
+            if (item.featured) {
+                pinHTML = `<div class="pin-badge"><i class="fas fa-thumbtack"></i></div>`;
+            }
+
+            card.innerHTML = `
+                <div class="card-img">
+                    <div class="image-wrapper">
+                        <div class="image-inner">
+                            ${item.imgurl ? `<img src="${item.imgurl}" alt="${item.name}" loading="lazy">` : `<i class="fas ${icon} placeholder-icon"></i>`}
+                        </div>
+                    </div>
+                    ${pinHTML}
+                    <div class="admin-app-actions">
+                        <button class="admin-action-btn edit" data-id="${item.id}" data-type="${type}"><i class="fas fa-edit"></i> دەستکاری</button>
+                        <button class="admin-action-btn delete" data-id="${item.id}" data-type="${type}"><i class="fas fa-trash"></i> سڕینەوە</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">${item.name}</div>
+                    <div class="card-meta">
+                        <span class="card-category">${type === 'app' ? 'ئەپ' : type === 'game' ? 'یاری' : 'IOS'}</span>
+                        <span class="card-version">V${version} ${platformLabel}</span>
+                        <span class="card-downloads"><i class="fas fa-download"></i> ${item.downloads || 0}</span>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+
+            card.querySelector('.edit').addEventListener('click', (e) => { e.stopPropagation(); editItem(item.id, type); });
+            card.querySelector('.delete').addEventListener('click', (e) => { e.stopPropagation(); deleteItem(item.id, type); });
+        }
+
+        function editItem(id, type) {
+            let item;
+            if (type === 'app') item = apps.find(a => a.id === id);
+            else if (type === 'game') item = games.find(a => a.id === id);
+            else if (type === 'ios') item = iosApps.find(a => a.id === id);
+            if (!item) return;
+
+            document.getElementById('edit-app-id').value = id;
+            document.getElementById('edit-app-type').value = type;
+            document.getElementById('edit-app-name').value = item.name || '';
+            document.getElementById('edit-app-description-long').value = item.descriptionLong || '';
+            document.getElementById('edit-app-info').value = item.info || '';
+            document.getElementById('edit-app-image').value = item.imgurl || '';
+            document.getElementById('edit-app-download').value = item.downloadurl || '';
+            document.getElementById('edit-app-featured').value = item.featured ? 'true' : 'false';
+            document.getElementById('edit-app-version').value = item.version || '1.0.0';
+            document.getElementById('edit-app-platform').value = item.platform || (type === 'ios' ? 'ios' : 'android');
+
+            editModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEditModal() {
+            editModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('editModalCloseBtn').addEventListener('click', closeEditModal);
+        editModal.addEventListener('click', (e) => { if (e.target === editModal) closeEditModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && editModal.classList.contains('active')) closeEditModal(); });
+
+        function deleteItem(id, type) {
+            if (!confirm('دڵنیایت دەتەوێت ئەم بەرنامەەی بسڕیتەوە؟')) return;
+            if (!db) return;
+            db.collection("zhi-zhi").doc(id).delete()
+                .then(() => { loadAllData(); })
+                .catch(e => console.error("❌ delete error:", e));
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            const el = document.getElementById(`${pageId}-page`);
+            if (el) el.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            adminLogin(u, p);
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            if (!confirm('دڵنیایت دەتەوێت بچیتە دەرەوە؟')) return;
+            isAdminLoggedIn = false;
+            document.getElementById('admin-login-form').reset();
+            showPage('admin-login');
+        });
+
+        function setupAdminTabs() {
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+                    if (tab.dataset.tab === 'manage-apps') renderAdminApps();
+                    if (tab.dataset.tab === 'manage-games') renderAdminGames();
+                    if (tab.dataset.tab === 'manage-ios') renderAdminIos();
                 });
-                state.laligaFinished = val.laligaFinished || false;
-                state.laligaChampion = val.laligaChampion || null;
-                if (val.championsLeague) {
-                    state.championsLeague = {
-                        semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null, ...(val.championsLeague.semi1 || {}) },
-                        semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null, ...(val.championsLeague.semi2 || {}) },
-                        final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null, ...(val.championsLeague.final || {}) }
-                    };
-                }
-                if (val.europaLeague) {
-                    state.europaLeague = {
-                        semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null, ...(val.europaLeague.semi1 || {}) },
-                        semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null, ...(val.europaLeague.semi2 || {}) },
-                        final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null, ...(val.europaLeague.final || {}) }
-                    };
-                }
-                if (val.superLeague) {
-                    state.superLeague = { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null, ...val.superLeague };
-                }
-            } else if (isInitialLoad) {
-                saveState();
-            }
-            isInitialLoad = false;
-            renderAll();
-            document.getElementById('loadingIndicator').style.display = 'none';
-        } catch (e) {
-            console.error('Load error:', e);
-            document.getElementById('loadingIndicator').style.display = 'none';
-        }
-    }, (err) => {
-        console.error('Firebase error:', err);
-        showToast('⚠️ کێشە لە Firebase', 'error');
-        renderAll();
-        document.getElementById('loadingIndicator').style.display = 'none';
-    });
-}
-
-function renderLaliga() {
-    const tbody = document.getElementById('laligaTbody');
-    const sorted = sortLaliga(state.laliga);
-    const qualCL = state.laligaFinished ? sorted.slice(0, 4).map(t => t.name) : [];
-    const qualEL = state.laligaFinished ? sorted.slice(4, 8).map(t => t.name) : [];
-    tbody.innerHTML = '';
-    sorted.forEach((team, idx) => {
-        const rank = idx + 1;
-        let cls = 'rank-badge';
-        if (rank >= 1 && rank <= 4) cls += ' rank-blue';
-        else if (rank >= 5 && rank <= 8) cls += ' rank-orange';
-        else cls += ' rank-red';
-        const diff = team.goals - team.goalsAgainst;
-        const tr = document.createElement('tr');
-        if (state.laligaFinished && state.laligaChampion === team.name) tr.classList.add('champion-row');
-        else if (state.laligaFinished && qualCL.includes(team.name)) tr.classList.add('cl-row');
-        else if (state.laligaFinished && qualEL.includes(team.name)) tr.classList.add('el-row');
-        else if (state.laligaFinished && rank >= 9) tr.classList.add('relegation-row');
-        tr.innerHTML = `
-            <td><span class="${cls}">${rank}</span></td>
-            <td>
-                <div class="team-info" onclick="openTeamInfo('${team.name}')">
-                    <img src="${team.img}" alt="${team.name}" class="team-img" loading="lazy" onerror="this.src='https://via.placeholder.com/40/1a1a4e/fff?text=?'">
-                    <span class="team-name">${team.name}</span>
-                </div>
-            </td>
-            <td>${team.goals}</td>
-            <td>${team.goalsAgainst}</td>
-            <td class="goals ${diff >= 0 ? 'gd-positive' : 'gd-negative'}">${diff > 0 ? '+' : ''}${diff}</td>
-            <td class="points">${team.points}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-    const banner = document.getElementById('laligaChampionBanner');
-    if (state.laligaFinished && state.laligaChampion) {
-        const champ = getTeamByName(state.laligaChampion);
-        banner.innerHTML = `
-            <div class="champion-banner">
-                <div class="trophy">🏆</div>
-                <div class="champion-label">🏆 براوەی LALIGA</div>
-                <div class="champion-team">
-                    <img src="${champ?.img || ''}" alt="${champ?.name || ''}">
-                    <span class="champion-name">${champ?.name || ''}</span>
-                </div>
-            </div>
-        `;
-    } else banner.innerHTML = '';
-    document.getElementById('finishLaligaBtn').style.display = state.laligaFinished ? 'none' : 'inline-flex';
-    document.getElementById('laligaLockedNotice').style.display = (state.laligaFinished && !isAdmin) ? 'block' : 'none';
-}
-
-function renderCL() {
-    const clLocked = !state.laligaFinished;
-    document.getElementById('clLockedNotice').style.display = clLocked ? 'block' : 'none';
-    document.getElementById('clContent').style.display = clLocked ? 'none' : 'block';
-    if (clLocked) return;
-    const cl = state.championsLeague;
-    const top4 = sortLaliga(state.laliga).slice(0, 4);
-    if (top4.length >= 4) {
-        if (!cl.semi1.teamA && !cl.semi1.teamB && !cl.semi1.winner) {
-            cl.semi1.teamA = top4[0].name; cl.semi1.teamB = top4[3].name;
-        }
-        if (!cl.semi2.teamA && !cl.semi2.teamB && !cl.semi2.winner) {
-            cl.semi2.teamA = top4[1].name; cl.semi2.teamB = top4[2].name;
-        }
-    }
-    renderMatch('clSemi1', cl.semi1);
-    renderMatch('clSemi2', cl.semi2);
-    renderMatch('clFinal', cl.final);
-    const banner = document.getElementById('clChampionBanner');
-    if (cl.final.winner) {
-        const champ = getTeamByName(cl.final.winner);
-        banner.innerHTML = `
-            <div class="champion-banner" style="margin-top:12px;">
-                <div class="trophy">🏆</div>
-                <div class="champion-label">🏆 براوەی CL</div>
-                <div class="champion-team">
-                    <img src="${champ?.img || ''}" alt="${champ?.name || ''}">
-                    <span class="champion-name">${champ?.name || ''}</span>
-                </div>
-            </div>
-        `;
-    } else banner.innerHTML = '';
-}
-
-function renderEL() {
-    const elLocked = !state.laligaFinished;
-    document.getElementById('elLockedNotice').style.display = elLocked ? 'block' : 'none';
-    document.getElementById('elContent').style.display = elLocked ? 'none' : 'block';
-    if (elLocked) return;
-    const el = state.europaLeague;
-    const sorted = sortLaliga(state.laliga);
-    if (sorted.length >= 8) {
-        if (!el.semi1.teamA && !el.semi1.teamB && !el.semi1.winner) {
-            el.semi1.teamA = sorted[4].name; el.semi1.teamB = sorted[7].name;
-        }
-        if (!el.semi2.teamA && !el.semi2.teamB && !el.semi2.winner) {
-            el.semi2.teamA = sorted[5].name; el.semi2.teamB = sorted[6].name;
-        }
-    }
-    renderMatch('elSemi1', el.semi1);
-    renderMatch('elSemi2', el.semi2);
-    renderMatch('elFinal', el.final);
-    const banner = document.getElementById('elChampionBanner');
-    if (el.final.winner) {
-        const champ = getTeamByName(el.final.winner);
-        banner.innerHTML = `
-            <div class="champion-banner" style="margin-top:12px;">
-                <div class="trophy">🏆</div>
-                <div class="champion-label">🏆 براوەی EL</div>
-                <div class="champion-team">
-                    <img src="${champ?.img || ''}" alt="${champ?.name || ''}">
-                    <span class="champion-name">${champ?.name || ''}</span>
-                </div>
-            </div>
-        `;
-    } else banner.innerHTML = '';
-}
-
-function renderSL() {
-    const clWinner = state.championsLeague.final.winner;
-    const elWinner = state.europaLeague.final.winner;
-    const slLocked = !clWinner || !elWinner;
-    document.getElementById('slLockedNotice').style.display = slLocked ? 'block' : 'none';
-    document.getElementById('slContent').style.display = slLocked ? 'none' : 'block';
-    if (slLocked) return;
-    const sl = state.superLeague;
-    if (sl.teamA !== clWinner || sl.teamB !== elWinner) {
-        if (!sl.winner) {
-            sl.teamA = clWinner; sl.teamB = elWinner;
-            sl.homeScore = null; sl.awayScore = null; sl.winner = null;
-            const sh = document.getElementById('slHome');
-            const sa = document.getElementById('slAway');
-            if (sh) sh.value = '';
-            if (sa) sa.value = '';
-        }
-    }
-    renderMatch('sl', sl);
-    const banner = document.getElementById('slChampionBanner');
-    if (sl.winner) {
-        const champ = getTeamByName(sl.winner);
-        banner.innerHTML = `
-            <div class="champion-banner" style="margin-top:12px;border-color:rgba(124,58,237,0.6);">
-                <div class="trophy">🏆</div>
-                <div class="champion-label">🏆 براوەی SUPER LEAGUE</div>
-                <div class="champion-team">
-                    <img src="${champ?.img || ''}" alt="${champ?.name || ''}" style="border-color:#a855f7;">
-                    <span class="champion-name" style="background:linear-gradient(90deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${champ?.name || ''}</span>
-                </div>
-            </div>
-        `;
-    } else banner.innerHTML = '';
-}
-
-function renderMatch(prefix, match) {
-    const teamsEl = document.getElementById(prefix + 'Teams');
-    const scoreEl = document.getElementById(prefix + 'Score');
-    const winnerEl = document.getElementById(prefix + 'Winner');
-    if (!teamsEl) return;
-    let tA = match.teamA ? getTeamByName(match.teamA) : null;
-    let tB = match.teamB ? getTeamByName(match.teamB) : null;
-    if (tA && tB) {
-        const wA = match.winner === tA.name;
-        const wB = match.winner === tB.name;
-        teamsEl.innerHTML = `
-            <div class="match-team ${wA?'winner-team':''}">
-                <img src="${tA.img}" onerror="this.src='https://via.placeholder.com/60/1a1a4e/fff?text=?'">
-                <span class="team-name">${tA.name}</span>
-            </div>
-            <div class="match-vs">VS</div>
-            <div class="match-team ${wB?'winner-team':''}">
-                <img src="${tB.img}" onerror="this.src='https://via.placeholder.com/60/1a1a4e/fff?text=?'">
-                <span class="team-name">${tB.name}</span>
-            </div>
-        `;
-    } else if (tA && !tB) {
-        teamsEl.innerHTML = `
-            <div class="match-team"><img src="${tA.img}"><span class="team-name">${tA.name}</span></div>
-            <div class="match-vs">VS</div>
-            <div class="match-team awaiting">چاوەڕوانی...</div>
-        `;
-    } else {
-        teamsEl.innerHTML = `<div class="awaiting" style="width:100%;">⏳ چاوەڕوانی...</div>`;
-    }
-    if (match.homeScore !== null && match.awayScore !== null && match.homeScore !== undefined) {
-        scoreEl.textContent = `${match.homeScore} - ${match.awayScore}`;
-    } else scoreEl.textContent = '-';
-    if (match.winner) {
-        const wTeam = getTeamByName(match.winner);
-        winnerEl.innerHTML = `<div class="match-winner"><img src="${wTeam?.img || ''}"> براوە: ${match.winner} 🏆</div>`;
-    } else winnerEl.innerHTML = '';
-}
-
-function renderAll() {
-    renderLaliga();
-    renderCL();
-    renderEL();
-    renderSL();
-}
-
-window.setCLSemiScore = function(num) {
-    if (!isAdmin) return showToast('❌ ئەدمین نیت!', 'error');
-    const cl = state.championsLeague;
-    const match = num === 1 ? cl.semi1 : cl.semi2;
-    const h = parseInt(document.getElementById(`clSemi${num}Home`).value);
-    const a = parseInt(document.getElementById(`clSemi${num}Away`).value);
-    if (isNaN(h) || isNaN(a)) return showToast('❌ ئەنجام بنووسە!', 'error');
-    if (!match.teamA || !match.teamB) return showToast('❌ یانەکان نیە!', 'error');
-    match.homeScore = h; match.awayScore = a;
-    match.winner = h > a ? match.teamA : a > h ? match.teamB : null;
-    if (!match.winner) return showToast('⚠️ یەکسانی!', 'warning');
-    if (cl.semi1.winner && cl.semi2.winner) {
-        cl.final.teamA = cl.semi1.winner; cl.final.teamB = cl.semi2.winner;
-        cl.final.homeScore = null; cl.final.awayScore = null; cl.final.winner = null;
-        const fh = document.getElementById('clFinalHome');
-        const fa = document.getElementById('clFinalAway');
-        if (fh) fh.value = ''; if (fa) fa.value = '';
-        showToast('🎉 FINAL!', 'success');
-    } else showToast('✅ تۆمار کرا!', 'success');
-    renderAll(); saveState();
-};
-
-window.resetCLSemi = function(num) {
-    if (!isAdmin) return;
-    showConfirm('ڕێستکردن', `Semifinal ${num}؟`, () => {
-        const cl = state.championsLeague;
-        const match = num === 1 ? cl.semi1 : cl.semi2;
-        match.homeScore = null; match.awayScore = null; match.winner = null;
-        cl.final = { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null };
-        ['clFinalHome','clFinalAway'].forEach(id => {
-            const e = document.getElementById(id); if (e) e.value = '';
-        });
-        renderAll(); saveState(); showToast('🔄 ڕێست کرا!', 'success');
-    });
-};
-
-window.setCLFinalScore = function() {
-    if (!isAdmin) return showToast('❌ ئەدمین نیت!', 'error');
-    const f = state.championsLeague.final;
-    if (!f.teamA || !f.teamB) return showToast('❌ یانەکان نیە!', 'error');
-    const h = parseInt(document.getElementById('clFinalHome').value);
-    const a = parseInt(document.getElementById('clFinalAway').value);
-    if (isNaN(h) || isNaN(a)) return showToast('❌ ئەنجام بنووسە!', 'error');
-    f.homeScore = h; f.awayScore = a;
-    f.winner = h > a ? f.teamA : a > h ? f.teamB : null;
-    if (!f.winner) return showToast('⚠️ یەکسانی!', 'warning');
-    addTrophy(f.winner, 'cl');
-    renderAll(); saveState();
-    showToast('🏆 ' + f.winner + ' پاڵەوانی CL!', 'success');
-};
-
-window.resetCLFinal = function() {
-    if (!isAdmin) return;
-    showConfirm('ڕێستکردنی Final', 'CL Final؟', () => {
-        state.championsLeague.final = { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null };
-        ['clFinalHome','clFinalAway'].forEach(id => {
-            const e = document.getElementById(id); if (e) e.value = '';
-        });
-        renderAll(); saveState(); showToast('🔄 ڕێست کرا!', 'success');
-    });
-};
-
-window.setELSemiScore = function(num) {
-    if (!isAdmin) return showToast('❌ ئەدمین نیت!', 'error');
-    const el = state.europaLeague;
-    const match = num === 1 ? el.semi1 : el.semi2;
-    const h = parseInt(document.getElementById(`elSemi${num}Home`).value);
-    const a = parseInt(document.getElementById(`elSemi${num}Away`).value);
-    if (isNaN(h) || isNaN(a)) return showToast('❌ ئەنجام بنووسە!', 'error');
-    if (!match.teamA || !match.teamB) return showToast('❌ یانەکان نیە!', 'error');
-    match.homeScore = h; match.awayScore = a;
-    match.winner = h > a ? match.teamA : a > h ? match.teamB : null;
-    if (!match.winner) return showToast('⚠️ یەکسانی!', 'warning');
-    if (el.semi1.winner && el.semi2.winner) {
-        el.final.teamA = el.semi1.winner; el.final.teamB = el.semi2.winner;
-        el.final.homeScore = null; el.final.awayScore = null; el.final.winner = null;
-        const fh = document.getElementById('elFinalHome');
-        const fa = document.getElementById('elFinalAway');
-        if (fh) fh.value = ''; if (fa) fa.value = '';
-        showToast('🎉 FINAL!', 'success');
-    } else showToast('✅ تۆمار کرا!', 'success');
-    renderAll(); saveState();
-};
-
-window.resetELSemi = function(num) {
-    if (!isAdmin) return;
-    showConfirm('ڕێستکردن', `Semifinal ${num}؟`, () => {
-        const el = state.europaLeague;
-        const match = num === 1 ? el.semi1 : el.semi2;
-        match.homeScore = null; match.awayScore = null; match.winner = null;
-        el.final = { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null };
-        ['elFinalHome','elFinalAway'].forEach(id => {
-            const e = document.getElementById(id); if (e) e.value = '';
-        });
-        renderAll(); saveState(); showToast('🔄 ڕێست کرا!', 'success');
-    });
-};
-
-window.setELFinalScore = function() {
-    if (!isAdmin) return showToast('❌ ئەدمین نیت!', 'error');
-    const f = state.europaLeague.final;
-    if (!f.teamA || !f.teamB) return showToast('❌ یانەکان نیە!', 'error');
-    const h = parseInt(document.getElementById('elFinalHome').value);
-    const a = parseInt(document.getElementById('elFinalAway').value);
-    if (isNaN(h) || isNaN(a)) return showToast('❌ ئەنجام بنووسە!', 'error');
-    f.homeScore = h; f.awayScore = a;
-    f.winner = h > a ? f.teamA : a > h ? f.teamB : null;
-    if (!f.winner) return showToast('⚠️ یەکسانی!', 'warning');
-    addTrophy(f.winner, 'el');
-    renderAll(); saveState();
-    showToast('🏆 ' + f.winner + ' پاڵەوانی EL!', 'success');
-};
-
-window.resetELFinal = function() {
-    if (!isAdmin) return;
-    showConfirm('ڕێستکردنی Final', 'EL Final؟', () => {
-        state.europaLeague.final = { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null };
-        ['elFinalHome','elFinalAway'].forEach(id => {
-            const e = document.getElementById(id); if (e) e.value = '';
-        });
-        renderAll(); saveState(); showToast('🔄 ڕێست کرا!', 'success');
-    });
-};
-
-window.setSLScore = function() {
-    if (!isAdmin) return showToast('❌ ئەدمین نیت!', 'error');
-    const sl = state.superLeague;
-    if (!sl.teamA || !sl.teamB) return showToast('❌ یانەکان نیە!', 'error');
-    const h = parseInt(document.getElementById('slHome').value);
-    const a = parseInt(document.getElementById('slAway').value);
-    if (isNaN(h) || isNaN(a)) return showToast('❌ ئەنجام بنووسە!', 'error');
-    sl.homeScore = h; sl.awayScore = a;
-    sl.winner = h > a ? sl.teamA : a > h ? sl.teamB : null;
-    if (!sl.winner) return showToast('⚠️ یەکسانی!', 'warning');
-    addTrophy(sl.winner, 'sl');
-    renderAll(); saveState();
-    showToast('🏆 ' + sl.winner + ' پاڵەوانی SL!', 'success');
-};
-
-window.resetSuperLeague = function() {
-    if (!isAdmin) return;
-    showConfirm('ڕێستکردنی SL', 'SUPER LEAGUE؟', () => {
-        state.superLeague = { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null };
-        ['slHome','slAway'].forEach(id => {
-            const e = document.getElementById(id); if (e) e.value = '';
-        });
-        renderAll(); saveState(); showToast('🔄 ڕێست کرا!', 'success');
-    });
-};
-
-window.resetChampionsLeague = function() {
-    if (!isAdmin) return;
-    showConfirm('ڕێستکردنی CL', 'تەواوی CHAMPIONS LEAGUE؟', () => {
-        state.championsLeague = {
-            semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null }
-        };
-        ['clSemi1Home','clSemi1Away','clSemi2Home','clSemi2Away','clFinalHome','clFinalAway'].forEach(id => {
-            const e = document.getElementById(id); if (e) e.value = '';
-        });
-        renderAll(); saveState(); showToast('🔄 CL ڕێست کرا!', 'success');
-    });
-};
-
-window.resetEuropaLeague = function() {
-    if (!isAdmin) return;
-    showConfirm('ڕێستکردنی EL', 'تەواوی EUROPA LEAGUE؟', () => {
-        state.europaLeague = {
-            semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null }
-        };
-        ['elSemi1Home','elSemi1Away','elSemi2Home','elSemi2Away','elFinalHome','elFinalAway'].forEach(id => {
-            const e = document.getElementById(id); if (e) e.value = '';
-        });
-        renderAll(); saveState(); showToast('🔄 EL ڕێست کرا!', 'success');
-    });
-};
-
-document.getElementById('finishLaligaBtn').addEventListener('click', () => {
-    if (!isAdmin) return;
-    showConfirm('کۆتاییهێنانی LALIGA', 'یانەی پلەی 1 دەبێتە پاڵەوان؟', () => {
-        const sorted = sortLaliga(state.laliga);
-        state.laligaFinished = true;
-        state.laligaChampion = sorted[0].name;
-        addTrophy(sorted[0].name, 'laliga');
-        state.championsLeague = {
-            semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null }
-        };
-        state.europaLeague = {
-            semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null }
-        };
-        state.superLeague = { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null };
-        saveState();
-        showToast('🏆 ' + sorted[0].name + ' پاڵەوان!', 'success');
-        renderAll(); switchPage('clPage');
-    });
-});
-
-document.getElementById('resetLaligaBtn').addEventListener('click', () => {
-    if (!isAdmin) return;
-    showConfirm('ڕێستکردنی LALIGA', 'تەنها ئەنجامەکان ڕێست دەکرێن؟', () => {
-        state.laliga = state.laliga.map(t => ({
-            name: t.name, img: t.img,
-            goals: 0, goalsAgainst: 0, points: 0,
-            champions: t.champions || 0, europa: t.europa || 0,
-            super: t.super || 0, superEuropa: t.superEuropa || 0
-        }));
-        state.laligaFinished = false;
-        state.laligaChampion = null;
-        state.championsLeague = {
-            semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null }
-        };
-        state.europaLeague = {
-            semi1: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            semi2: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null },
-            final: { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null }
-        };
-        state.superLeague = { teamA: null, teamB: null, homeScore: null, awayScore: null, winner: null };
-        ['clSemi1Home','clSemi1Away','clSemi2Home','clSemi2Away','clFinalHome','clFinalAway',
-         'elSemi1Home','elSemi1Away','elSemi2Home','elSemi2Away','elFinalHome','elFinalAway',
-         'slHome','slAway'].forEach(id => {
-            const el = document.getElementById(id); if (el) el.value = '';
-        });
-        renderAll(); saveState();
-        showToast('🔄 LALIGA ڕێست کرا!', 'success');
-    });
-});
-
-window.openTeamInfo = function(name) {
-    const t = getTeamByName(name);
-    if (!t) return;
-    currentTeamInfoName = name;
-    document.getElementById('teamInfoImg').src = t.img;
-    document.getElementById('teamInfoName').textContent = t.name;
-    document.getElementById('teamInfoCLDisplay').textContent = t.champions || 0;
-    document.getElementById('teamInfoELDisplay').textContent = t.europa || 0;
-    document.getElementById('teamInfoSLDisplay').textContent = t.super || 0;
-    document.getElementById('teamInfoSEDisplay').textContent = t.superEuropa || 0;
-    document.getElementById('teamInfoCLInput').value = t.champions || 0;
-    document.getElementById('teamInfoELInput').value = t.europa || 0;
-    document.getElementById('teamInfoSLInput').value = t.super || 0;
-    document.getElementById('teamInfoSEInput').value = t.superEuropa || 0;
-    const isAdminMode = isAdmin;
-    ['CL','EL','SL','SE'].forEach(key => {
-        document.getElementById('teamInfo' + key + 'Display').style.display = isAdminMode ? 'none' : 'inline';
-        document.getElementById('teamInfo' + key + 'Input').style.display = isAdminMode ? 'block' : 'none';
-    });
-    document.getElementById('saveTrophiesBtn').style.display = isAdminMode ? 'block' : 'none';
-    applyTeamTheme(t);
-    document.getElementById('teamInfoModal').classList.add('active');
-};
-
-function applyTeamTheme(team) {
-    const modalContent = document.getElementById('teamInfoModalContent');
-    const themeBadge = document.getElementById('themeBadge');
-    modalContent.classList.remove('theme-fire', 'theme-diamond', 'theme-crown');
-    themeBadge.classList.remove('badge-fire', 'badge-diamond', 'badge-crown');
-    themeBadge.style.display = 'none';
-    const total = getTotalTrophies(team);
-    const theme = getTeamTheme(team);
-    if (theme === 'crown') {
-        modalContent.classList.add('theme-crown');
-        themeBadge.classList.add('badge-crown');
-        themeBadge.textContent = '👑 ' + total + ' جام';
-        themeBadge.style.display = 'block';
-    } else if (theme === 'diamond') {
-        modalContent.classList.add('theme-diamond');
-        themeBadge.classList.add('badge-diamond');
-        themeBadge.textContent = '💎 ' + total + ' جام';
-        themeBadge.style.display = 'block';
-    } else if (theme === 'fire') {
-        modalContent.classList.add('theme-fire');
-        themeBadge.classList.add('badge-fire');
-        themeBadge.textContent = '🔥 ' + total + ' جام';
-        themeBadge.style.display = 'block';
-    }
-}
-
-window.closeTeamInfoModal = function() {
-    document.getElementById('teamInfoModal').classList.remove('active');
-    currentTeamInfoName = null;
-};
-
-document.getElementById('saveTrophiesBtn').addEventListener('click', () => {
-    if (!isAdmin || !currentTeamInfoName) return;
-    const team = getTeamByName(currentTeamInfoName);
-    if (!team) return;
-    team.champions = parseInt(document.getElementById('teamInfoCLInput').value) || 0;
-    team.europa = parseInt(document.getElementById('teamInfoELInput').value) || 0;
-    team.super = parseInt(document.getElementById('teamInfoSLInput').value) || 0;
-    team.superEuropa = parseInt(document.getElementById('teamInfoSEInput').value) || 0;
-    saveState();
-    showToast('✅ پاشەکەوت کرا!', 'success');
-    closeTeamInfoModal();
-});
-
-const editModal = document.getElementById('editModal');
-document.getElementById('editLaligaBtn').addEventListener('click', () => {
-    if (!isAdmin) return;
-    buildEditForm();
-    editModal.classList.add('active');
-});
-document.getElementById('closeEditModal').addEventListener('click', () => editModal.classList.remove('active'));
-editModal.addEventListener('click', (e) => { if (e.target === editModal) editModal.classList.remove('active'); });
-
-function buildEditForm() {
-    const container = document.getElementById('editFormContainer');
-    let html = '';
-    state.laliga.forEach((t, i) => {
-        html += `
-            <div class="edit-form-group" data-index="${i}">
-                <div class="edit-team-header">${i+1}. ${t.name}</div>
-                <div><label>گۆڵ</label><input type="number" class="edit-goals" value="${t.goals}" min="0"></div>
-                <div><label>گ.لێکران</label><input type="number" class="edit-ga" value="${t.goalsAgainst}" min="0"></div>
-                <div><label>خاڵ</label><input type="number" class="edit-points" value="${t.points}" min="0"></div>
-            </div>
-        `;
-    });
-    container.innerHTML = html;
-}
-
-document.getElementById('saveEditBtn').addEventListener('click', () => {
-    if (!isAdmin) return;
-    const groups = document.querySelectorAll('#editFormContainer .edit-form-group');
-    const newTeams = [];
-    groups.forEach(g => {
-        const oldTeam = state.laliga[parseInt(g.dataset.index)] || {};
-        newTeams.push({
-            name: oldTeam.name || '',
-            img: oldTeam.img || 'https://via.placeholder.com/40/1a1a4e/fff?text=?',
-            goals: parseInt(g.querySelector('.edit-goals').value) || 0,
-            goalsAgainst: parseInt(g.querySelector('.edit-ga').value) || 0,
-            points: parseInt(g.querySelector('.edit-points').value) || 0,
-            champions: oldTeam.champions || 0,
-            europa: oldTeam.europa || 0,
-            super: oldTeam.super || 0,
-            superEuropa: oldTeam.superEuropa || 0
-        });
-    });
-    if (newTeams.length !== 10) return showToast('❌ 10 یانە!', 'error');
-    state.laliga = newTeams;
-    editModal.classList.remove('active');
-    renderAll(); saveState();
-    showToast('✅ پاشەکەوت کرا!', 'success');
-});
-
-let confirmCallback = null;
-function showConfirm(title, message, callback) {
-    document.getElementById('confirmTitle').textContent = title;
-    document.getElementById('confirmMessage').textContent = message;
-    document.getElementById('confirmModal').classList.add('active');
-    confirmCallback = callback;
-}
-document.getElementById('confirmYesBtn').addEventListener('click', () => {
-    document.getElementById('confirmModal').classList.remove('active');
-    if (confirmCallback) { confirmCallback(); confirmCallback = null; }
-});
-document.getElementById('confirmNoBtn').addEventListener('click', () => {
-    document.getElementById('confirmModal').classList.remove('active');
-    confirmCallback = null;
-});
-
-const loginModal = document.getElementById('loginModal');
-const adminBtn = document.getElementById('adminLoginBtn');
-document.getElementById('adminLoginBtn').addEventListener('click', () => {
-    if (isAdmin) {
-        isAdmin = false;
-        adminBtn.textContent = '🔐 پەنەلی ئەدمین';
-        adminBtn.classList.remove('logout');
-        updateAdminUI();
-        showToast('👋 دەرچوویت!', 'success');
-        renderAll();
-    } else loginModal.classList.add('active');
-});
-document.getElementById('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('active'));
-loginModal.addEventListener('click', (e) => { if (e.target === loginModal) loginModal.classList.remove('active'); });
-document.getElementById('loginSubmit').addEventListener('click', () => {
-    const u = document.getElementById('usernameInput').value.trim();
-    const p = document.getElementById('passwordInput').value.trim();
-    if (u === 'z' && p === '1') {
-        isAdmin = true;
-        loginModal.classList.remove('active');
-        adminBtn.textContent = '🚪 دەرچون';
-        adminBtn.classList.add('logout');
-        document.getElementById('usernameInput').value = '';
-        document.getElementById('passwordInput').value = '';
-        updateAdminUI();
-        showToast('✅ بەخێربێی!', 'success');
-        renderAll();
-    } else {
-        showToast('❌ هەڵە!', 'error');
-        document.getElementById('passwordInput').value = '';
-    }
-});
-
-function switchPage(pageId) {
-    document.querySelectorAll('.page-container').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-    const tab = document.querySelector(`.nav-tab[data-page="${pageId}"]`);
-    if (tab) tab.classList.add('active');
-}
-document.querySelectorAll('.nav-tab').forEach(tab => {
-    tab.addEventListener('click', () => switchPage(tab.dataset.page));
-});
-
-loadState();
-console.log('👋 Admin: z / 1');
-
-/* ============ MODERN RIPPLE EFFECT ============ */
-(function initRippleEffect() {
-    const rippleTargets = [
-        'button',
-        '.nav-tab',
-        '.admin-btn',
-        '.close-modal',
-        '.login-submit',
-        '.save-edit-btn',
-        '.save-trophies-btn',
-        '.confirm-buttons button',
-        '.match-card',
-        '.team-info'
-    ];
-
-    const selector = rippleTargets.join(',');
-
-    document.addEventListener('pointerdown', function(e) {
-        const target = e.target.closest(selector);
-        if (!target) return;
-
-        // Skip if element is disabled
-        if (target.disabled) return;
-
-        // Prepare host
-        if (!target.classList.contains('ripple-host')) {
-            target.classList.add('ripple-host');
+            });
         }
 
-        // Calculate ripple position
-        const rect = target.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-
-        // Create ripple element
-        const ripple = document.createElement('span');
-        ripple.className = 'ripple';
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-
-        // Append and clean up
-        target.appendChild(ripple);
-        ripple.addEventListener('animationend', () => {
-            ripple.remove();
-            if (!target.querySelector('.ripple')) {
-                target.classList.remove('ripple-host');
-            }
+        document.getElementById('add-app-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const type = document.getElementById('app-type').value;
+            const name = document.getElementById('app-name').value;
+            const version = document.getElementById('app-version').value || '1.0.0';
+            const platform = document.getElementById('app-platform').value || 'android';
+            const descriptionLong = document.getElementById('app-description-long').value;
+            const info = document.getElementById('app-info').value;
+            const imgurl = document.getElementById('app-image').value;
+            const downloadurl = document.getElementById('app-download').value;
+            const featured = document.getElementById('app-featured').checked;
+            if (!type || !name || !downloadurl) { alert('تکایە هەموو خانە پێویستەکان پڕ بکەرەوە'); return; }
+            if (!db) return;
+            db.collection("zhi-zhi").add({
+                type, name,
+                description: descriptionLong || '',
+                descriptionLong: descriptionLong || '',
+                info: info || '',
+                imgurl: imgurl || '', downloadurl, downloads: 0, featured,
+                version, platform,
+                createdAt: new Date().toISOString()
+            }).then(() => {
+                document.getElementById('add-app-form').reset();
+                document.getElementById('app-version').value = '1.0.0';
+                document.getElementById('app-platform').value = 'android';
+                loadAllData();
+            }).catch(e => console.error("❌ add error:", e));
         });
-    }, { passive: true });
 
-    document.addEventListener('pointerup', function(e) {
-        const target = e.target.closest('.ripple-host');
-        if (target && !target.querySelector('.ripple')) {
-            target.classList.remove('ripple-host');
-        }
-    }, { passive: true });
-})();
-</script>
+        document.getElementById('edit-app-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('edit-app-id').value;
+            const name = document.getElementById('edit-app-name').value;
+            const version = document.getElementById('edit-app-version').value || '1.0.0';
+            const platform = document.getElementById('edit-app-platform').value || 'android';
+            const descriptionLong = document.getElementById('edit-app-description-long').value;
+            const info = document.getElementById('edit-app-info').value;
+            const imgurl = document.getElementById('edit-app-image').value;
+            const downloadurl = document.getElementById('edit-app-download').value;
+            const featured = document.getElementById('edit-app-featured').value === 'true';
+            if (!db) return;
+            db.collection("zhi-zhi").doc(id).update({
+                name,
+                description: descriptionLong || '',
+                descriptionLong: descriptionLong || '',
+                info: info || '',
+                imgurl: imgurl || '',
+                downloadurl, featured,
+                version, platform
+            }).then(() => {
+                closeEditModal();
+                document.getElementById('edit-app-form').reset();
+                loadAllData();
+            }).catch(e => console.error("❌ update error:", e));
+        });
+
+        document.getElementById('cancel-edit').addEventListener('click', () => {
+            closeEditModal();
+            document.getElementById('edit-app-form').reset();
+        });
+
+        showPage('admin-login');
+    </script>
 </body>
 </html>
